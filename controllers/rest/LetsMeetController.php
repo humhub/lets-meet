@@ -19,7 +19,7 @@ class LetsMeetController extends BaseContentController
 
     public function getContentActiveRecordClass()
     {
-//        return ;
+
     }
 
     public function returnContentDefinition(ContentActiveRecord $contentRecord)
