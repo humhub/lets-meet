@@ -3,7 +3,12 @@
 namespace humhub\modules\letsMeet\models;
 
 use yii\db\ActiveRecord;
+use humhub\modules\user\models\User;
 
+/**
+ * @property-read MeetingTimeSlot $timeSlot
+ * @property-read User $user
+ */
 class MeetingVote extends ActiveRecord
 {
     public static function tableName()

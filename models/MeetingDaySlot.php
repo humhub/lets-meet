@@ -4,6 +4,10 @@ namespace humhub\modules\letsMeet\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * @property-read Meeting $meeting
+ * @property-read MeetingTimeSlot[] $timeSlots
+ */
 class MeetingDaySlot extends ActiveRecord
 {
     public static function tableName()

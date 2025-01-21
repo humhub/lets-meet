@@ -3,7 +3,14 @@
 namespace humhub\modules\letsMeet\models;
 
 use yii\db\ActiveRecord;
+use humhub\modules\user\models\User;
 
+/**
+ * @property-read MeetingInvite[] $invites
+ * @property-read MeetingDaySlot[] $daySlots
+ * @property-read User $createdBy
+ * @property-read User $updatedBy
+ */
 class Meeting extends ActiveRecord
 {
     public static function tableName()
