@@ -13,9 +13,9 @@ use humhub\modules\content\models\ContentContainer;
 use humhub\modules\rest\components\BaseContentController;
 use Yii;
 
-class LetsMeetController extends BaseContentController
+class IndexController extends BaseContentController
 {
-    public static $moduleId = 'letsMeet';
+    public static $moduleId = 'lets-meet';
 
     public function getContentActiveRecordClass()
     {

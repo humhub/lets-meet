@@ -1,0 +1,23 @@
+{
+    "name": "humhub/lets-meet",
+    "authors": [
+        {
+            "name": "Gevorg Mansuryan",
+            "email": "gevorgmansuryan@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    }
+}

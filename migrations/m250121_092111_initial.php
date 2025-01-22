@@ -57,8 +57,11 @@ class m250121_092111_initial extends Migration
             'vote' => $this->boolean()->notNull(),
         ]);
 
-        $this->addForeignKey('fk_lets_meet_meeting_time_slot_vote_time_slot', 'lets_meet_meeting_time_slot_vote', 'time_slot_id', 'lets_meet_meeting_time_slot', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('fk_lets_meet_meeting_time_slot_vote_user', 'lets_meet_meeting_time_slot_vote', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_lets_meet_meeting_vote_time_slot', 'lets_meet_meeting_vote', 'time_slot_id', 'lets_meet_meeting_time_slot', 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('fk_lets_meet_meeting_vote
+        
+        
+        _user', 'lets_meet_meeting_vote', 'user_id', 'user', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function safeDown()

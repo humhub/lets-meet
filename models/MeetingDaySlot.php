@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -27,9 +28,9 @@ class MeetingDaySlot extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'date' => 'Date',
-            'meeting_id' => 'Meeting ID',
+            'id' => Yii::t('LetsMeetModule.base', 'ID'),
+            'date' => Yii::t('LetsMeetModule.base', 'Date'),
+            'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
         ];
     }
 

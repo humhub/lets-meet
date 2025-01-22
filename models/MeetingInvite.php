@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;
 
@@ -27,10 +28,10 @@ class MeetingInvite extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'meeting_id' => 'Meeting ID',
-            'user_id' => 'User ID',
-            'invite_status' => 'Invite Status',
+            'id' => Yii::t('LetsMeetModule.base', 'ID'),
+            'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
+            'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
+            'invite_status' => Yii::t('LetsMeetModule.base', 'Invite Status'),
         ];
     }
 

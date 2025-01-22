@@ -30,7 +30,7 @@ class CreateLetsMeet extends BasePermission
 //        Space::USERGROUP_OWNER,
     ];
 
-    protected $moduleId = 'letsMeet';
+    protected $moduleId = 'lets-meet';
 
     public function getTitle()
     {

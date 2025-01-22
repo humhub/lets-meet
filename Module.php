@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet;
 
+use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\space\models\Space;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\components\ContentContainerModule;
@@ -30,7 +31,7 @@ class Module extends ContentContainerModule
 
     public function disableContentContainer(ContentContainerActiveRecord $container)
     {
-        foreach (Meet::find()->contentContainer($container)->all() as $meet) {
+        foreach (Meeting::find()->contentContainer($container)->all() as $meet) {
             $meet->hardDelete();
         }
 
@@ -60,7 +61,7 @@ class Module extends ContentContainerModule
 
     public function getContentClasses(): array
     {
-        return [Meet::class];
+        return [Meeting::class];
     }
 
 }

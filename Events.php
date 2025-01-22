@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet;
 
+use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\space\models\Space;
 use Yii;
 use yii\base\Event;
@@ -19,7 +20,7 @@ class Events
 
     public static function onUserDelete($event)
     {
-        foreach (Meet::findAll(array('created_by' => $event->sender->id)) as $meet) {
+        foreach (Meeting::findAll(array('created_by' => $event->sender->id)) as $meet) {
             $meet->delete();
         }
 

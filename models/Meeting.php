@@ -2,8 +2,12 @@
 
 namespace humhub\modules\letsMeet\models;
 
-use yii\db\ActiveRecord;
+
+use Yii;
+use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
+use humhub\modules\content\components\ContentActiveRecord;
+use humhub\modules\search\interfaces\Searchable;
 
 /**
  * @property-read MeetingInvite[] $invites
@@ -11,8 +15,11 @@ use humhub\modules\user\models\User;
  * @property-read User $createdBy
  * @property-read User $updatedBy
  */
-class Meeting extends ActiveRecord
+class Meeting extends ContentActiveRecord implements Searchable
 {
+    public $wallEntryClass = WallEntry::class;
+    public $moduleId = 'lets-meet';
+
     public static function tableName()
     {
         return 'lets_meet_meeting';
@@ -33,17 +40,17 @@ class Meeting extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'duration' => 'Duration',
-            'is_public' => 'Is Public',
-            'invite_all_space_users' => 'Invite All Space Users',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
+            'id' => Yii::t('LetsMeetModule.base', 'ID'),
+            'title' => Yii::t('LetsMeetModule.base', 'Title'),
+            'description' => Yii::t('LetsMeetModule.base', 'Description'),
+            'duration' => Yii::t('LetsMeetModule.base', 'Duration'),
+            'is_public' => Yii::t('LetsMeetModule.base', 'Is Public'),
+            'invite_all_space_users' => Yii::t('LetsMeetModule.base', 'Invite All Space Users'),
+            'status' => Yii::t('LetsMeetModule.base', 'Status'),
+            'created_at' => Yii::t('LetsMeetModule.base', 'Created At'),
+            'created_by' => Yii::t('LetsMeetModule.base', 'Created By'),
+            'updated_at' => Yii::t('LetsMeetModule.base', 'Updated At'),
+            'updated_by' => Yii::t('LetsMeetModule.base', 'Updated By'),
         ];
     }
 
@@ -65,5 +72,30 @@ class Meeting extends ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getIcon()
+    {
+        return 'fa-calendar-check-o';
+    }
+
+    public function getContentName()
+    {
+        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
+    }
+
+    public function getSearchAttributes()
+    {
+        $itemAnswers = '';
+
+        foreach ($this->answers as $answer) {
+            $itemAnswers .= $answer->answer . ' ';
+        }
+
+        return [
+            'question' => $this->question,
+            'description' => $this->description,
+            'itemAnswers' => trim($itemAnswers),
+        ];
     }
 }

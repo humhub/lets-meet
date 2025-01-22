@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
 class LetsMeetAsset extends AssetBundle
 {
     public $jsOptions = ['position' => \yii\web\View::POS_END];
-    public $sourcePath = '@letsMeet/resources';
+    public $sourcePath = '@lets-meet/resources';
     public $css = [];
     public $js = [
         'js/humhub.lets-meet.js',

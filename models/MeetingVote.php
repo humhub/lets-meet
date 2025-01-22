@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;
 
@@ -28,10 +29,10 @@ class MeetingVote extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'time_slot_id' => 'Time Slot ID',
-            'user_id' => 'User ID',
-            'vote' => 'Vote',
+            'id' => Yii::t('LetsMeetModule.base', 'ID'),
+            'time_slot_id' => Yii::t('LetsMeetModule.base', 'Time Slot ID'),
+            'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
+            'vote' => Yii::t('LetsMeetModule.base', 'Vote'),
         ];
     }
 
