@@ -3,9 +3,9 @@
 namespace humhub\modules\letsMeet\models\forms;
 
 use Yii;
-use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
-class EditForm extends Model
+class MainForm extends Form
 {
     public $title;
     public $description;
@@ -14,13 +14,13 @@ class EditForm extends Model
 
     public function rules()
     {
-        return [
+        return ArrayHelper::merge(parent::rules(), [
             [['title', 'description', 'duration', 'make_public'], 'required'],
             [['description'], 'string'],
             [['duration'], 'time', 'format' => 'php:H:i'/*, 'message' => Yii::t('LetsMeetModule.base', 'The duration must be in the format hh:mm')*/],
             [['make_public'], 'boolean'],
             [['title'], 'string', 'max' => 255],
-        ];
+        ]);
     }
 
     public function attributeLabels()
@@ -31,10 +31,5 @@ class EditForm extends Model
             'duration' => Yii::t('LetsMeetModule.base', 'Duration'),
             'make_public' => Yii::t('LetsMeetModule.base', 'Make Public'),
         ];
-    }
-
-    public function save()
-    {
-        //
     }
 }

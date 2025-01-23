@@ -2,7 +2,7 @@
 
 namespace humhub\modules\letsMeet\controllers;
 
-use humhub\modules\letsMeet\models\forms\EditForm;
+use humhub\modules\letsMeet\models\forms\MainForm;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
 
@@ -15,7 +15,7 @@ class IndexController extends ContentContainerController
 
     public function actionEdit($id)
     {
-        $form = new EditForm();
+        $form = new MainForm();
 
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
 

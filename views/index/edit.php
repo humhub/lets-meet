@@ -2,18 +2,17 @@
 
 
 use Yii;
-use humhub\modules\letsMeet\models\forms\EditForm;
+use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ActiveForm;
 use humhub\widgets\ModalButton;
 
 /**
- * @var EditForm $model
+ * @var MainForm $model
  * @var \yii\web\View $this
  */
 
 //Assets::register($this);
-
 
 ?>
 
@@ -22,6 +21,7 @@ use humhub\widgets\ModalButton;
     <div class="modal-body meeting-edit-modal" data-ui-widget="lets-meet.Form" data-ui-init>
         <?php $form = ActiveForm::begin(); ?>
 
+        <?= $form->field($model, 'step')->hiddenInput()->label(false) ?>
         <?= $this->render('tabs/main', ['form' => $form, 'model' => $model]) ?>
 
 
