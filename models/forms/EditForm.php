@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\models\forms;
 
+use Yii;
 use yii\base\Model;
 
 class EditForm extends Model

@@ -16,7 +16,7 @@ class WallEntry extends WallStreamModuleEntryWidget
     /**
      * @inheritDoc
      */
-    public $editRoute = '/lets-meet/index/editt';
+    public $editRoute = '/lets-meet/index/edit';
 
     public $editMode = self::EDIT_MODE_MODAL;
 
@@ -32,7 +32,7 @@ class WallEntry extends WallStreamModuleEntryWidget
             $this->editRoute = '';
         }
 
-        return $this->render('entry', ['lets-meet' => $this->model,
+        return $this->render('wallEntry', ['lets-meet' => $this->model,
             'user' => $this->model->content->createdBy,
             'contentContainer' => $this->model->content->container]);
     }
