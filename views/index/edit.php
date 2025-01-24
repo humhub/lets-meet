@@ -14,6 +14,12 @@ use humhub\widgets\ModalButton;
 
 //Assets::register($this);
 
+$tabs = [
+    1 => 'tabs/main',
+    'tabs/dates',
+    'tabs/invites',
+];
+
 ?>
 
 <?php ModalDialog::begin(['header' => Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')]) ?>
@@ -22,12 +28,11 @@ use humhub\widgets\ModalButton;
         <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'step')->hiddenInput()->label(false) ?>
-        <?= $this->render('tabs/main', ['form' => $form, 'model' => $model]) ?>
-
+        <?= $this->render($model->getTabView(), ['form' => $form, 'model' => $model]) ?>
 
         <div class="text-center">
             <?= ModalButton::cancel(); ?>
-            <?= ModalButton::submitModal()?>
+            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))?>
         </div>
 
         <?php ActiveForm::end(); ?>

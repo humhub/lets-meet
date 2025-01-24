@@ -25,7 +25,14 @@ abstract class Form extends Model
     {
         if ($this->validate()) {
             $this->step++;
-            $this->save();
+            return $this->save();
         }
+
+        return false;
+    }
+
+    public function save()
+    {
+        return true;
     }
 }

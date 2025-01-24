@@ -2,6 +2,8 @@
 
 namespace humhub\modules\letsMeet\controllers;
 
+use humhub\modules\letsMeet\models\forms\DatesForm;
+use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
@@ -15,10 +17,16 @@ class IndexController extends ContentContainerController
 
     public function actionEdit($id)
     {
-        $form = new MainForm();
+        $mainForm = new MainForm();
+        $datesForm = new DatesForm();
+        $invitesForm = new InvitesForm();
 
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-
+        if ($mainForm->load(Yii::$app->request->post())) {
+            $mainForm->next();
+        } elseif ($datesForm->load(Yii::$app->request->post())) {
+            $datesForm->next();
+        } elseif ($invitesForm->load(Yii::$app->request->post())) {
+            $invitesForm->next();
         }
 
         return $this->renderAjax('edit', ['model' => $form]);
