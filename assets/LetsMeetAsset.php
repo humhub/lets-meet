@@ -2,13 +2,12 @@
 
 namespace humhub\modules\letsMeet\assets;
 
-use humhub\modules\ui\view\components\View;
-use Yii;
 use yii\web\AssetBundle;
+use yii\web\View;
 
 class LetsMeetAsset extends AssetBundle
 {
-    public $jsOptions = ['position' => \yii\web\View::POS_END];
+    public $jsOptions = ['position' => View::POS_END];
     public $sourcePath = '@lets-meet/resources';
     public $css = [];
     public $js = [

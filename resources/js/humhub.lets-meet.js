@@ -3,13 +3,10 @@ humhub.module('letsMeet', function (module, require, $) {
     var client = require('client');
     var Content = require('content').Content;
 
-    var LetsMeet = function (id) {
-        Content.call(this, id);
-    };
+    var addDateRow = function (event) {
 
-
+    }
 
     module.export({
-        LetsMeet: LetsMeet
     });
 });

@@ -3,6 +3,7 @@
 namespace humhub\modules\letsMeet\models\forms;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
 abstract class Form extends Model
 {
@@ -34,5 +35,23 @@ abstract class Form extends Model
     public function save()
     {
         return true;
+    }
+
+    /**
+     * @param int $step
+     * @return static
+     */
+    public static function getForm(int $step = 1)
+    {
+        /** @var static $form */
+        $form = ArrayHelper::getValue([
+            new MainForm(),
+            new DatesForm(),
+            new InvitesForm(),
+        ], $step - 1);
+
+        $form->step = $step;
+
+        return $form;
     }
 }

@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 
 class DatesForm extends Form
 {
-    public $dates;
+    public $dates = [];
 
     public function rules()
     {

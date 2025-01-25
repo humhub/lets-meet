@@ -1,24 +1,24 @@
 <?php
 
 
-use Yii;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ActiveForm;
 use humhub\widgets\ModalButton;
+use yii\helpers\ArrayHelper;
 
 /**
  * @var MainForm $model
  * @var \yii\web\View $this
  */
 
-//Assets::register($this);
-
-$tabs = [
-    1 => 'tabs/main',
-    'tabs/dates',
-    'tabs/invites',
-];
+$tabView = ArrayHelper::getValue([
+        'tabs/main',
+        'tabs/dates',
+        'tabs/invites',
+    ],
+    $model->step - 1,
+);
 
 ?>
 
@@ -26,9 +26,8 @@ $tabs = [
 
     <div class="modal-body meeting-edit-modal" data-ui-widget="lets-meet.Form" data-ui-init>
         <?php $form = ActiveForm::begin(); ?>
-
         <?= $form->field($model, 'step')->hiddenInput()->label(false) ?>
-        <?= $this->render($model->getTabView(), ['form' => $form, 'model' => $model]) ?>
+        <?= $this->renderAjax($tabView, ['form' => $form, 'model' => $model]) ?>
 
         <div class="text-center">
             <?= ModalButton::cancel(); ?>
