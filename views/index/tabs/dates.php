@@ -1,26 +1,63 @@
 <?php
 
+use humhub\modules\letsMeet\models\forms\DayForm;
+use humhub\modules\letsMeet\models\MeetingDaySlot;
+use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\content\widgets\richtext\RichTextField;
+use yii\widgets\ActiveForm;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
+use humhub\widgets\ModalDialog;
+use humhub\widgets\ModalButton;
+
 /**
- * @var \yii\widgets\ActiveForm $form
- * @var \humhub\modules\letsMeet\models\forms\DatesForm $model
+ * @var ActiveForm $form
+ * @var DayForm[] $models
  * @var \yii\web\View $this
+ * @var ContentContainerActiveRecord $contentContainer
  */
 
-use humhub\modules\letsMeet\models\MeetingDaySlot;
-
-$dayModel = new MeetingDaySlot();
-
-$this->registerJsVar('date_row_template', $this->render(
-    'date_row',
-    ['form' => $form, 'model' => $model, 'day' => $dayModel, 'index' => '__INDEX__'])
-);
+LetsMeetAsset::register($this);
 
 ?>
 
-<?php foreach ($model->dates as $index => $day) : ?>
-    <?= $this->render('date_row', ['form' => $form, 'model' => $model, 'day' => $day, 'index' => $index]) ?>
-<?php endforeach; ?>
 
-<?php if (empty($model->dates)) : ?>
-    <?= $this->render('date_row', ['form' => $form, 'model' => $model, 'day' => $dayModel, 'index' => 0]) ?>
-<?php endif; ?>
+
+
+<?php ModalDialog::begin(['header' => Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')]) ?>
+
+    <div class="modal-body meeting-edit-modal">
+        <?php $form = ActiveForm::begin() ?>
+
+        <div id="date-rows">
+            <?php foreach ($models as $index => $day) : ?>
+                <?= $this->render('date_row', [
+                    'form' => $form,
+                    'model' => $day,
+                    'index' => $index,
+                    'contentContainer' => $contentContainer,
+                    'last' => $index === count($models) - 1,
+                ]) ?>
+            <?php endforeach; ?>
+
+            <?php if (empty($models)) : ?>
+                <?= $this->render('date_row', [
+                    'form' => $form,
+                    'model' => new DayForm(),
+                    'index' => 0,
+                    'contentContainer' => $contentContainer,
+                    'last' => true,
+                ]) ?>
+            <?php endif; ?>
+
+        </div>
+
+
+        <div class="text-center">
+            <?= ModalButton::cancel(); ?>
+            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
+        </div>
+
+        <?php ActiveForm::end() ?>
+    </div>
+
+<?php ModalDialog::end() ?>

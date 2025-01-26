@@ -2,34 +2,32 @@
 
 namespace humhub\modules\letsMeet\models\forms;
 
+use humhub\modules\user\models\User;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use humhub\modules\user\models\User;
 
-class InvitesForm extends Model
+class NewInvitesForm extends Model
 {
     public $invites;
-    public $invite_all_space_members;
+    public $currentInvites;
 
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['invites', 'invite_all_space_members'], 'required'],
-            [['invites'], 'each', 'rule' => [
+            [['invites'], 'required'],
+            [['invites', 'currentInvites'], 'each', 'rule' => [
                 'exist',
                 'targetClass' => User::class,
                 'targetAttribute' => 'guid',
             ]],
-            [['invite_all_space_members'], 'boolean'],
         ]);
     }
 
     public function attributeLabels()
     {
         return [
-            'invites' => Yii::t('LetsMeetModule.base', 'Participants'),
-            'invite_all_space_members' => Yii::t('LetsMeetModule.base', 'Invite all space members'),
+            'invites' => Yii::t('LetsMeetModule.base', 'New Participant'),
         ];
     }
 }

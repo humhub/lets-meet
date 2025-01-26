@@ -8,11 +8,12 @@ use humhub\modules\content\models\ContentTag;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\ui\form\widgets\BasePicker;
 use humhub\modules\ui\view\components\View;
+use yii\helpers\Html;
 
 
 class TimeSlotPicker extends BasePicker
 {
-//    public $itemClass = MeetingTimeSlot::class;
+    public $itemClass = MeetingTimeSlot::class;
 
     public $minInput = 1;
 
@@ -58,13 +59,14 @@ JS;
         return parent::init();
     }
 
-    /**
-     * @param MeetingTimeSlot $item
-     * @return string
-     */
-    protected function getItemText($item): string
+    protected function getItemText($item)
     {
-        return $item->time;
+        return $item;
+    }
+
+    protected function getItemKey($item)
+    {
+        return $item;
     }
 
     protected function getItemImage($item)
@@ -85,5 +87,20 @@ JS;
     protected function getUrl()
     {
         return null;
+    }
+
+    protected function getSelectedOptions()
+    {
+        $this->selection = Html::getAttributeValue($this->model, $this->attribute) ?: [];
+
+        $result = [];
+        foreach ($this->selection as $item) {
+            if (!$item) {
+                continue;
+            }
+
+            $result[$this->getItemKey($item)] = $this->buildItemOption($item);
+        }
+        return $result;
     }
 }

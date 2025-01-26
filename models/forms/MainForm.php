@@ -3,9 +3,10 @@
 namespace humhub\modules\letsMeet\models\forms;
 
 use Yii;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-class MainForm extends Form
+class MainForm extends Model
 {
     public $title;
     public $description;

@@ -4,12 +4,12 @@ namespace humhub\modules\letsMeet\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;
-
 class LetsMeetAsset extends AssetBundle
 {
-    public $jsOptions = ['position' => View::POS_END];
     public $sourcePath = '@lets-meet/resources';
-    public $css = [];
+    public $css = [
+        'css/lets-meet.css'
+    ];
     public $js = [
         'js/humhub.lets-meet.js',
     ];
@@ -27,4 +27,8 @@ class LetsMeetAsset extends AssetBundle
         ]);
         return parent::register($view);
     }
+
+    public $publishOptions = [
+        'forceCopy' => true,
+    ];
 }
