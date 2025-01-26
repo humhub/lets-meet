@@ -3,6 +3,7 @@
 
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\widgets\richtext\RichTextField;
+use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use yii\widgets\ActiveForm;
@@ -118,7 +119,8 @@ $invitesDataProvider->pagination
         <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'letsMeet.inviteAllMembers']]) ?>
 
         <div class="text-center">
-            <?= ModalButton::cancel(); ?>
+            <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
+<!--            --><?php //= ModalButton::cancel(); ?>
             <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
         </div>
     <?php ActiveForm::end() ?>

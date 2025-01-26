@@ -10,6 +10,17 @@ use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\search\interfaces\Searchable;
 
 /**
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property int $duration
+ * @property bool $is_public
+ * @property bool $invite_all_space_users
+ * @property int $status
+ * @property string $created_at
+ * @property int $created_by
+ * @property string $updated_at
+ * @property int $updated_by
  * @property-read MeetingInvite[] $invites
  * @property-read MeetingDaySlot[] $daySlots
  * @property-read User $createdBy
@@ -28,7 +39,7 @@ class Meeting extends ContentActiveRecord implements Searchable
     public function rules()
     {
         return [
-            [['title', 'description', 'duration', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['title', 'description', 'duration'], 'required'],
             [['description'], 'string'],
             [['duration', 'status', 'created_by', 'updated_by'], 'integer'],
             [['is_public', 'invite_all_space_users'], 'boolean'],

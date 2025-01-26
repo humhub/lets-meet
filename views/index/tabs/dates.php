@@ -1,5 +1,6 @@
 <?php
 
+use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\content\components\ContentContainerActiveRecord;
@@ -53,7 +54,7 @@ LetsMeetAsset::register($this);
 
 
         <div class="text-center">
-            <?= ModalButton::cancel(); ?>
+            <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/edit', ['hash' => TabsStateManager::instance()->hash])); ?>
             <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
         </div>
 

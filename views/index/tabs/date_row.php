@@ -1,5 +1,6 @@
 <?php
 
+use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
 use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
@@ -45,7 +46,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                 ?>
                 <?= Button::asLink()->primary()
                     ->icon('fa-plus')
-                    ->action('letsMeet.addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row'))
+                    ->action('letsMeet.addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
                     ->options([
                         'title' => Yii::t('LetsMeetModule.base', 'Delete'),
                         'class' => 'add-row',

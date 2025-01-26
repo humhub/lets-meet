@@ -6,6 +6,9 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
+ * @property int $id
+ * @property string $date
+ * @property int $meeting_id
  * @property-read Meeting $meeting
  * @property-read MeetingTimeSlot[] $timeSlots
  */

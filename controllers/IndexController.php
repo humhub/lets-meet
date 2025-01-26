@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\controllers;
 
+use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\forms\Form;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
@@ -12,12 +13,23 @@ use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
 use yii\widgets\ActiveForm;
 use humhub\modules\user\models\UserPicker;
 
 class IndexController extends ContentContainerController
 {
+    private ?TabsStateManager $stateManager;
+
+    public function beforeAction($action)
+    {
+        $this->stateManager = TabsStateManager::instance();
+        if ($hash = Yii::$app->request->get('hash')) {
+            $this->stateManager->restore($hash);
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function actionCreate()
     {
         return $this->actionEdit(null);
@@ -25,12 +37,14 @@ class IndexController extends ContentContainerController
 
     public function actionEdit($id = null)
     {
-        $model = new MainForm();
+        $model = $this->stateManager->getState(MainForm::class, new MainForm());
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
+                $this->stateManager->saveState(MainForm::class, $model);
+
                 return $this->asJson([
-                    'next' => $this->contentContainer->createUrl('/lets-meet/index/dates')
+                    'next' => $this->contentContainer->createUrl('/lets-meet/index/dates', ['hash' => $this->stateManager->hash])
                 ]);
             }
         }
@@ -43,15 +57,17 @@ class IndexController extends ContentContainerController
 
     public function actionDates($id = null)
     {
-        $models = [];
+        $models = $this->stateManager->getState(DayForm::class, [new DayForm()]);
 
         if (Yii::$app->request->isPost && $count = count(Yii::$app->request->post((new DayForm)->formName()))) {
             $models = array_fill(0, $count, new DayForm());
         }
 
         if (DayForm::loadMultiple($models, Yii::$app->request->post()) && DayForm::validateMultiple($models)) {
+            $this->stateManager->saveState(DayForm::class, $models);
+
             return $this->asJson([
-                'next' => $this->contentContainer->createUrl('/lets-meet/index/invites'),
+                'next' => $this->contentContainer->createUrl('/lets-meet/index/invites', ['hash' => $this->stateManager->hash]),
             ]);
         }
 
@@ -68,10 +84,16 @@ class IndexController extends ContentContainerController
 
         if ($newInvites->load(Yii::$app->request->post()) && $newInvites->validate()) {
             $newInvites->currentInvites = ArrayHelper::merge($newInvites->invites ?: [], $newInvites->currentInvites ?: []);
+        } else {
+            $newInvites->currentInvites = $this->stateManager->getState(InvitesForm::class, new InvitesForm())->invites;
         }
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
+                $this->stateManager->saveState(InvitesForm::class, $model);
+
+                $this->stateManager->save();
+
                 return $this->asJson([
                     'success' => true
                 ]);
