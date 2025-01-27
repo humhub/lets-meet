@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\common;
 
+use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
@@ -56,7 +57,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         return !empty($state) ? $state : $default;
     }
 
-    public function save()
+    public function save(ContentContainerActiveRecord $contentContainer)
     {
         $transaction = Yii::$app->db->beginTransaction();
 
@@ -69,6 +70,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             $invites = $this->getState(InvitesForm::class);
 
             $meeting = new Meeting();
+            $meeting->content->container = $contentContainer;
             $meeting->title = $main->title;
             $meeting->description = $main->description;
             $meeting->duration = (int)explode(':', $main->duration)[0];

@@ -1,0 +1,127 @@
+.lets-meet-container {
+    background-color: #ededed;
+    border-radius: 8px;
+    padding: 8px 8px 0 8px;
+    overflow: hidden;
+}
+
+.slots-container, .controls-container, .votes-container {
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.icons-cell {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px 0 8px;
+    min-width: 44px;
+}
+
+.icons-cell > div {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+}
+
+.dates-cell {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+.day-cell {
+    display: flex;
+    white-space: nowrap;
+    font-weight: bold;
+    min-height: 40px;
+    align-items: center;
+}
+
+.times-container {
+    display: flex;
+    gap: 8px;
+}
+
+.scrollable-container {
+    overflow-x: hidden;
+}
+
+.time-slot, .time-slot-vote {
+    display: flex;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 8px;
+    min-height: 40px;
+    white-space: nowrap;
+}
+
+.scroll-left {
+    display: flex;
+    align-items: center;
+}
+
+.control-buttons {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-right {
+    display: flex;
+    align-items: center;
+}
+
+.time-slot-vote {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+.votes-container .icons-cell {
+    padding: 0;
+}
+
+.votes-container .icons-cell > div {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.expanded-vote {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.expanded-vote .time-slot-vote {
+    border-radius: 0;
+}
+
+.expanded-vote .time-slot-vote:hover, .time-slot-vote.voted {
+    border: 4px solid #f5f5f5;
+}
+
+.time-slot-vote.vote-accept {
+    color: #97d271;
+}
+.time-slot-vote.vote-accept:hover, .time-slot-vote.vote-accept.voted {
+    background-color: #f0f9ea;
+}
+.time-slot-vote.vote-maybe {
+    color: #ffc107;
+}
+.time-slot-vote.vote-maybe:hover, .time-slot-vote.vote-maybe.voted {
+    background-color: #fff6da;
+}
+.time-slot-vote.vote-decline {
+    color: #fc4a64;
+}
+.time-slot-vote.vote-decline:hover, .time-slot-vote.vote-decline.voted {
+    background-color: #ffe4e8;
+}

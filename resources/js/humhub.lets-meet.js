@@ -1,9 +1,6 @@
 humhub.module('letsMeet', function (module, require, $) {
-    const object = require('util').object;
     const client = require('client');
-    const Content = require('content').Content;
     const additions = require('ui.additions');
-    const loader = require('ui.loader');
     const modal = require('ui.modal');
 
 

@@ -27,14 +27,11 @@ class WallEntry extends WallStreamModuleEntryWidget
      */
     public function renderContent()
     {
-
-        if ($this->model->closed) {
-            $this->editRoute = '';
-        }
-
-        return $this->render('wallEntry', ['lets-meet' => $this->model,
+        return $this->render('wallEntry', [
+            'meeting' => $this->model,
             'user' => $this->model->content->createdBy,
-            'contentContainer' => $this->model->content->container]);
+            'contentContainer' => $this->model->content->container,
+        ]);
     }
 
     /**

@@ -92,7 +92,7 @@ class IndexController extends ContentContainerController
             if ($model->validate()) {
                 $this->stateManager->saveState(InvitesForm::class, $model);
 
-                $this->stateManager->save();
+                $this->stateManager->save($this->contentContainer);
 
                 return $this->asJson([
                     'success' => true
