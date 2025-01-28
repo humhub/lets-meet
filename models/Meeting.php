@@ -8,6 +8,8 @@ use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\search\interfaces\Searchable;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * @property int $id
@@ -23,6 +25,8 @@ use humhub\modules\search\interfaces\Searchable;
  * @property int $updated_by
  * @property-read MeetingInvite[] $invites
  * @property-read MeetingDaySlot[] $daySlots
+ * @property-read MeetingTimeSlot[] $timeSlots
+ * @property-read MeetingVote[] $votes
  * @property-read User $createdBy
  * @property-read User $updatedBy
  */
@@ -65,7 +69,7 @@ class Meeting extends ContentActiveRecord implements Searchable
         ];
     }
 
-    public function getInvites()
+    public function getInvites() : ActiveQuery
     {
         return $this->hasMany(MeetingInvite::class, ['meeting_id' => 'id']);
     }
@@ -73,6 +77,16 @@ class Meeting extends ContentActiveRecord implements Searchable
     public function getDaySlots()
     {
         return $this->hasMany(MeetingDaySlot::class, ['meeting_id' => 'id']);
+    }
+
+    public function getTimeSlots()
+    {
+        return $this->hasMany(MeetingTimeSlot::class, ['day_id' => 'id'])->via('daySlots');
+    }
+
+    public function getVotes() : ActiveQuery
+    {
+        return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id'])->via('timeSlots');
     }
 
     public function getCreatedBy()

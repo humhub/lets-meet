@@ -8,6 +8,7 @@ use humhub\modules\user\models\User;
 
 /**
  * @property-read Meeting $meeting
+ * @property-read MeetingVote $votes
  * @property-read User $user
  */
 class MeetingInvite extends ActiveRecord
@@ -43,5 +44,10 @@ class MeetingInvite extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getVotes() : \yii\db\ActiveQuery
+    {
+        return $this->hasMany(MeetingVote::class, ['user_id' => 'id']);
     }
 }

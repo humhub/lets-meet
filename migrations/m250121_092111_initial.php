@@ -54,7 +54,7 @@ class m250121_092111_initial extends Migration
             'id' => $this->primaryKey(),
             'time_slot_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
-            'vote' => $this->boolean()->notNull(),
+            'vote' => $this->tinyInteger(1)->unsigned(),
         ]);
 
         $this->addForeignKey('fk_lets_meet_meeting_vote_time_slot', 'lets_meet_meeting_vote', 'time_slot_id', 'lets_meet_meeting_time_slot', 'id', 'CASCADE', 'CASCADE');

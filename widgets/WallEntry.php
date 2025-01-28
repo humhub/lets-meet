@@ -3,7 +3,17 @@
 namespace humhub\modules\letsMeet\widgets;
 
 use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
+use humhub\modules\letsMeet\models\forms\VoteForm;
+use humhub\modules\letsMeet\models\Meeting;
+use humhub\modules\letsMeet\models\MeetingDaySlot;
+use humhub\modules\letsMeet\models\MeetingTimeSlot;
+use humhub\modules\letsMeet\models\MeetingVote;
+use Yii;
+use yii\helpers\ArrayHelper;
 
+/**
+ * @property Meeting $model
+ */
 class WallEntry extends WallStreamModuleEntryWidget
 {
     /**
@@ -27,11 +37,97 @@ class WallEntry extends WallStreamModuleEntryWidget
      */
     public function renderContent()
     {
+        $action = Yii::$app->request->post('action');
+
+        /** @var MeetingVote[] $voteModels */
+        $voteModels = ArrayHelper::index(ArrayHelper::merge([], [], ...ArrayHelper::getColumn($this->model->daySlots, function(MeetingDaySlot $daySlot) {
+            return ArrayHelper::getColumn($daySlot->timeSlots, function(MeetingTimeSlot $timeSlot) {
+                return new MeetingVote([
+                    'time_slot_id' => $timeSlot->id,
+                    'user_id' => Yii::$app->user->id
+                ]);
+            });
+        })), 'time_slot_id');
+
+        $userVotes = $this->getUserVotes();
+
+        $votedUserIdsQuery = $this->model->getVotes()
+            ->select('user_id')
+            ->distinct()
+            ->where(['<>', 'user_id', Yii::$app->user->id])
+            ->limit(Yii::$app->request->get('showAll') ? null : 2);
+
+        $votedUsersCount = (clone $votedUserIdsQuery)->limit(null)->count();
+
+
+        if (Yii::$app->request->isPost) {
+            if ($action == 'vote' && empty($userVotes)) {
+                if (MeetingVote::loadMultiple($voteModels, Yii::$app->request->post()) && MeetingVote::validateMultiple($voteModels)) {
+                    foreach ($voteModels as $voteModel) {
+                        $voteModel->save();
+                    }
+                }
+                $userVotes = $this->getUserVotes();
+            } elseif ($action == 'reset') {
+                MeetingVote::deleteAll(['user_id' => Yii::$app->user->id, 'time_slot_id' => $this->model->getTimeSlots()->select('id')->column()]);
+                $userVotes = [];
+            }
+        }
+
+        $votes = ArrayHelper::index(
+            $this->model->getVotes()
+                ->with('user')
+                ->with('timeSlot.acceptedVotes')
+                ->where(['user_id' => $votedUserIdsQuery->column()])
+                ->orderBy(['user_id' => SORT_ASC])
+                ->all(),
+            null, 'user_id'
+        );
+
         return $this->render('wallEntry', [
             'meeting' => $this->model,
+            'userVotes' => $userVotes,
+            'votes' =>  $votes,
+            'votedUsersCount' =>  $votedUsersCount,
+            'voteModels' => $voteModels,
+            'bestOptions' => $this->getBestOptions(),
             'user' => $this->model->content->createdBy,
             'contentContainer' => $this->model->content->container,
         ]);
+    }
+
+    private function getUserVotes()
+    {
+        return $this->model->getVotes()
+            ->andWhere(['user_id' => Yii::$app->user->id])
+            ->all();
+    }
+
+    private function getBestOptions()
+    {
+        $bestOptions = [];
+
+        foreach ($this->model->daySlots as $daySlot) {
+            foreach ($daySlot->timeSlots as $timeSlot) {
+                $bestOptions[] = [
+                    'acceptedVotes' => count($timeSlot->acceptedVotes),
+                    'day' => $daySlot->date,
+                    'time' => $timeSlot->time,
+                ];
+            }
+        }
+
+        usort($bestOptions, function($a, $b) {
+            return $b['acceptedVotes'] <=> $a['acceptedVotes'];
+        });
+
+        $maxAcceptedVotes = max(array_map(function($option) {
+            return $option['acceptedVotes'];
+        }, $bestOptions));
+
+        return array_filter($bestOptions, function($option) use ($maxAcceptedVotes) {
+            return $option['acceptedVotes'] === $maxAcceptedVotes;
+        });
     }
 
     /**

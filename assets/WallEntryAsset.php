@@ -25,6 +25,7 @@ class WallEntryAsset extends AssetBundle
                 // module text translations
             ],
         ]);
+
         return parent::register($view);
     }
 

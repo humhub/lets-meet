@@ -5,7 +5,7 @@
     overflow: hidden;
 }
 
-.slots-container, .controls-container, .votes-container {
+.slots-container, .controls-container, .votes-container, .totals-container, .best-options-container {
     display: flex;
     flex-direction: row;
     padding: 8px;
@@ -13,6 +13,16 @@
     background-color: #fff;
     overflow: hidden;
     margin-bottom: 8px;
+    width: 100%;
+}
+
+.results-container {
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+    margin-bottom: 8px;
+    width: 100%;
 }
 
 .icons-cell {
@@ -20,6 +30,7 @@
     flex-direction: column;
     padding: 0 16px 0 8px;
     min-width: 44px;
+    justify-content: center;
 }
 
 .icons-cell > div {
@@ -33,7 +44,7 @@
 .dates-cell {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    gap: 16px;
 }
 .day-cell {
     display: flex;
@@ -59,6 +70,8 @@
     padding: 8px;
     min-height: 40px;
     white-space: nowrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .scroll-left {
@@ -87,11 +100,7 @@
 
 .votes-container .icons-cell {
     padding: 0;
-}
-
-.votes-container .icons-cell > div {
-    align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .expanded-vote {
@@ -99,11 +108,15 @@
     overflow: hidden;
 }
 
+.expanded-vote.voted .time-slot-vote:not(.voted) {
+    color: #555555;
+}
+
 .expanded-vote .time-slot-vote {
     border-radius: 0;
 }
 
-.expanded-vote .time-slot-vote:hover, .time-slot-vote.voted {
+.expanded-vote .time-slot-vote:hover, .expanded-vote .time-slot-vote.voted {
     border: 4px solid #f5f5f5;
 }
 
@@ -124,4 +137,22 @@
 }
 .time-slot-vote.vote-decline:hover, .time-slot-vote.vote-decline.voted {
     background-color: #ffe4e8;
+}
+
+.results-container .votes-container {
+    padding: 0;
+    margin-bottom: 8px;
+}
+
+.results-container .votes-container .time-slot-vote {
+    cursor: default;
+}
+
+.results-container .show-all-btn, .results-container .collapse-btn {
+    width: 100%;
+}
+
+.best-options-container {
+    flex-direction: column;
+    gap: 4px;
 }

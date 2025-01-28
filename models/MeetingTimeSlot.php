@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $day_id
  * @property-read MeetingDaySlot $day
  * @property-read MeetingVote[] $votes
+ * @property-read MeetingVote[] $acceptedVotes
  */
 class MeetingTimeSlot extends ActiveRecord
 {
@@ -45,5 +46,9 @@ class MeetingTimeSlot extends ActiveRecord
     public function getVotes()
     {
         return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id']);
+    }
+    public function getAcceptedVotes()
+    {
+        return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id'])->andWhere(['vote' => MeetingVote::VOTE_ACCEPT]);
     }
 }

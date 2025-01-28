@@ -1,11 +1,5 @@
 humhub.module('letsMeetWallEntry', function (module, require, $) {
 
-    const init = function () {
-        const width = $('.lets-meet-container .time-slot').outerWidth();
-
-        $('.lets-meet-container .time-slot-vote').css('width', width + 'px');
-    }
-
     const scrollLeft = function(event) {
         smoothScroll(event, '-');
     }
@@ -24,9 +18,29 @@ humhub.module('letsMeetWallEntry', function (module, require, $) {
         );
     }
 
+    const vote = function(event) {
+        const voteCell = event.$target.closest('.expanded-vote');
+        const mainContainer = voteCell.closest('.lets-meet-container');
+        const voteContainer = voteCell.closest('.votes-container');
+
+        const alreadyVoted = event.$target.hasClass('voted');
+        voteCell.find('.time-slot-vote').removeClass('voted');
+        if (alreadyVoted) {
+            event.$target.removeClass('voted');
+            voteCell.removeClass('voted');
+            voteCell.find('.vote-value').val('');
+        } else {
+            event.$target.addClass('voted');
+            voteCell.addClass('voted');
+            voteCell.find('.vote-value').val(event.$target.data('value'));
+        }
+
+        mainContainer.find(':submit').prop('disabled', voteContainer.find('.time-slot-vote.voted').length !== mainContainer.find('.expanded-vote').length)
+    };
+
     module.export({
-        init: init,
         scrollLeft: scrollLeft,
         scrollRight: scrollRight,
+        vote: vote,
     });
 });
