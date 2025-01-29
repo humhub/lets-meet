@@ -35,7 +35,7 @@ $voteModel = new MeetingVote();
     }
 </style>
 
-<div class="media" style="margin-top:20px;" data-action-component="calendar.CalendarEntry">
+<div class="media" style="margin-top:20px;">
     <div class="clearfix" style="margin-bottom:10px">
         <?php if (!empty($meeting->description)) : ?>
             <div data-ui-markdown data-ui-show-more>
@@ -162,7 +162,7 @@ $voteModel = new MeetingVote();
                         <strong>
                             <?= Yii::t(
                                 'LetsMeetModule.base',
-                                'Best {options, plural, =1{option} other{options}}', ['options' => 2]
+                                'Best {options, plural, =1{option} other{options}}', ['options' => count($bestOptions)]
                             ) ?>
                         </strong>
                         <?php foreach ($bestOptions as $option): ?>

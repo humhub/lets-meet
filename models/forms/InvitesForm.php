@@ -7,6 +7,9 @@ use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use humhub\modules\user\models\User;
 
+/**
+ * @property-read User[] $userIds
+ */
 class InvitesForm extends Model
 {
     public $invites;
@@ -31,5 +34,10 @@ class InvitesForm extends Model
             'invites' => Yii::t('LetsMeetModule.base', 'Participants'),
             'invite_all_space_members' => Yii::t('LetsMeetModule.base', 'Invite all space members'),
         ];
+    }
+
+    public function getUserIds()
+    {
+        return User::find()->select('id')->where(['guid' => $this->invites])->column();
     }
 }

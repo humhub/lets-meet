@@ -3,7 +3,7 @@
 namespace humhub\modules\letsMeet\widgets;
 
 use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
-use humhub\modules\letsMeet\models\forms\VoteForm;
+use humhub\modules\content\widgets\WallEntryControlLink;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
@@ -30,7 +30,44 @@ class WallEntry extends WallStreamModuleEntryWidget
 
     public $editMode = self::EDIT_MODE_MODAL;
 
-    public $createFormClass = WallCreateForm::class;
+    public function getControlsMenuEntries()
+    {
+        $result = parent::getControlsMenuEntries();
+
+        if (!$this->model->content->canEdit()) {
+            return $result;
+        }
+
+        $result[] = [
+            WallEntryControlLink::class,
+            [
+                'label' => Yii::t('LetsMeetModule.base', 'Participants'),
+                'icon' => 'fa-users',
+                'action' => 'editModal',
+                'options' => [
+                    'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/invites', ['id' => $this->model->id]),
+                ]
+            ],
+            [
+               'sortOrder' => 100,
+            ]
+        ];
+
+        $result[] = [
+            WallEntryControlLink::class,
+            [
+                'label' => Yii::t('LetsMeetModule.base', 'Close'),
+                'icon' => 'fa-times',
+                'action' => 'letsMeet.close',
+                'actionUrl' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
+            ],
+            [
+               'sortOrder' => 100,
+            ]
+        ];
+
+        return $result;
+    }
 
     /**
      * @inheritDoc
@@ -135,6 +172,6 @@ class WallEntry extends WallStreamModuleEntryWidget
      */
     protected function getTitle()
     {
-        return 'Anasun!';
+        return $this->model->title;
     }
 }

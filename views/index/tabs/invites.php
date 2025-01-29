@@ -43,7 +43,7 @@ $invitesDataProvider->pagination
 
 <div class="modal-body meeting-edit-modal">
 
-<?php Pjax::begin(['enablePushState' => false]) ?>
+<?php Pjax::begin(['enablePushState' => false, 'id' => 'invites']) ?>
     <?php $form = ActiveForm::begin([
         'id' => 'new-invites-form',
         'options' => [
@@ -103,25 +103,27 @@ $invitesDataProvider->pagination
     </div>
     <?php ActiveForm::end() ?>
 
-
     <?php $form = ActiveForm::begin([
         'options' => [
             'data-pjax' => 0,
         ],
     ]) ?>
 
-        <?= $form->field($model, "invites")->hiddenInput()->label(false) ?>
+        <?= $form->field($model, "invites")->hiddenInput(['value' => ''])->label(false) ?>
         <?php foreach ($invites as $user) : ?>
-        <?= $form->field($model, "invites[]")
-                ->hiddenInput(['value' => $user->guid])
-                ->label(false) ?>
-        <?php endforeach; ?>
+            <?= $form->field($model, "invites[]")
+                    ->hiddenInput(['value' => $user->guid])
+                    ->label(false) ?>
+            <?php endforeach; ?>
         <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'letsMeet.inviteAllMembers']]) ?>
 
         <div class="text-center">
-            <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
-<!--            --><?php //= ModalButton::cancel(); ?>
-            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
+            <?php if (TabsStateManager::instance()->id): ?>
+                <?= ModalButton::cancel(); ?>
+            <?php else: ?>
+                <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
+            <?php endif; ?>
+            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', TabsStateManager::instance()->id ? 'Save' : 'Next'))->action('letsMeet.submit')->loader(false)?>
         </div>
     <?php ActiveForm::end() ?>
 <?php Pjax::end() ?>

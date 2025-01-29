@@ -19,7 +19,6 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 ?>
 
 <div class="panel panel-default date-row">
-    <?= $form->field($model, "[$index]id")->hiddenInput()->label(false) ?>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-1 text-center">

@@ -8,15 +8,19 @@ use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
+use humhub\modules\letsMeet\models\MeetingInvite;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
+use humhub\modules\content\models\Content;
 use Yii;
 use yii\base\BaseObject;
 use yii\base\StaticInstanceInterface;
 use yii\base\StaticInstanceTrait;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 
 /**
+ * @property-read string $id
  * @property-read string $hash
  */
 class TabsStateManager extends BaseObject implements StaticInstanceInterface
@@ -24,12 +28,18 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
     use StaticInstanceTrait;
 
     private $hash;
+    private $id;
 
     public function init()
     {
         parent::init();
 
         $this->hash = Yii::$app->security->generateRandomString();
+    }
+
+    private function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function restore($hash)
@@ -42,22 +52,96 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         return $this->hash;
     }
 
-    public function saveState($for, $data)
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function saveState($for, $data, $id = null)
+    {
+        $this->setId($id);
+
+        $this->id ? $this->saveDatabaseState($for, $data) : $this->saveTempState($for, $data);
+    }
+
+    private function saveTempState($for, $data)
     {
         $state = $this->getState();
         ArrayHelper::setValue($state, $for, $data);
         Yii::$app->session->set($this->hash, $state);
     }
 
-    public function getState($for = null, $default = null)
+    public function getState($for = null, $default = null, $id = null)
     {
-        $state = Yii::$app->session->get($this->hash);
-        $state = $for ? ArrayHelper::getValue($state, $for) : $state;
+        $this->setId($id);
+        $state = $this->id ? $this->getDatabaseState($for) : $this->getTempState($for);
 
         return !empty($state) ? $state : $default;
     }
 
-    public function save(ContentContainerActiveRecord $contentContainer)
+    private function getTempState($for = null)
+    {
+        $state = Yii::$app->session->get($this->hash);
+
+        return $for ? ArrayHelper::getValue($state, $for) : $state;
+    }
+
+    private function saveDatabaseState($for, $data)
+    {
+        /** @var Meeting $meeting */
+        $meeting = Meeting::findOne($this->id);
+
+        match ($for) {
+            MainForm::class => $this->saveMeeting($data, $meeting),
+            DayForm::class => $this->saveDays($data, $meeting),
+            InvitesForm::class => $this->saveInvites($data, $meeting),
+            default => throw new \InvalidArgumentException("Unknown form type: $for"),
+        };
+    }
+
+    private function getDatabaseState($for)
+    {
+        /** @var Meeting $meeting */
+        $meeting = Meeting::find()->with([
+            'daySlots',
+            'daySlots.timeSlots',
+            'invites',
+            'invites.user',
+        ])->where(['id' => $this->id])->one();
+
+        if (!$meeting) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($for == MainForm::class) {
+            return new MainForm([
+                'title' => $meeting->title,
+                'description' => $meeting->description,
+                'duration' => $meeting->duration . ':00',
+            ]);
+        } elseif ($for == DayForm::class) {
+            $days = [];
+            foreach ($meeting->daySlots as $day) {
+                $days[] = new DayForm([
+                    'day' => $day->date,
+                    'times' => ArrayHelper::getColumn($day->timeSlots, function(MeetingTimeSlot $timeSlot) {
+                        return Yii::$app->formatter->asTime($timeSlot->time, 'php:G:i');
+                    }),
+                ]);
+            }
+
+            return $days;
+        } elseif ($for == InvitesForm::class) {
+            return new InvitesForm([
+                'invites' => ArrayHelper::getColumn($meeting->invites, 'user.guid'),
+                'invite_all_space_members' => $meeting->invite_all_space_users,
+            ]);
+        } else {
+            throw new \InvalidArgumentException("Unknown form type: $for");
+        }
+    }
+
+    public function saveFromTempState(ContentContainerActiveRecord $contentContainer)
     {
         $transaction = Yii::$app->db->beginTransaction();
 
@@ -70,33 +154,10 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             $invites = $this->getState(InvitesForm::class);
 
             $meeting = new Meeting();
-            $meeting->content->container = $contentContainer;
-            $meeting->title = $main->title;
-            $meeting->description = $main->description;
-            $meeting->duration = (int)explode(':', $main->duration)[0];
-            $meeting->is_public = $main->make_public;
-            $meeting->invite_all_space_users = $invites->invite_all_space_members;
-            if (!$meeting->save()) {
-                throw new \RuntimeException(Html::errorSummary($meeting));
-            }
 
-            foreach ($days as $day) {
-                $meetingDay = MeetingDaySlot::findOne(['meeting_id' => $meeting->id, 'date' => $day->day]) ?: new MeetingDaySlot();
-                $meetingDay->meeting_id = $meeting->id;
-                $meetingDay->date = $day->day;
-                if (!$meetingDay->save()) {
-                    throw new \RuntimeException(Html::errorSummary($meetingDay));
-                }
-
-                foreach ($day->times as $time) {
-                    $meetingDayTime = MeetingTimeSlot::findOne(['day_id' => $meetingDay->id, 'time' => $time]) ?: new MeetingTimeSlot();
-                    $meetingDayTime->day_id = $meetingDay->id;
-                    $meetingDayTime->time = $time;
-                    if (!$meetingDayTime->save()) {
-                        throw new \RuntimeException(Html::errorSummary($meetingDayTime));
-                    }
-                }
-            }
+            $this->saveMeeting($main, $meeting, $contentContainer);
+            $this->saveDays($days, $meeting);
+            $this->saveInvites($invites, $meeting);
 
             $transaction->commit();
         } catch (\Throwable $e) {
@@ -108,5 +169,64 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         }
 
         return true;
+    }
+
+    private function saveMeeting(MainForm $main, Meeting $meeting, ContentContainerActiveRecord $contentContainer = null)
+    {
+        if ($contentContainer) {
+            $meeting->content->container = $contentContainer;
+        }
+        $meeting->content->visibility = $main->make_public ? Content::VISIBILITY_PUBLIC : Content::VISIBILITY_PRIVATE;
+        $meeting->title = $main->title;
+        $meeting->description = $main->description;
+        $meeting->duration = (int)explode(':', $main->duration)[0];
+
+        if (!$meeting->save()) {
+            throw new \RuntimeException(Html::errorSummary($meeting));
+        }
+    }
+
+    private function saveDays(array $days, Meeting $meeting)
+    {
+        foreach ($days as $day) {
+            $meetingDay = MeetingDaySlot::findOne(['meeting_id' => $meeting->id, 'date' => $day->day]) ?: new MeetingDaySlot();
+            $meetingDay->meeting_id = $meeting->id;
+            $meetingDay->date = $day->day;
+            if (!$meetingDay->save()) {
+                throw new \RuntimeException(Html::errorSummary($meetingDay));
+            }
+
+            foreach ($day->times as $time) {
+                $meetingDayTime = MeetingTimeSlot::findOne(['day_id' => $meetingDay->id, 'time' => $time]) ?: new MeetingTimeSlot();
+                $meetingDayTime->day_id = $meetingDay->id;
+                $meetingDayTime->time = $time;
+                if (!$meetingDayTime->save()) {
+                    throw new \RuntimeException(Html::errorSummary($meetingDayTime));
+                }
+            }
+        }
+    }
+
+    private function saveInvites(InvitesForm $invites, Meeting $meeting)
+    {
+        $meeting->invite_all_space_users = $invites->invite_all_space_members;
+        $meeting->save();
+
+        if ($invites->invite_all_space_members) {
+            $invites->invites = [];
+        }
+
+        if (!empty($invites->invites) || $invites->invite_all_space_members) {
+            MeetingInvite::deleteAll(['meeting_id' => $meeting->id]);
+
+            foreach ($invites->userIds as $userId) {
+                $invite = new MeetingInvite();
+                $invite->meeting_id = $meeting->id;
+                $invite->user_id = $userId;
+                if (!$invite->save()) {
+                    throw new \RuntimeException(Html::errorSummary($invite));
+                }
+            }
+        }
     }
 }

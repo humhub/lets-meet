@@ -22,7 +22,12 @@ class LetsMeetAsset extends AssetBundle
     {
         $view->registerJsConfig('letsMeet', [
             'text' => [
-                // module text translations
+                'success' => [
+                    'saved' => 'Successfully Saved',
+                ],
+                'error' => [
+                    'unsuccessful' => 'Something went wrong.',
+                ],
             ],
         ]);
         return parent::register($view);

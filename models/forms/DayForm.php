@@ -18,7 +18,7 @@ class DayForm extends Model
         return ArrayHelper::merge(parent::rules(), [
             [['id'], 'safe'],
             [['day', 'times'], 'required'],
-            [['day'], DbDateValidator::class],
+            [['day'], DbDateValidator::class, 'convertToFormat' => 'Y-m-d'],
             [['times'], 'each', 'rule' => [
                 'time', 'format' => 'php:G:i'
             ]],

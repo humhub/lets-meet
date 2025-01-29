@@ -16,7 +16,6 @@ use yii\db\ActiveRecord;
  * @property string $title
  * @property string $description
  * @property int $duration
- * @property bool $is_public
  * @property bool $invite_all_space_users
  * @property int $status
  * @property string $created_at
@@ -32,6 +31,9 @@ use yii\db\ActiveRecord;
  */
 class Meeting extends ContentActiveRecord implements Searchable
 {
+    const STATUS_OPEN = 1;
+    const STATUS_CLOSED = 2;
+
     public $wallEntryClass = WallEntry::class;
     public $moduleId = 'lets-meet';
 
@@ -74,12 +76,12 @@ class Meeting extends ContentActiveRecord implements Searchable
         return $this->hasMany(MeetingInvite::class, ['meeting_id' => 'id']);
     }
 
-    public function getDaySlots()
+    public function getDaySlots() : ActiveQuery
     {
         return $this->hasMany(MeetingDaySlot::class, ['meeting_id' => 'id']);
     }
 
-    public function getTimeSlots()
+    public function getTimeSlots() : ActiveQuery
     {
         return $this->hasMany(MeetingTimeSlot::class, ['day_id' => 'id'])->via('daySlots');
     }
@@ -89,12 +91,12 @@ class Meeting extends ContentActiveRecord implements Searchable
         return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id'])->via('timeSlots');
     }
 
-    public function getCreatedBy()
+    public function getCreatedBy() : ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-    public function getUpdatedBy()
+    public function getUpdatedBy() : ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }

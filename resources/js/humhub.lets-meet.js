@@ -50,8 +50,6 @@ humhub.module('letsMeet', function (module, require, $) {
     const removeParticipant = function(event) {
         const participant = event.$target.closest('li');
 
-        console.log(participant, $('input[value="' + participant.find('input').val() + '"]'))
-
         $('input[value="' + participant.find('input').val() + '"]').closest('.form-group').remove();
         participant.remove();
     }
@@ -72,17 +70,17 @@ humhub.module('letsMeet', function (module, require, $) {
 
             console.log(response)
 
-            if (response.dataType === 'json') {
+            if (response.dataType === 'json' && response.data.next) {
                 loadTab(response.data.next)
+            } else if (response.dataType === 'json') {
+                modal.global.close();
+                module.log.success('success.saved');
             } else {
                 modal.global.setDialog(response);
-                // changeModalButton()
             }
-            // } else {
-                // modal.global.close();
-                // module.log.success('success.send');
-            // }
-        }).finally(function() {
+        }).error(function() {
+            modal.global.close();
+            module.log.error('error.unsuccessful');
         })
     }
 

@@ -3,10 +3,13 @@
 namespace humhub\modules\letsMeet\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;
 
 /**
+ * @property int $meeting_id
+ * @property int $user_id
  * @property-read Meeting $meeting
  * @property-read MeetingVote $votes
  * @property-read User $user
@@ -21,32 +24,30 @@ class MeetingInvite extends ActiveRecord
     public function rules()
     {
         return [
-            [['meeting_id', 'user_id', 'invite_status'], 'required'],
-            [['meeting_id', 'user_id', 'invite_status'], 'integer'],
+            [['meeting_id', 'user_id'], 'required'],
+            [['meeting_id', 'user_id'], 'integer'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('LetsMeetModule.base', 'ID'),
             'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
             'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
-            'invite_status' => Yii::t('LetsMeetModule.base', 'Invite Status'),
         ];
     }
 
-    public function getMeeting()
+    public function getMeeting() : ActiveQuery
     {
         return $this->hasOne(Meeting::class, ['id' => 'meeting_id']);
     }
 
-    public function getUser()
+    public function getUser() : ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getVotes() : \yii\db\ActiveQuery
+    public function getVotes() : ActiveQuery
     {
         return $this->hasMany(MeetingVote::class, ['user_id' => 'id']);
     }

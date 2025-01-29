@@ -19,6 +19,12 @@ use humhub\widgets\ModalButton;
 
 LetsMeetAsset::register($this);
 
+$tabStateManager = TabsStateManager::instance();
+$prevUrl = $contentContainer->createUrl(
+    '/lets-meet/index/edit',
+    $tabStateManager->id ? ['id' => $tabStateManager->id] : ['hash' => $tabStateManager->hash]
+);
+
 ?>
 
 
@@ -54,8 +60,9 @@ LetsMeetAsset::register($this);
 
 
         <div class="text-center">
-            <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/edit', ['hash' => TabsStateManager::instance()->hash])); ?>
-            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
+            <?= ModalButton::defaultType('Previous')->load($prevUrl); ?>
+            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
+                ->action('letsMeet.submit')->loader(false)?>
         </div>
 
         <?php ActiveForm::end() ?>

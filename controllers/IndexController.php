@@ -32,19 +32,22 @@ class IndexController extends ContentContainerController
 
     public function actionCreate()
     {
-        return $this->actionEdit(null);
+        return $this->actionEdit();
     }
 
     public function actionEdit($id = null)
     {
-        $model = $this->stateManager->getState(MainForm::class, new MainForm());
+        $model = $this->stateManager->getState(MainForm::class, new MainForm(), $id);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                $this->stateManager->saveState(MainForm::class, $model);
+                $this->stateManager->saveState(MainForm::class, $model, $id);
 
                 return $this->asJson([
-                    'next' => $this->contentContainer->createUrl('/lets-meet/index/dates', ['hash' => $this->stateManager->hash])
+                    'next' => $this->contentContainer->createUrl(
+                        '/lets-meet/index/dates',
+                        $id ? ['id' => $id] : ['hash' => $this->stateManager->hash]
+                    )
                 ]);
             }
         }
@@ -57,17 +60,26 @@ class IndexController extends ContentContainerController
 
     public function actionDates($id = null)
     {
-        $models = $this->stateManager->getState(DayForm::class, [new DayForm()]);
+        $models = $this->stateManager->getState(DayForm::class, [new DayForm()], $id);
 
-        if (Yii::$app->request->isPost && $count = count(Yii::$app->request->post((new DayForm)->formName()))) {
-            $models = array_fill(0, $count, new DayForm());
+        if (Yii::$app->request->isPost) {
+            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm)->formName()), function() {
+                return new DayForm();
+            });
         }
 
         if (DayForm::loadMultiple($models, Yii::$app->request->post()) && DayForm::validateMultiple($models)) {
-            $this->stateManager->saveState(DayForm::class, $models);
+            $this->stateManager->saveState(DayForm::class, $models, $id);
+
+            if ($id) {
+                return $this->asJson([]);
+            }
 
             return $this->asJson([
-                'next' => $this->contentContainer->createUrl('/lets-meet/index/invites', ['hash' => $this->stateManager->hash]),
+                'next' => $this->contentContainer->createUrl(
+                    '/lets-meet/index/invites',
+                    ['hash' => $this->stateManager->hash]
+                ),
             ]);
         }
 
@@ -80,24 +92,27 @@ class IndexController extends ContentContainerController
     public function actionInvites($id = null)
     {
         $newInvites = new NewInvitesForm();
-        $model = new InvitesForm();
+        $model = $this->stateManager->getState(InvitesForm::class, new InvitesForm(), $id);
 
-        if ($newInvites->load(Yii::$app->request->post()) && $newInvites->validate()) {
-            $newInvites->currentInvites = ArrayHelper::merge($newInvites->invites ?: [], $newInvites->currentInvites ?: []);
-        } else {
-            $newInvites->currentInvites = $this->stateManager->getState(InvitesForm::class, new InvitesForm())->invites;
+        if ($newInvites->load(Yii::$app->request->post())) {
+            $model->invite_all_space_members = false;
+            if ($newInvites->validate()) {
+                $newInvites->currentInvites = ArrayHelper::merge($newInvites->invites ?: [], $newInvites->currentInvites ?: []);
+            }
+        } elseif (!Yii::$app->request->isPost) {
+            $newInvites->currentInvites = $model->invites;
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                $this->stateManager->saveState(InvitesForm::class, $model);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $this->stateManager->saveState(InvitesForm::class, $model, $id);
 
-                $this->stateManager->save($this->contentContainer);
-
-                return $this->asJson([
-                    'success' => true
-                ]);
+            if (!$id) {
+                $this->stateManager->saveFromTempState($this->contentContainer);
             }
+
+            return $this->asJson([
+                'success' => true
+            ]);
         }
 
         $invitesDataProvider = new ActiveDataProvider([
