@@ -139,6 +139,11 @@
     background-color: #ffe4e8;
 }
 
+.lets-meet-container.voting-closed .time-slot-vote.voted:not(.vote-accept) {
+    background-color: #e7e7e7;
+    color: #555555;
+}
+
 .results-container .votes-container {
     padding: 0;
     margin-bottom: 8px;

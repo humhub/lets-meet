@@ -25,6 +25,7 @@ use yii\widgets\ActiveForm;
 WallEntryAsset::register($this);
 
 $voteModel = new MeetingVote();
+$isClosed = $meeting->status == Meeting::STATUS_CLOSED;
 
 
 ?>
@@ -42,6 +43,7 @@ $voteModel = new MeetingVote();
                 <?= RichText::output($meeting->description) ?>
             </div>
         <?php endif; ?>
+        <br/>
         <div>
             <?= Yii::t(
                 'LetsMeetModule.base',
@@ -50,7 +52,7 @@ $voteModel = new MeetingVote();
         </div>
     </div>
 
-    <div class="lets-meet-container">
+    <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>">
         <div class="slots-container">
             <div class="icons-cell">
                 <div>
@@ -90,12 +92,14 @@ $voteModel = new MeetingVote();
                         <?= Button::defaultType()->icon('arrow-left')->action('letsMeetWallEntry.scrollLeft')->loader(false) ?>
                     </div>
                     <div class="control-buttons">
-                        <?php if (empty($userVotes)): ?>
-                            <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
-                                ->options(['name' => 'action', 'value' => 'vote', 'disabled' => 'disabled'])  ?>
-                        <?php else: ?>
-                            <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Reset Vote'))->submit()
-                                ->options(['name' => 'action', 'value' => 'reset']) ?>
+                        <?php if (!$isClosed): ?>
+                            <?php if (empty($userVotes)): ?>
+                                <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
+                                    ->options(['name' => 'action', 'value' => 'vote', 'disabled' => 'disabled'])  ?>
+                            <?php else: ?>
+                                <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Reset Vote'))->submit()
+                                    ->options(['name' => 'action', 'value' => 'reset']) ?>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                     </div>

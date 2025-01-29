@@ -1,4 +1,6 @@
 humhub.module('letsMeetWallEntry', function (module, require, $) {
+    var Widget = require('ui.widget.Widget');
+    var client = require('client');
 
     const scrollLeft = function(event) {
         smoothScroll(event, '-');
@@ -38,9 +40,18 @@ humhub.module('letsMeetWallEntry', function (module, require, $) {
         mainContainer.find(':submit').prop('disabled', voteContainer.find('.time-slot-vote.voted').length !== mainContainer.find('.expanded-vote').length)
     };
 
+    const close = function(event) {
+        client.post(event).then(function () {
+            Widget.closest(event.$trigger).reload()
+        }).catch(function (err) {
+            module.log.error(err, true);
+        });
+    };
+
     module.export({
         scrollLeft: scrollLeft,
         scrollRight: scrollRight,
         vote: vote,
+        close: close,
     });
 });

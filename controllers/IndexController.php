@@ -8,11 +8,13 @@ use humhub\modules\letsMeet\models\forms\Form;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
+use humhub\modules\letsMeet\models\Meeting;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
 use humhub\modules\user\models\UserPicker;
 
@@ -33,6 +35,18 @@ class IndexController extends ContentContainerController
     public function actionCreate()
     {
         return $this->actionEdit();
+    }
+
+    public function actionClose($id)
+    {
+        $meeting = Meeting::findOne(['id' => $id]);
+
+        if (!$meeting) {
+            throw new NotFoundHttpException();
+        }
+
+        $meeting->status = Meeting::STATUS_CLOSED;
+        $meeting->save();
     }
 
     public function actionEdit($id = null)

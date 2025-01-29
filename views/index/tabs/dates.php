@@ -25,14 +25,21 @@ $prevUrl = $contentContainer->createUrl(
     $tabStateManager->id ? ['id' => $tabStateManager->id] : ['hash' => $tabStateManager->hash]
 );
 
+$header = TabsStateManager::instance()->id
+    ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
+    : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
+;
+
 ?>
 
-
-
-
-<?php ModalDialog::begin(['header' => Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')]) ?>
-
+<?php ModalDialog::begin(['header' => $header]) ?>
     <div class="modal-body meeting-edit-modal">
+        <div class="form-heading">
+            <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
+            <div>
+                <?= Yii::t('LetsMeetModule.base', 'To schedule an event, provide at least two options, different time slots or days.') ?>
+            </div>
+        </div>
         <?php $form = ActiveForm::begin() ?>
 
         <div id="date-rows">

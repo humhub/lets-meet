@@ -1,6 +1,7 @@
 <?php
 
 use humhub\modules\content\widgets\richtext\RichTextField;
+use humhub\modules\letsMeet\common\TabsStateManager;
 use yii\widgets\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
@@ -16,10 +17,15 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 
 LetsMeetAsset::register($this);
 
+$header = TabsStateManager::instance()->id
+    ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
+    : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
+;
+
 ?>
 
 
-<?php ModalDialog::begin(['header' => Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')]) ?>
+<?php ModalDialog::begin(['header' => $header]) ?>
 
 <div class="modal-body meeting-edit-modal">
     <?php $form = ActiveForm::begin() ?>

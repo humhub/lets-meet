@@ -16,3 +16,7 @@
 .invites .media-body:not(:first-child) {
     padding-left: 5px;
 }
+
+.form-heading {
+    margin-bottom: 20px;
+}

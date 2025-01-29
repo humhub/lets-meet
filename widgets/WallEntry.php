@@ -30,13 +30,23 @@ class WallEntry extends WallStreamModuleEntryWidget
 
     public $editMode = self::EDIT_MODE_MODAL;
 
+    public function init()
+    {
+        parent::init();
+
+        if ($this->model->status == Meeting::STATUS_CLOSED) {
+            $this->editRoute = false;
+        }
+    }
+
     public function getControlsMenuEntries()
     {
         $result = parent::getControlsMenuEntries();
 
-        if (!$this->model->content->canEdit()) {
+        if (!$this->model->content->canEdit() || $this->model->status == Meeting::STATUS_CLOSED) {
             return $result;
         }
+
 
         $result[] = [
             WallEntryControlLink::class,
@@ -58,11 +68,13 @@ class WallEntry extends WallStreamModuleEntryWidget
             [
                 'label' => Yii::t('LetsMeetModule.base', 'Close'),
                 'icon' => 'fa-times',
-                'action' => 'letsMeet.close',
-                'actionUrl' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
+                'action' => 'letsMeetWallEntry.close',
+                'options' => [
+                    'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
+                ]
             ],
             [
-               'sortOrder' => 100,
+               'sortOrder' => 200,
             ]
         ];
 

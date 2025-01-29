@@ -32,101 +32,110 @@ use humhub\widgets\Pjax;
 LetsMeetAsset::register($this);
 
 $invites = $invitesDataProvider->models;
-$invitesDataProvider->pagination
+
+$header = TabsStateManager::instance()->id
+    ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
+    : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
+;
 
 ?>
 
 
 
 
-<?php ModalDialog::begin(['header' => Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')]) ?>
+<?php ModalDialog::begin(['header' => $header]) ?>
 
 <div class="modal-body meeting-edit-modal">
-
-<?php Pjax::begin(['enablePushState' => false, 'id' => 'invites']) ?>
-    <?php $form = ActiveForm::begin([
-        'id' => 'new-invites-form',
-        'options' => [
-            'data-pjax' => 1,
-            'style' => ['display' => $model->invite_all_space_members ? 'none' : ''],
-        ],
-    ]) ?>
-        <div class="row">
-            <div class="col-md-10">
-                <?= UserPickerField::widget([
-                    'model' => $newInvitesModel,
-                    'attribute' => 'invites',
-                    'placeholder' => Yii::t('LetsMeetModule.base', 'Add participants...'),
-                    'options' => ['label' => false],
-                    'url' => $searchUsersUrl,
-                ]) ?>
-            </div>
-            <div class="col-md-2 text-right">
-                <?= Button::info()
-                    ->submit()
-                    ->options(['name' => 'add'])
-                    ->icon('send') ?>
-            </div>
-        </div>
-    <div class="invites" style="<?= Html::cssStyleFromArray(['display' => $model->invite_all_space_members ? 'none' : '']) ?>">
-        <ul class="media-list">
-            <?php foreach ($invites as $index => $user) : ?>
-                <li>
-                    <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
-                    <div class="media">
-                        <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="media-body">
-                            <?= Image::widget([
-                                'user' => $user,
-                                'link' => false,
-                                'width' => 32,
-                                'htmlOptions' => ['class' => 'media-object'],
-                            ]) ?>
-                            <h4 class="media-heading"><?= Html::encode($user->displayName) ?></h4>
-                            <h5><?= Html::encode($user->displayNameSub) ?></h5>
-                        </a>
-                        <div class="media-body">
-                            <?= Button::danger()->sm()
-                                ->icon('remove')
-                                ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
-                                ->action('letsMeet.removeParticipant') ?>
-                        </div>
-                    </div>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-
-        <div class="text-center">
-            <?= LinkPager::widget([
-                'pagination' => $invitesDataProvider->pagination,
-            ]) ?>
+    <div class="form-heading">
+        <h5><?= Yii::t('LetsMeetModule.base', 'Invite users') ?></h5>
+        <div>
+            <?= Yii::t('LetsMeetModule.base', 'elect either individual users to receive an invite,, or select all Space members.') ?>
         </div>
     </div>
-    <?php ActiveForm::end() ?>
+    <?php Pjax::begin(['enablePushState' => false, 'id' => 'invites']) ?>
+        <?php $form = ActiveForm::begin([
+            'id' => 'new-invites-form',
+            'options' => [
+                'data-pjax' => 1,
+                'style' => ['display' => $model->invite_all_space_members ? 'none' : ''],
+            ],
+        ]) ?>
+            <div class="row">
+                <div class="col-md-10">
+                    <?= UserPickerField::widget([
+                        'model' => $newInvitesModel,
+                        'attribute' => 'invites',
+                        'placeholder' => Yii::t('LetsMeetModule.base', 'Add participants...'),
+                        'options' => ['label' => false],
+                        'url' => $searchUsersUrl,
+                    ]) ?>
+                </div>
+                <div class="col-md-2 text-right">
+                    <?= Button::info()
+                        ->submit()
+                        ->options(['name' => 'add'])
+                        ->icon('send') ?>
+                </div>
+            </div>
+        <div class="invites" style="<?= Html::cssStyleFromArray(['display' => $model->invite_all_space_members ? 'none' : '']) ?>">
+            <ul class="media-list">
+                <?php foreach ($invites as $index => $user) : ?>
+                    <li>
+                        <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
+                        <div class="media">
+                            <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="media-body">
+                                <?= Image::widget([
+                                    'user' => $user,
+                                    'link' => false,
+                                    'width' => 32,
+                                    'htmlOptions' => ['class' => 'media-object'],
+                                ]) ?>
+                                <h4 class="media-heading"><?= Html::encode($user->displayName) ?></h4>
+                                <h5><?= Html::encode($user->displayNameSub) ?></h5>
+                            </a>
+                            <div class="media-body">
+                                <?= Button::danger()->sm()
+                                    ->icon('remove')
+                                    ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
+                                    ->action('letsMeet.removeParticipant') ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
 
-    <?php $form = ActiveForm::begin([
-        'options' => [
-            'data-pjax' => 0,
-        ],
-    ]) ?>
-
-        <?= $form->field($model, "invites")->hiddenInput(['value' => ''])->label(false) ?>
-        <?php foreach ($invites as $user) : ?>
-            <?= $form->field($model, "invites[]")
-                    ->hiddenInput(['value' => $user->guid])
-                    ->label(false) ?>
-            <?php endforeach; ?>
-        <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'letsMeet.inviteAllMembers']]) ?>
-
-        <div class="text-center">
-            <?php if (TabsStateManager::instance()->id): ?>
-                <?= ModalButton::cancel(); ?>
-            <?php else: ?>
-                <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
-            <?php endif; ?>
-            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', TabsStateManager::instance()->id ? 'Save' : 'Next'))->action('letsMeet.submit')->loader(false)?>
+            <div class="text-center">
+                <?= LinkPager::widget([
+                    'pagination' => $invitesDataProvider->pagination,
+                ]) ?>
+            </div>
         </div>
-    <?php ActiveForm::end() ?>
-<?php Pjax::end() ?>
+        <?php ActiveForm::end() ?>
+
+        <?php $form = ActiveForm::begin([
+            'options' => [
+                'data-pjax' => 0,
+            ],
+        ]) ?>
+
+            <?= $form->field($model, "invites")->hiddenInput(['value' => ''])->label(false) ?>
+            <?php foreach ($invites as $user) : ?>
+                <?= $form->field($model, "invites[]")
+                        ->hiddenInput(['value' => $user->guid])
+                        ->label(false) ?>
+                <?php endforeach; ?>
+            <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'letsMeet.inviteAllMembers']]) ?>
+
+            <div class="text-center">
+                <?php if (TabsStateManager::instance()->id): ?>
+                    <?= ModalButton::cancel(); ?>
+                <?php else: ?>
+                    <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
+                <?php endif; ?>
+                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', TabsStateManager::instance()->id ? 'Save' : 'Next'))->action('letsMeet.submit')->loader(false)?>
+            </div>
+        <?php ActiveForm::end() ?>
+    <?php Pjax::end() ?>
 </div>
 
 <?php ModalDialog::end() ?>
