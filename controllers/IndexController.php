@@ -9,6 +9,7 @@ use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\modules\letsMeet\models\Meeting;
+use humhub\modules\user\models\UserFilter;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
@@ -150,12 +151,16 @@ class IndexController extends ContentContainerController
 
     public function actionSearchParticipants(string $keyword, $id = null)
     {
-        $filterParams = [
+        return $this->asJson(UserPicker::filter([
+            'query' => $this->contentContainer->getMembershipUser()->andWhere(['<>', 'user.id', Yii::$app->user->id]),
             'keyword' => $keyword,
             'fillUser' => true,
-        ];
-
-        return $this->asJson(UserPicker::filter($filterParams));
+            'fillQuery' => $this->contentContainer->getMembershipUser()->andWhere(['<>', 'user.id', Yii::$app->user->id]),
+            'disabledText' => Yii::t(
+                'SpaceModule.base',
+                'This user is not a member of this space.',
+            ),
+        ]));
     }
 
     public function actionAddDateRow()

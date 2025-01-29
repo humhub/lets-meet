@@ -20,13 +20,13 @@ use yii\widgets\ActiveForm;
  * @var MeetingVote $votes
  * @var int $votedUsersCount
  * @var array $bestOptions
+ * @var bool $canVote
  */
 
 WallEntryAsset::register($this);
 
 $voteModel = new MeetingVote();
 $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
-
 
 ?>
 
@@ -83,7 +83,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
                 <?= $this->render('votes_row', [
                     'meeting' => $meeting,
-                    'canVote' => empty($userVotes),
+                    'canVote' => empty($userVotes) && $canVote,
                     'votes' => $userVotes,
                     'user' => Yii::$app->user->identity,
                 ]) ?>
@@ -92,7 +92,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                         <?= Button::defaultType()->icon('arrow-left')->action('letsMeetWallEntry.scrollLeft')->loader(false) ?>
                     </div>
                     <div class="control-buttons">
-                        <?php if (!$isClosed): ?>
+                        <?php if ($canVote): ?>
                             <?php if (empty($userVotes)): ?>
                                 <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
                                     ->options(['name' => 'action', 'value' => 'vote', 'disabled' => 'disabled'])  ?>

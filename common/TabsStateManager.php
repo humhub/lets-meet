@@ -118,6 +118,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
                 'title' => $meeting->title,
                 'description' => $meeting->description,
                 'duration' => $meeting->duration . ':00',
+                'make_public' => $meeting->content->visibility == Content::VISIBILITY_PUBLIC,
             ]);
         } elseif ($for == DayForm::class) {
             $days = [];
