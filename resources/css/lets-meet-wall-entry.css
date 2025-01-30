@@ -1,6 +1,6 @@
 .lets-meet-container {
     background-color: #ededed;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 8px 8px 0 8px;
     overflow: hidden;
 }
@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: row;
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
     margin-bottom: 8px;
@@ -18,7 +18,7 @@
 
 .results-container {
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
     margin-bottom: 8px;

@@ -51,12 +51,12 @@ class Module extends ContentContainerModule
 
     public function getContentContainerName(ContentContainerActiveRecord $container)
     {
-        return Yii::t('LetsMeetModule.base', 'Lets Meet');
+        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
     }
 
     public function getContentContainerDescription(ContentContainerActiveRecord $container)
     {
-        return Yii::t('LetsMeetModule.base', 'Allows to start lets Meet.');
+        return Yii::t('LetsMeetModule.base', 'Allows to start Let\'s Meet.');
     }
 
     public function getContentClasses(): array
