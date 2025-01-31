@@ -6,9 +6,9 @@ class uninstall extends Migration
 {
     public function up()
     {
-        $this->dropForeignKey('fk_lets_meet_meeting_time_slot_vote_user', 'lets_meet_meeting_time_slot_vote');
-        $this->dropForeignKey('fk_lets_meet_meeting_time_slot_vote_time_slot', 'lets_meet_meeting_time_slot_vote');
-        $this->dropTable('lets_meet_meeting_time_slot_vote');
+        $this->dropForeignKey('fk_lets_meet_meeting_vote_user', 'lets_meet_meeting_vote');
+        $this->dropForeignKey('fk_lets_meet_meeting_vote_time_slot', 'lets_meet_meeting_vote');
+        $this->dropTable('lets_meet_meeting_vote');
 
         $this->dropForeignKey('fk_lets_meet_meeting_time_slot_day', 'lets_meet_meeting_time_slot');
         $this->dropTable('lets_meet_meeting_time_slot');
@@ -16,6 +16,7 @@ class uninstall extends Migration
         $this->dropForeignKey('fk_lets_meet_meeting_day_slot_meeting', 'lets_meet_meeting_day_slot');
         $this->dropTable('lets_meet_meeting_day_slot');
 
+        $this->dropForeignKey('fk_lets_meet_meeting_invite_user', 'lets_meet_meeting_invite');
         $this->dropForeignKey('fk_lets_meet_meeting_invite_meeting', 'lets_meet_meeting_invite');
         $this->dropTable('lets_meet_meeting_invite');
 

@@ -18,7 +18,8 @@ class InvitesForm extends Model
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['invites', 'invite_all_space_members'], 'required'],
+            [['invite_all_space_members'], 'required'],
+            [['invites'], 'required', 'when' => [$this, 'isAllSpaceMembersNotInvited']],
             [['invites'], 'each', 'rule' => [
                 'exist',
                 'targetClass' => User::class,
@@ -26,6 +27,11 @@ class InvitesForm extends Model
             ]],
             [['invite_all_space_members'], 'boolean'],
         ]);
+    }
+
+    public function isAllSpaceMembersNotInvited()
+    {
+        return !$this->invite_all_space_members;
     }
 
     public function attributeLabels()

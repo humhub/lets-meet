@@ -18,6 +18,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
 use humhub\modules\user\models\UserPicker;
+use humhub\modules\stream\actions\StreamEntryResponse;
 
 class IndexController extends ContentContainerController
 {
@@ -122,12 +123,16 @@ class IndexController extends ContentContainerController
             $this->stateManager->saveState(InvitesForm::class, $model, $id);
 
             if (!$id) {
-                $this->stateManager->saveFromTempState($this->contentContainer);
+                $model = $this->stateManager->saveFromTempState($this->contentContainer);
+
+                $entry = StreamEntryResponse::getAsArray($model->content);
+                $entry['reloadWall'] = true;
+                $entry['success'] = true;
+
+                return $this->asJson($entry);
             }
 
-            return $this->asJson([
-                'success' => true
-            ]);
+            return $this->asJson([]);
         }
 
         $invitesDataProvider = new ActiveDataProvider([

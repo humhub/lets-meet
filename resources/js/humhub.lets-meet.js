@@ -2,6 +2,7 @@ humhub.module('letsMeet', function (module, require, $) {
     const client = require('client');
     const additions = require('ui.additions');
     const modal = require('ui.modal');
+    const event = require('event');
 
 
     const addDateRow = function (event) {
@@ -58,21 +59,18 @@ humhub.module('letsMeet', function (module, require, $) {
 
         client.get(url).then(function (response) {
             modal.global.setDialog(response);
-            // modal.global.loader(false);
         })
     }
 
-    const submit = function(event) {
-        event.originalEvent.preventDefault();
-        // modal.global.loader();
+    const submit = function(evt) {
+        evt.originalEvent.preventDefault();
 
-        client.submit(event).then(function(response) {
-
-            console.log(response)
-
+        client.submit(evt).then(function(response) {
             if (response.dataType === 'json' && response.data.next) {
                 loadTab(response.data.next)
-            } else if (response.dataType === 'json') {
+            } else if (response.dataType === 'json' && response.reloadWall) {
+                event.trigger('humhub:content:newEntry', response.output, this);
+                event.trigger('humhub:content:afterSubmit', response.output, this);
                 modal.global.close();
                 module.log.success('success.saved');
             } else {

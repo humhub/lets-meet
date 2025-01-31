@@ -108,7 +108,8 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                     </div>
                 </div>
 
-                <div class="results-container">
+                <?php if (!empty($votes)): ?>
+                    <div class="results-container">
                     <?php foreach ($votes as $userId => $vote): ?>
                         <?= $this->render('votes_row', [
                             'meeting' => $meeting,
@@ -141,6 +142,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
+                <?php endif; ?>
 
                 <div class="totals-container">
                     <div class="icons-cell">

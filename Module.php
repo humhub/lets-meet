@@ -24,7 +24,9 @@ class Module extends ContentContainerModule
     
     public function disable()
     {
-        // delete all
+        foreach (Meeting::find()->all() as $meeting) {
+            $meeting->hardDelete();
+        }
 
         parent::disable();
     }

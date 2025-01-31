@@ -132,7 +132,7 @@ $header = TabsStateManager::instance()->id
                 <?php else: ?>
                     <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
                 <?php endif; ?>
-                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', TabsStateManager::instance()->id ? 'Save' : 'Next'))->action('letsMeet.submit')->loader(false)?>
+                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Save'))->action('letsMeet.submit')->loader()?>
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>

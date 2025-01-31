@@ -1,6 +1,6 @@
 humhub.module('letsMeetWallEntry', function (module, require, $) {
-    var Widget = require('ui.widget.Widget');
-    var client = require('client');
+    const Widget = require('ui.widget.Widget');
+    const client = require('client');
 
     const scrollLeft = function(event) {
         smoothScroll(event, '-');
@@ -14,7 +14,7 @@ humhub.module('letsMeetWallEntry', function (module, require, $) {
 
         container.find('.scrollable-container').animate(
             {
-                scrollLeft: direction + '=' + container.width() * 0.7
+                scrollLeft: direction + '=' + container.width() * 0.8
             },
             500
         );
