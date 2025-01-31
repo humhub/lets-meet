@@ -61,7 +61,7 @@ class Meeting extends ContentActiveRecord implements Searchable
             'id' => Yii::t('LetsMeetModule.base', 'ID'),
             'title' => Yii::t('LetsMeetModule.base', 'Title'),
             'description' => Yii::t('LetsMeetModule.base', 'Description'),
-            'duration' => Yii::t('LetsMeetModule.base', 'Duration'),
+            'duration' => Yii::t('LetsMeetModule.base', 'Meeting duration'),
             'invite_all_space_users' => Yii::t('LetsMeetModule.base', 'Invite All Space Users'),
             'status' => Yii::t('LetsMeetModule.base', 'Status'),
             'created_at' => Yii::t('LetsMeetModule.base', 'Created At'),
@@ -114,7 +114,7 @@ class Meeting extends ContentActiveRecord implements Searchable
     public function getSearchAttributes()
     {
         return [
-            'question' => $this->title,
+            'title' => $this->title,
             'description' => $this->description,
         ];
     }

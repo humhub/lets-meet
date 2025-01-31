@@ -23,7 +23,7 @@
 
 #date-rows {
     background-color: #ededed;
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 8px 8px 0 8px;
     overflow: hidden;
     margin-bottom: 16px;
@@ -31,7 +31,7 @@
 
 #date-rows .date-row {
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
     margin-bottom: 8px;
