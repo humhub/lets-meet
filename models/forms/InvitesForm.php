@@ -38,7 +38,7 @@ class InvitesForm extends Model
     {
         return [
             'invites' => Yii::t('LetsMeetModule.base', 'Participants'),
-            'invite_all_space_members' => Yii::t('LetsMeetModule.base', 'Invite all space members'),
+            'invite_all_space_members' => Yii::t('LetsMeetModule.base', 'Invite all Space members'),
         ];
     }
 

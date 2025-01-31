@@ -34,11 +34,11 @@ class CreateLetsMeet extends BasePermission
 
     public function getTitle()
     {
-        return Yii::t('LetsMeetModule.base', 'Lets meet');
+        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
     }
 
     public function getDescription()
     {
-        return Yii::t('LetsMeetModule.base', 'Lets meet description');
+        return Yii::t('LetsMeetModule.base', 'Let\'s Meet description');
     }
 }

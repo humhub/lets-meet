@@ -49,7 +49,7 @@ $header = TabsStateManager::instance()->id
     <div class="form-heading">
         <h5><?= Yii::t('LetsMeetModule.base', 'Invite users') ?></h5>
         <div>
-            <?= Yii::t('LetsMeetModule.base', 'elect either individual users to receive an invite,, or select all Space members.') ?>
+            <?= Yii::t('LetsMeetModule.base', 'Select either individual users to receive an invite, or select all Space members.') ?>
         </div>
     </div>
     <?php Pjax::begin(['enablePushState' => false, 'id' => 'invites']) ?>

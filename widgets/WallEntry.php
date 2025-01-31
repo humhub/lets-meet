@@ -71,8 +71,8 @@ class WallEntry extends WallStreamModuleEntryWidget
                 'action' => 'letsMeetWallEntry.close',
                 'options' => [
                     'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
-                    'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Lets Meet'),
-                    'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to close this Lets Meet?'),
+                    'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Let\'s Meet'),
+                    'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to close this Let\'s Meet?'),
                 ]
             ],
             [
