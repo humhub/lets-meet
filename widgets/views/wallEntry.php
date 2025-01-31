@@ -53,7 +53,9 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
         </div>
     </div>
 
-    <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>">
+
+    <?php Pjax::begin(['enablePushState' => false, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
+        <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>">
         <div class="slots-container">
             <div class="icons-cell">
                 <div>
@@ -80,113 +82,112 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php Pjax::begin(['enablePushState' => false, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
-            <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
-                <?= $this->render('votes_row', [
-                    'meeting' => $meeting,
-                    'canVote' => $canVote && (empty($userVotes) || $canEditVote),
-                    'votes' => $userVotes,
-                    'user' => Yii::$app->user->identity,
-                ]) ?>
-                <div class="controls-container">
-                    <div class="scroll-left">
-                        <?= Button::defaultType()->icon('arrow-left')->action('letsMeetWallEntry.scrollLeft')->loader(false) ?>
-                    </div>
-                    <div class="control-buttons">
-                        <?php if ($canVote): ?>
-                            <?php if (empty($userVotes) || $canEditVote): ?>
-                                <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
-                                    ->options(['name' => 'action', 'value' => 'vote', 'disabled' => 'disabled'])  ?>
-                            <?php else: ?>
-                                <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Edit Vote'))->submit()
-                                    ->options(['name' => 'action', 'value' => 'edit']) ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-
-                    </div>
-                    <div class="scroll-right">
-                        <?= Button::defaultType()->icon('arrow-right')->action('letsMeetWallEntry.scrollRight')->loader(false) ?>
-                    </div>
+        <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
+            <?= $this->render('votes_row', [
+                'meeting' => $meeting,
+                'canVote' => $canVote && (empty($userVotes) || $canEditVote),
+                'votes' => $userVotes,
+                'user' => Yii::$app->user->identity,
+            ]) ?>
+            <div class="controls-container">
+                <div class="scroll-left">
+                    <?= Button::defaultType()->icon('arrow-left')->action('letsMeetWallEntry.scrollLeft')->loader(false) ?>
                 </div>
-
-                <?php if (!empty($votes)): ?>
-                    <div class="results-container">
-                    <?php foreach ($votes as $userId => $vote): ?>
-                        <?= $this->render('votes_row', [
-                            'meeting' => $meeting,
-                            'canVote' => false,
-                            'votes' => $vote,
-                            'user' => $vote[0]->user,
-                        ]) ?>
-                    <?php endforeach; ?>
-                    <?php if ($votedUsersCount > 2): ?>
-                        <?php if (count($votes) != $votedUsersCount): ?>
-                            <div>
-                                <?= Button::defaultType(Yii::t(
-                                    'LetsMeetModule.base', 'Show All ({count})',
-                                    ['count' => $votedUsersCount]
-                                ))
-                                    ->link(Url::current(['showAll' => 1]))
-                                    ->pjax()
-                                    ->options(['class' => 'show-all-btn']) ?>
-                            </div>
+                <div class="control-buttons">
+                    <?php if ($canVote): ?>
+                        <?php if (empty($userVotes) || $canEditVote): ?>
+                            <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
+                                ->options(['name' => 'action', 'value' => 'vote', 'disabled' => !$canEditVote])  ?>
                         <?php else: ?>
-                            <div>
-                                <?= Button::defaultType(Yii::t(
-                                    'LetsMeetModule.base', 'Collapse ({count})',
-                                    ['count' => $votedUsersCount - 2]
-                                ))
-                                    ->link(Url::current(['showAll' => 0]))
-                                    ->pjax()
-                                    ->options(['class' => 'collapse-btn']) ?>
-                            </div>
+                            <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Edit Vote'))->submit()
+                                ->options(['name' => 'action', 'value' => 'edit']) ?>
                         <?php endif; ?>
                     <?php endif; ?>
+
                 </div>
+                <div class="scroll-right">
+                    <?= Button::defaultType()->icon('arrow-right')->action('letsMeetWallEntry.scrollRight')->loader(false) ?>
+                </div>
+            </div>
+
+            <?php if (!empty($votes)): ?>
+                <div class="results-container">
+                <?php foreach ($votes as $userId => $vote): ?>
+                    <?= $this->render('votes_row', [
+                        'meeting' => $meeting,
+                        'canVote' => false,
+                        'votes' => $vote,
+                        'user' => $vote[0]->user,
+                    ]) ?>
+                <?php endforeach; ?>
+                <?php if ($votedUsersCount > 2): ?>
+                    <?php if (count($votes) != $votedUsersCount): ?>
+                        <div>
+                            <?= Button::defaultType(Yii::t(
+                                'LetsMeetModule.base', 'Show All ({count})',
+                                ['count' => $votedUsersCount]
+                            ))
+                                ->link(Url::current(['showAll' => 1]))
+                                ->pjax()
+                                ->options(['class' => 'show-all-btn']) ?>
+                        </div>
+                    <?php else: ?>
+                        <div>
+                            <?= Button::defaultType(Yii::t(
+                                'LetsMeetModule.base', 'Collapse ({count})',
+                                ['count' => $votedUsersCount - 2]
+                            ))
+                                ->link(Url::current(['showAll' => 0]))
+                                ->pjax()
+                                ->options(['class' => 'collapse-btn']) ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
+            </div>
+            <?php endif; ?>
 
-                <div class="totals-container">
-                    <div class="icons-cell">
-                        <?= Icon::get('line-chart')->size(Icon::SIZE_LG) ?>
-                    </div>
-                    <div class="dates-cell scrollable-container">
-                        <?php foreach ($meeting->daySlots as $daySlot): ?>
-                            <div>
-                                <div class="times-container">
-                                    <?php foreach ($daySlot->timeSlots as $timeSlot): ?>
-                                        <div class="time-slot">
-                                            <?= count($timeSlot->acceptedVotes) ?>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+            <div class="totals-container">
+                <div class="icons-cell">
+                    <?= Icon::get('line-chart')->size(Icon::SIZE_LG) ?>
                 </div>
+                <div class="dates-cell scrollable-container">
+                    <?php foreach ($meeting->daySlots as $daySlot): ?>
+                        <div>
+                            <div class="times-container">
+                                <?php foreach ($daySlot->timeSlots as $timeSlot): ?>
+                                    <div class="time-slot">
+                                        <?= count($timeSlot->acceptedVotes) ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
 
-                <?php if (!empty($bestOptions)): ?>
-                    <div class="best-options-container">
-                        <strong>
+            <?php if (!empty($bestOptions)): ?>
+                <div class="best-options-container">
+                    <strong>
+                        <?= Yii::t(
+                            'LetsMeetModule.base',
+                            'Best {options, plural, =1{option} other{options}}', ['options' => count($bestOptions)]
+                        ) ?>
+                    </strong>
+                    <?php foreach ($bestOptions as $option): ?>
+                        <div>
                             <?= Yii::t(
                                 'LetsMeetModule.base',
-                                'Best {options, plural, =1{option} other{options}}', ['options' => count($bestOptions)]
+                                '{day} at {time} with {votes, plural, =1{# vote} other{# votes}}.', [
+                                    'day' => Yii::$app->formatter->asDate($option['day']),
+                                    'time' => Yii::$app->formatter->asTime($option['time'], 'short'),
+                                    'votes' => $option['acceptedVotes']
+                                ]
                             ) ?>
-                        </strong>
-                        <?php foreach ($bestOptions as $option): ?>
-                            <div>
-                                <?= Yii::t(
-                                    'LetsMeetModule.base',
-                                    '{day} at {time} with {votes, plural, =1{# vote} other{# votes}}.', [
-                                        'day' => Yii::$app->formatter->asDate($option['day']),
-                                        'time' => Yii::$app->formatter->asTime($option['time'], 'short'),
-                                        'votes' => $option['acceptedVotes']
-                                    ]
-                                ) ?>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            <?php ActiveForm::end() ?>
-        <?php Pjax::end() ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php ActiveForm::end() ?>
     </div>
+    <?php Pjax::end() ?>
 </div>

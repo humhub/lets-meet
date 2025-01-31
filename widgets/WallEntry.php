@@ -10,6 +10,7 @@ use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\letsMeet\models\MeetingVote;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * @property Meeting $model
@@ -89,9 +90,6 @@ class WallEntry extends WallStreamModuleEntryWidget
     public function renderContent()
     {
         $action = Yii::$app->request->post('action');
-        $canEditVote = false;
-
-        $userVotes = $this->getUserVotes();
 
         /** @var MeetingVote[] $voteModels */
         $voteModels = ArrayHelper::index(
@@ -107,7 +105,6 @@ class WallEntry extends WallStreamModuleEntryWidget
             'time_slot_id'
         );
 
-
         $votedUserIdsQuery = $this->model->getVotes()
             ->select('user_id')
             ->distinct()
@@ -115,13 +112,31 @@ class WallEntry extends WallStreamModuleEntryWidget
             ->limit(Yii::$app->request->get('showAll') ? null : 2);
 
         $votedUsersCount = (clone $votedUserIdsQuery)->limit(null)->count();
-
+        $userVotes = $this->getUserVotes();
+        $canEditVote = false;
 
         if (Yii::$app->request->isPost) {
             if ($action == 'vote') {
                 if (MeetingVote::loadMultiple($voteModels, Yii::$app->request->post()) && MeetingVote::validateMultiple($voteModels)) {
-                    foreach ($voteModels as $voteModel) {
-                        $voteModel->save();
+                    $transaction = Yii::$app->db->beginTransaction();
+                    try {
+                        MeetingVote::deleteAll([
+                            'user_id' => Yii::$app->user->id,
+                            'time_slot_id' => $this->model->getTimeSlots()->select('id')->column()
+                        ]);
+
+                        foreach ($voteModels as $voteModel) {
+                            $voteModel->save();
+                            if ($voteModel->hasErrors()) {
+                                throw new \RuntimeException(Html::errorSummary($voteModel));
+                            }
+                        }
+
+                        $transaction->commit();
+                    } catch (\Throwable $e) {
+                        $transaction->rollBack();
+
+                        throw $e;
                     }
                 }
                 $userVotes = $this->getUserVotes();
@@ -164,6 +179,7 @@ class WallEntry extends WallStreamModuleEntryWidget
     {
         return $this->model->getVotes()
             ->andWhere(['user_id' => Yii::$app->user->id])
+            ->indexBy('time_slot_id')
             ->all();
     }
 

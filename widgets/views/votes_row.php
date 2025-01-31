@@ -32,8 +32,6 @@ $voteOptions = [
     ]
 ];
 
-$votes = ArrayHelper::index($votes, 'time_slot_id');
-
 ?>
 
 
@@ -61,13 +59,14 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
                             <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]time_slot_id", ['value' => $timeSlot->id]) ?>
                             <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]vote", ['value' => $vote?->vote, 'class' => 'vote-value']) ?>
                             <?php foreach ($voteOptions as $value => $options): ?>
-                                    <div class="time-slot-vote <?= $options['class'] ?> <?= $vote?->vote == $value ? 'voted' : '' ?>" data-value="<?= $value ?>" data-action-click="letsMeetWallEntry.vote">
+                                    <div class="time-slot-vote <?= $options['class'] ?> <?= $vote?->vote === $value ? 'voted' : '' ?>" data-value="<?= $value ?>" data-action-click="letsMeetWallEntry.vote">
                                         <?= Icon::get($options['icon'])->size(Icon::SIZE_LG) ?>
                                     </div>
                             <?php endforeach; ?>
                         </div>
                     <?php else:?>
                         <div class="time-slot-vote voted <?= $voteOptions[$vote?->vote]['class'] ?? '' ?>">
+
                             <?= $vote ? Icon::get($voteOptions[$vote?->vote]['icon'] ?? '')->size(Icon::SIZE_LG) : '' ?>
                         </div>
                     <?php endif; ?>
