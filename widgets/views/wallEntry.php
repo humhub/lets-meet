@@ -80,7 +80,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php Pjax::begin(['enablePushState' => false]) ?>
+        <?php Pjax::begin(['enablePushState' => false, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
             <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
                 <?= $this->render('votes_row', [
                     'meeting' => $meeting,

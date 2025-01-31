@@ -1,9 +1,9 @@
 {
     "id": "lets-meet",
-    "name": "Lets Meet",
-    "description": "Easily create letsMeet",
+    "name": "Let's Meet",
+    "description": "Schedule a meeting with the Let's Meet module, a smart tool for finding the best time for your team to meet. Create a poll with multiple dates and time slots, invite participants to vote, and identify the best option for everyone.",
     "keywords": ["letsMeet", "voting"],
-    "version": "1.3.6",
+    "version": "0.1.0",
     "humhub": {
         "minVersion": "1.14"
     },
