@@ -61,7 +61,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
     {
         $this->setId($id);
 
-        $this->id ? $this->saveDatabaseState($for, $data) : $this->saveTempState($for, $data);
+        return $this->id ? $this->saveDatabaseState($for, $data) : $this->saveTempState($for, $data);
     }
 
     private function saveTempState($for, $data)
@@ -69,6 +69,8 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         $state = $this->getState();
         ArrayHelper::setValue($state, $for, $data);
         Yii::$app->session->set($this->hash, $state);
+
+        return null;
     }
 
     public function getState($for = null, $default = null, $id = null)
@@ -97,6 +99,8 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             InvitesForm::class => $this->saveInvites($data, $meeting),
             default => throw new \InvalidArgumentException("Unknown form type: $for"),
         };
+
+        return $meeting;
     }
 
     private function getDatabaseState($for)
@@ -166,10 +170,10 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
 
             throw $e;
 
-            return false;
+            return null;
         }
 
-        return true;
+        return $meeting;
     }
 
     private function saveMeeting(MainForm $main, Meeting $meeting, ContentContainerActiveRecord $contentContainer = null)

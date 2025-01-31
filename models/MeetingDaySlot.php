@@ -4,6 +4,7 @@ namespace humhub\modules\letsMeet\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property int $id
@@ -45,5 +46,12 @@ class MeetingDaySlot extends ActiveRecord
     public function getTimeSlots()
     {
         return $this->hasMany(MeetingTimeSlot::class, ['day_id' => 'id']);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        MeetingVote::deleteAll(['time_slot_id' => ArrayHelper::getColumn($this->timeSlots, 'id')]);
     }
 }

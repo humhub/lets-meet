@@ -3,13 +3,14 @@
 namespace humhub\modules\letsMeet\models;
 
 
+use humhub\modules\letsMeet\notifications\newInvite;
 use Yii;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\search\interfaces\Searchable;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property int $id
@@ -48,7 +49,7 @@ class Meeting extends ContentActiveRecord implements Searchable
             [['title', 'description', 'duration'], 'required'],
             [['description'], 'string'],
             [['duration', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['is_public', 'invite_all_space_users'], 'boolean'],
+            [['invite_all_space_users'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
         ];
@@ -61,7 +62,6 @@ class Meeting extends ContentActiveRecord implements Searchable
             'title' => Yii::t('LetsMeetModule.base', 'Title'),
             'description' => Yii::t('LetsMeetModule.base', 'Description'),
             'duration' => Yii::t('LetsMeetModule.base', 'Duration'),
-            'is_public' => Yii::t('LetsMeetModule.base', 'Is Public'),
             'invite_all_space_users' => Yii::t('LetsMeetModule.base', 'Invite All Space Users'),
             'status' => Yii::t('LetsMeetModule.base', 'Status'),
             'created_at' => Yii::t('LetsMeetModule.base', 'Created At'),
@@ -113,16 +113,26 @@ class Meeting extends ContentActiveRecord implements Searchable
 
     public function getSearchAttributes()
     {
-        $itemAnswers = '';
-
-        foreach ($this->answers as $answer) {
-            $itemAnswers .= $answer->answer . ' ';
-        }
-
         return [
-            'question' => $this->question,
+            'question' => $this->title,
             'description' => $this->description,
-            'itemAnswers' => trim($itemAnswers),
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+            $userQuery = $this->content->container->getMembershipUser();
+            if (!$this->invite_all_space_users) {
+                $userQuery->andWhere(['user.id' => ArrayHelper::getColumn($this->invites, 'user.id')]);
+            }
+
+            NewInvite::instance()
+                ->from($this->createdBy)
+                ->about($this)
+                ->sendBulk($userQuery);
+        }
     }
 }

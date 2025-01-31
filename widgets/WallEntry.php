@@ -185,7 +185,7 @@ class WallEntry extends WallStreamModuleEntryWidget
         }, $bestOptions));
 
         return array_filter($bestOptions, function($option) use ($maxAcceptedVotes) {
-            return $option['acceptedVotes'] === $maxAcceptedVotes;
+            return $option['acceptedVotes'] > 1 && $option['acceptedVotes'] === $maxAcceptedVotes;
         });
     }
 

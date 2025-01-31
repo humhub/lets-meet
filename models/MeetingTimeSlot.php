@@ -51,4 +51,11 @@ class MeetingTimeSlot extends ActiveRecord
     {
         return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id'])->andWhere(['vote' => MeetingVote::VOTE_ACCEPT]);
     }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        MeetingVote::deleteAll(['time_slot_id' => $this->id]);
+    }
 }
