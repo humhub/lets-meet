@@ -89,18 +89,24 @@ class WallEntry extends WallStreamModuleEntryWidget
     public function renderContent()
     {
         $action = Yii::$app->request->post('action');
-
-        /** @var MeetingVote[] $voteModels */
-        $voteModels = ArrayHelper::index(ArrayHelper::merge([], [], ...ArrayHelper::getColumn($this->model->daySlots, function(MeetingDaySlot $daySlot) {
-            return ArrayHelper::getColumn($daySlot->timeSlots, function(MeetingTimeSlot $timeSlot) {
-                return new MeetingVote([
-                    'time_slot_id' => $timeSlot->id,
-                    'user_id' => Yii::$app->user->id
-                ]);
-            });
-        })), 'time_slot_id');
+        $canEditVote = false;
 
         $userVotes = $this->getUserVotes();
+
+        /** @var MeetingVote[] $voteModels */
+        $voteModels = ArrayHelper::index(
+            ArrayHelper::merge([], [], ...ArrayHelper::getColumn($this->model->daySlots,
+                function(MeetingDaySlot $daySlot) {
+                    return ArrayHelper::getColumn($daySlot->timeSlots, function(MeetingTimeSlot $timeSlot) {
+                        return new MeetingVote([
+                            'time_slot_id' => $timeSlot->id,
+                            'user_id' => Yii::$app->user->id,
+                        ]);
+                    });
+            })),
+            'time_slot_id'
+        );
+
 
         $votedUserIdsQuery = $this->model->getVotes()
             ->select('user_id')
@@ -112,16 +118,15 @@ class WallEntry extends WallStreamModuleEntryWidget
 
 
         if (Yii::$app->request->isPost) {
-            if ($action == 'vote' && empty($userVotes)) {
+            if ($action == 'vote') {
                 if (MeetingVote::loadMultiple($voteModels, Yii::$app->request->post()) && MeetingVote::validateMultiple($voteModels)) {
                     foreach ($voteModels as $voteModel) {
                         $voteModel->save();
                     }
                 }
                 $userVotes = $this->getUserVotes();
-            } elseif ($action == 'reset') {
-                MeetingVote::deleteAll(['user_id' => Yii::$app->user->id, 'time_slot_id' => $this->model->getTimeSlots()->select('id')->column()]);
-                $userVotes = [];
+            } elseif ($action == 'edit') {
+                $canEditVote = true;
             }
         }
 
@@ -146,9 +151,9 @@ class WallEntry extends WallStreamModuleEntryWidget
             'meeting' => $this->model,
             'userVotes' => $userVotes,
             'canVote' => $canVote,
+            'canEditVote' => $canEditVote,
             'votes' =>  $votes,
             'votedUsersCount' =>  $votedUsersCount,
-            'voteModels' => $voteModels,
             'bestOptions' => $this->getBestOptions(),
             'user' => $this->model->content->createdBy,
             'contentContainer' => $this->model->content->container,

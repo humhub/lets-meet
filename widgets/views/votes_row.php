@@ -52,25 +52,25 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
         <?php foreach ($meeting->daySlots as $daySlot): ?>
             <div class="times-container">
                 <?php foreach ($daySlot->timeSlots as $timeSlot): ?>
-                        <?php if ($canVote): ?>
-                            <div class="expanded-vote">
-                                <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]time_slot_id", ['value' => $timeSlot->id]) ?>
-                                <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]vote", ['class' => 'vote-value']) ?>
-                                <?php foreach ($voteOptions as $value => $options): ?>
-                                        <div class="time-slot-vote <?= $options['class'] ?>" data-value="<?= $value ?>" data-action-click="letsMeetWallEntry.vote">
-                                            <?= Icon::get($options['icon'])->size(Icon::SIZE_LG) ?>
-                                        </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php else:?>
-                            <?php
-                                /** @var MeetingVote $vote */
-                                $vote = ArrayHelper::getValue($votes, $timeSlot->id);
-                            ?>
-                            <div class="time-slot-vote voted <?= $voteOptions[$vote?->vote]['class'] ?? '' ?>">
-                                <?= $vote ? Icon::get($voteOptions[$vote?->vote]['icon'] ?? '')->size(Icon::SIZE_LG) : '' ?>
-                            </div>
-                        <?php endif; ?>
+                    <?php
+                    /** @var MeetingVote $vote */
+                    $vote = ArrayHelper::getValue($votes, $timeSlot->id);
+                    ?>
+                    <?php if ($canVote): ?>
+                        <div class="expanded-vote <?= $vote?->vote ? 'voted' : '' ?>">
+                            <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]time_slot_id", ['value' => $timeSlot->id]) ?>
+                            <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]vote", ['value' => $vote?->vote, 'class' => 'vote-value']) ?>
+                            <?php foreach ($voteOptions as $value => $options): ?>
+                                    <div class="time-slot-vote <?= $options['class'] ?> <?= $vote?->vote == $value ? 'voted' : '' ?>" data-value="<?= $value ?>" data-action-click="letsMeetWallEntry.vote">
+                                        <?= Icon::get($options['icon'])->size(Icon::SIZE_LG) ?>
+                                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else:?>
+                        <div class="time-slot-vote voted <?= $voteOptions[$vote?->vote]['class'] ?? '' ?>">
+                            <?= $vote ? Icon::get($voteOptions[$vote?->vote]['icon'] ?? '')->size(Icon::SIZE_LG) : '' ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>

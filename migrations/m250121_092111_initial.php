@@ -51,7 +51,6 @@ class m250121_092111_initial extends Migration
 
 
         $this->createTable('lets_meet_meeting_vote', [
-            'id' => $this->primaryKey(),
             'time_slot_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
             'vote' => $this->tinyInteger(1)->unsigned(),

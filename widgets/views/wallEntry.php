@@ -21,6 +21,7 @@ use yii\widgets\ActiveForm;
  * @var int $votedUsersCount
  * @var array $bestOptions
  * @var bool $canVote
+ * @var bool $canEditVote
  */
 
 WallEntryAsset::register($this);
@@ -83,7 +84,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
                 <?= $this->render('votes_row', [
                     'meeting' => $meeting,
-                    'canVote' => empty($userVotes) && $canVote,
+                    'canVote' => $canVote && (empty($userVotes) || $canEditVote),
                     'votes' => $userVotes,
                     'user' => Yii::$app->user->identity,
                 ]) ?>
@@ -93,12 +94,12 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                     </div>
                     <div class="control-buttons">
                         <?php if ($canVote): ?>
-                            <?php if (empty($userVotes)): ?>
+                            <?php if (empty($userVotes) || $canEditVote): ?>
                                 <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
                                     ->options(['name' => 'action', 'value' => 'vote', 'disabled' => 'disabled'])  ?>
                             <?php else: ?>
-                                <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Reset Vote'))->submit()
-                                    ->options(['name' => 'action', 'value' => 'reset']) ?>
+                                <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Edit Vote'))->submit()
+                                    ->options(['name' => 'action', 'value' => 'edit']) ?>
                             <?php endif; ?>
                         <?php endif; ?>
 
