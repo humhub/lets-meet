@@ -53,15 +53,4 @@ class MeetingVote extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-
-        if ($insert) {
-            Yii::$app->queue->push(new EveryoneVotedNotificationJob([
-                'timeSlotId' => $this->time_slot_id
-            ]));
-        }
-    }
 }

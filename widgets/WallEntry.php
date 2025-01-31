@@ -4,6 +4,7 @@ namespace humhub\modules\letsMeet\widgets;
 
 use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
 use humhub\modules\content\widgets\WallEntryControlLink;
+use humhub\modules\letsMeet\jobs\EveryoneVotedNotificationJob;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
@@ -131,6 +132,10 @@ class WallEntry extends WallStreamModuleEntryWidget
                                 throw new \RuntimeException(Html::errorSummary($voteModel));
                             }
                         }
+
+                        Yii::$app->queue->push(new EveryoneVotedNotificationJob([
+                            'meetingId' => $this->model->id,
+                        ]));
 
                         $transaction->commit();
                     } catch (\Throwable $e) {
