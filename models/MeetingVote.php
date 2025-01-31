@@ -2,6 +2,7 @@
 
 namespace humhub\modules\letsMeet\models;
 
+use humhub\modules\letsMeet\jobs\EveryoneVotedNotificationJob;
 use Yii;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;
@@ -37,7 +38,6 @@ class MeetingVote extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('LetsMeetModule.base', 'ID'),
             'time_slot_id' => Yii::t('LetsMeetModule.base', 'Time Slot ID'),
             'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
             'vote' => Yii::t('LetsMeetModule.base', 'Vote'),
@@ -52,5 +52,16 @@ class MeetingVote extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+            Yii::$app->queue->push(new EveryoneVotedNotificationJob([
+                'timeSlotId' => $this->time_slot_id
+            ]));
+        }
     }
 }

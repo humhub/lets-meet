@@ -14,12 +14,7 @@ use humhub\modules\user\notifications\Mentioned;
 use Yii;
 use yii\bootstrap\Html;
 
-/**
- * Notification for new comments
- *
- * @since 0.5
- */
-class newInvite extends BaseNotification
+class EveryoneVotedNotification extends BaseNotification
 {
     /**
      * @var Meeting
@@ -34,7 +29,7 @@ class newInvite extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = 'newInvite';
+    public $viewName = 'everyoneVoted';
 
     /**
      * @inheritdoc
@@ -46,17 +41,14 @@ class newInvite extends BaseNotification
 
     public function getMailSubject()
     {
-        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Meeting Let's Meet", [
-            'organizer' => $this->originator->displayName,
-            'meeting' => $this->source->title,
-        ]);
+        return Yii::t('LetsMeetModule.notification', "All invited participants have voted.");
     }
 
     public function html()
     {
-        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Meeting Let's Meet", [
-            'organizer' => $this->originator->displayName,
+        return Yii::t('LetsMeetModule.notification', "All invited participants for the {meeting} Let's Meet in the {space} have voted.", [
             'meeting' => $this->source->title,
+            'space' => $this->source->contentContainer->name,
         ]);
     }
 }

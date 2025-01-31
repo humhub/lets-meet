@@ -3,6 +3,7 @@
 namespace humhub\modules\letsMeet\models;
 
 
+use humhub\modules\letsMeet\jobs\NewInviteNotificationJob;
 use humhub\modules\letsMeet\notifications\newInvite;
 use Yii;
 use humhub\modules\letsMeet\widgets\WallEntry;
@@ -124,15 +125,9 @@ class Meeting extends ContentActiveRecord implements Searchable
         parent::afterSave($insert, $changedAttributes);
 
         if ($insert) {
-            $userQuery = $this->content->container->getMembershipUser();
-            if (!$this->invite_all_space_users) {
-                $userQuery->andWhere(['user.id' => ArrayHelper::getColumn($this->invites, 'user.id')]);
-            }
-
-            NewInvite::instance()
-                ->from($this->createdBy)
-                ->about($this)
-                ->sendBulk($userQuery);
+            Yii::$app->queue->push(new NewInviteNotificationJob([
+                'meetingId' => $this->id,
+            ]));
         }
     }
 }
