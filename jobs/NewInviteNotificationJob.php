@@ -3,7 +3,7 @@
 namespace humhub\modules\letsMeet\jobs;
 
 use humhub\modules\letsMeet\models\Meeting;
-use humhub\modules\letsMeet\notifications\newInvite;
+use humhub\modules\letsMeet\notifications\NewInviteNotification;
 use humhub\modules\queue\ActiveJob;
 use yii\helpers\ArrayHelper;
 
@@ -24,7 +24,7 @@ class NewInviteNotificationJob extends ActiveJob
             $userQuery->andWhere(['user.id' => ArrayHelper::getColumn($meeting->invites, 'user.id')]);
         }
 
-        NewInvite::instance()
+        NewInviteNotification::instance()
             ->from($meeting->createdBy)
             ->about($this)
             ->sendBulk($userQuery);

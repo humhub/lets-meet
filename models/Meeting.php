@@ -4,7 +4,6 @@ namespace humhub\modules\letsMeet\models;
 
 
 use humhub\modules\letsMeet\jobs\NewInviteNotificationJob;
-use humhub\modules\letsMeet\notifications\newInvite;
 use Yii;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;

@@ -14,7 +14,7 @@ use humhub\modules\user\notifications\Mentioned;
 use Yii;
 use yii\bootstrap\Html;
 
-class newInvite extends BaseNotification
+class NewInviteNotification extends BaseNotification
 {
     /**
      * @var Meeting
