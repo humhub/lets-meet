@@ -23,12 +23,12 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
         <div class="col-md-1 text-center">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-3">
             <?= $form->field($model, "[$index]day")
                 ->widget(DatePicker::class)
                 ->label(false) ?>
         </div>
-        <div class="col-md-2 text-right">
+        <div class="col-md-8 text-right">
             <?= Button::asLink()->danger()
                 ->icon('fa-times')
                 ->action('letsMeet.removeDateRow')
@@ -39,7 +39,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Add'),
                     'class' => 'remove-row',
-                    'style' => ['display' => $last ? 'none' : '']
+                    'style' => ['display' => $index === 0 ? 'none' : '']
                 ])
             ?>
             <?= Button::asLink()->primary()

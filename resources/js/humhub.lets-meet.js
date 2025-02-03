@@ -29,9 +29,13 @@ humhub.module('letsMeet', function (module, require, $) {
         const rowsContainer = $('#date-rows');
 
         rowsContainer.find('.add-row').hide();
-        rowsContainer.find('.remove-row').show();
 
-        rowsContainer.find('.remove-row').last().hide();
+        if (rowsContainer.find('.date-row').length === 1) {
+            rowsContainer.find('.remove-row').hide();
+        } else {
+            rowsContainer.find('.remove-row').show();
+        }
+
         rowsContainer.find('.add-row').last().show();
     }
 
