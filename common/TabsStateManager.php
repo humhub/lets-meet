@@ -27,8 +27,8 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
 {
     use StaticInstanceTrait;
 
-    private $hash;
-    private $id;
+    private ?string $hash;
+    private ?int $id;
 
     public function init()
     {
@@ -37,27 +37,27 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         $this->hash = Yii::$app->security->generateRandomString();
     }
 
-    private function setId($id)
+    private function setId($id): void
     {
         $this->id = $id;
     }
 
-    public function restore($hash)
+    public function restore($hash): void
     {
         $this->hash = $hash;
     }
 
-    public function getHash()
+    public function getHash(): ?string
     {
         return $this->hash;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function saveState($for, $data, $id = null)
+    public function saveState($for, $data, $id = null): ?Meeting
     {
         $this->setId($id);
 
@@ -193,6 +193,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
 
     private function saveDays(array $days, Meeting $meeting)
     {
+        $existingDayIds = [];
         foreach ($days as $day) {
             $meetingDay = MeetingDaySlot::findOne(['meeting_id' => $meeting->id, 'date' => $day->day]) ?: new MeetingDaySlot();
             $meetingDay->meeting_id = $meeting->id;
@@ -200,7 +201,9 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             if (!$meetingDay->save()) {
                 throw new \RuntimeException(Html::errorSummary($meetingDay));
             }
+            $existingDayIds[] = $meetingDay->id;
 
+            $existingTimeIds = [];
             foreach ($day->times as $time) {
                 $meetingDayTime = MeetingTimeSlot::findOne(['day_id' => $meetingDay->id, 'time' => $time]) ?: new MeetingTimeSlot();
                 $meetingDayTime->day_id = $meetingDay->id;
@@ -208,7 +211,26 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
                 if (!$meetingDayTime->save()) {
                     throw new \RuntimeException(Html::errorSummary($meetingDayTime));
                 }
+                $existingTimeIds[] = $meetingDayTime->id;
             }
+
+            $existingTimes = MeetingTimeSlot::find()
+                ->where(['day_id' => $meetingDay->id])
+                ->andWhere(['not in', 'id', $existingTimeIds])
+                ->all();
+
+            foreach ($existingTimes as $time) {
+                $time->delete();
+            }
+        }
+
+        $existingDays = MeetingDaySlot::find()
+            ->where(['meeting_id' => $meeting->id])
+            ->andWhere(['not in', 'id', $existingDayIds])
+            ->all();
+
+        foreach ($existingDays as $day) {
+            $day->delete();
         }
     }
 
