@@ -3,7 +3,7 @@
 use humhub\modules\content\widgets\richtext\RichTextField;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
+use humhub\modules\letsMeet\assets\FormAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\components\ContentContainerActiveRecord;
@@ -15,7 +15,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
  * @var ContentContainerActiveRecord $contentContainer
  */
 
-LetsMeetAsset::register($this);
+FormAsset::register($this);
 
 $header = TabsStateManager::instance()->id
     ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')

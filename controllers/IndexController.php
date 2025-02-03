@@ -9,6 +9,8 @@ use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\modules\letsMeet\models\Meeting;
+use humhub\modules\letsMeet\widgets\WallEntry;
+use humhub\modules\letsMeet\widgets\WallEntryContent;
 use humhub\modules\user\models\UserFilter;
 use Yii;
 use humhub\modules\content\components\ContentContainerController;
@@ -166,6 +168,17 @@ class IndexController extends ContentContainerController
                 'This user is not a member of this space.',
             ),
         ]));
+    }
+
+    public function actionContent($id)
+    {
+        $model = Meeting::findOne(['id' => $id]);
+
+        if (!$model) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->renderAjax(WallEntryContent::widget(['model' => $model]));
     }
 
     public function actionAddDateRow()

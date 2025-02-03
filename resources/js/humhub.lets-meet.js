@@ -69,9 +69,9 @@ humhub.module('letsMeet', function (module, require, $) {
             if (response.dataType === 'json' && response.data.next) {
                 loadTab(response.data.next)
             } else if (response.dataType === 'json' && response.reloadWall) {
+                modal.global.close(true);
                 event.trigger('humhub:content:newEntry', response.output, this);
                 event.trigger('humhub:content:afterSubmit', response.output, this);
-                modal.global.close();
                 module.log.success('success.saved');
             } else {
                 modal.global.setDialog(response);

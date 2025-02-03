@@ -7,7 +7,7 @@ use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
+use humhub\modules\letsMeet\assets\FormAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\widgets\Button;
@@ -29,7 +29,7 @@ use humhub\widgets\Pjax;
  * @var string $searchUsersUrl
  */
 
-LetsMeetAsset::register($this);
+FormAsset::register($this);
 
 $invites = $invitesDataProvider->models;
 

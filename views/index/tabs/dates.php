@@ -6,7 +6,7 @@ use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\widgets\richtext\RichTextField;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
+use humhub\modules\letsMeet\assets\FormAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 
@@ -17,7 +17,7 @@ use humhub\widgets\ModalButton;
  * @var ContentContainerActiveRecord $contentContainer
  */
 
-LetsMeetAsset::register($this);
+FormAsset::register($this);
 
 $tabStateManager = TabsStateManager::instance();
 $prevUrl = $contentContainer->createUrl(

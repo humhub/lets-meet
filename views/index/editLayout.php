@@ -1,7 +1,7 @@
 <?php
 
 
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
+use humhub\modules\letsMeet\assets\FormAsset;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ActiveForm;
@@ -15,7 +15,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
  * @var ContentContainerActiveRecord $contentContainer
  */
 
-LetsMeetAsset::register($this);
+FormAsset::register($this);
 
 ?>
 

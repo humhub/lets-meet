@@ -1,6 +1,5 @@
 <?php
 
-use humhub\modules\letsMeet\assets\WallEntryAsset;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
 use humhub\modules\ui\icon\widgets\Icon;
@@ -23,8 +22,6 @@ use yii\widgets\ActiveForm;
  * @var bool $canVote
  * @var bool $canEditVote
  */
-
-WallEntryAsset::register($this);
 
 $voteModel = new MeetingVote();
 $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
@@ -54,7 +51,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
     </div>
 
 
-    <?php Pjax::begin(['enablePushState' => false, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
+    <?php Pjax::begin(['enablePushState' => '', 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
         <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>">
         <div class="slots-container">
             <div class="icons-cell">
@@ -82,7 +79,10 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php ActiveForm::begin(['options' => ['data' => ['pjax' => 1]]]) ?>
+        <?php ActiveForm::begin([
+            'action' => $meeting->content->container->createUrl('/lets-meet/index/content', ['id' => $meeting->id]),
+            'options' => ['data' => ['pjax' => 1]]]
+        ) ?>
             <?= $this->render('votes_row', [
                 'meeting' => $meeting,
                 'canVote' => $canVote && (empty($userVotes) || $canEditVote),
