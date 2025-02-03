@@ -18,7 +18,6 @@ class InvitesForm extends Model
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            [['invite_all_space_members'], 'required'],
             [['invites'], 'required', 'when' => [$this, 'isAllSpaceMembersNotInvited']],
             [['invites'], 'each', 'rule' => [
                 'exist',

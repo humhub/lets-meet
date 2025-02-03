@@ -41,7 +41,8 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
     <div class="icons-cell">
         <?= Image::widget([
             'user' => $user,
-            'link' => false,
+            'link' => true,
+            'linkOptions' => ['data' => ['pjax' => 0]],
             'hideOnlineStatus' => true,
             'showTooltip' => true,
             'width' => 36,
