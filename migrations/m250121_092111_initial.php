@@ -13,6 +13,7 @@ class m250121_092111_initial extends Migration
             'description' => $this->text()->notNull(),
             'duration' => $this->integer()->notNull(),
             'invite_all_space_users' => $this->boolean()->notNull()->defaultValue(0),
+            'space_users_notified' => $this->boolean()->notNull()->defaultValue(0),
             'status' => $this->integer()->defaultValue(Meeting::STATUS_OPEN),
             'created_at' => $this->dateTime()->notNull(),
             'created_by' => $this->integer()->notNull(),
@@ -26,6 +27,7 @@ class m250121_092111_initial extends Migration
         $this->createTable('lets_meet_meeting_invite', [
             'meeting_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
+            'notified' => $this->boolean()->notNull()->defaultValue(0),
         ]);
 
         $this->addForeignKey('fk_lets_meet_meeting_invite_meeting', 'lets_meet_meeting_invite', 'meeting_id', 'lets_meet_meeting', 'id', 'CASCADE', 'CASCADE');

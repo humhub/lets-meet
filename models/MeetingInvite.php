@@ -10,6 +10,7 @@ use humhub\modules\user\models\User;
 /**
  * @property int $meeting_id
  * @property int $user_id
+ * @property bool $notified
  * @property-read Meeting $meeting
  * @property-read MeetingVote $votes
  * @property-read User $user
@@ -26,6 +27,7 @@ class MeetingInvite extends ActiveRecord
         return [
             [['meeting_id', 'user_id'], 'required'],
             [['meeting_id', 'user_id'], 'integer'],
+            [['notified'], 'boolean'],
         ];
     }
 
@@ -34,6 +36,7 @@ class MeetingInvite extends ActiveRecord
         return [
             'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
             'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
+            'notified' => Yii::t('LetsMeetModule.base', 'Notified'),
         ];
     }
 

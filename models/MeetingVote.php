@@ -2,7 +2,7 @@
 
 namespace humhub\modules\letsMeet\models;
 
-use humhub\modules\letsMeet\jobs\EveryoneVotedNotificationJob;
+
 use Yii;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;

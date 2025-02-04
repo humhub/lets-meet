@@ -3,8 +3,10 @@
 namespace humhub\modules\letsMeet\jobs;
 
 use humhub\modules\letsMeet\models\Meeting;
+use humhub\modules\letsMeet\models\MeetingInvite;
 use humhub\modules\letsMeet\notifications\NewInviteNotification;
 use humhub\modules\queue\ActiveJob;
+use Yii;
 use yii\helpers\ArrayHelper;
 
 class NewInviteNotificationJob extends ActiveJob
@@ -13,20 +15,40 @@ class NewInviteNotificationJob extends ActiveJob
     
     public function run()
     {
+        /** @var Meeting $meeting */
         $meeting = Meeting::findOne(['id' => $this->meetingId]);
 
         if (!$meeting) {
             return;
         }
 
-        $userQuery = $meeting->content->container->getMembershipUser();
-        if (!$meeting->invite_all_space_users) {
-            $userQuery->andWhere(['user.id' => ArrayHelper::getColumn($meeting->invites, 'user.id')]);
-        }
+        $transaction = Yii::$app->db->beginTransaction();
 
-        NewInviteNotification::instance()
-            ->from($meeting->createdBy)
-            ->about($this)
-            ->sendBulk($userQuery);
+        try {
+            $userQuery = $meeting->content->container->getMembershipUser();
+
+            if ($meeting->invite_all_space_users && !$meeting->space_users_notified) {
+                $meeting->space_users_notified = true;
+                $meeting->save();
+            } elseif (!$meeting->invite_all_space_users) {
+                $invitedUserIds = $meeting->getInvites()->select('user_id')->andWhere(['notified' => 0])->column();
+                MeetingInvite::updateAll(['notified' => true], ['user_id' => $invitedUserIds]);
+                $userQuery->andWhere(['user.id' => $invitedUserIds]);
+            } else {
+                $transaction->rollBack();
+
+                return;
+            }
+
+            NewInviteNotification::instance()
+                ->from($meeting->createdBy)
+                ->about($meeting)
+                ->sendBulk($userQuery);
+
+            $transaction->commit();
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
     }
 }

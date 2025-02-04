@@ -178,7 +178,7 @@ class IndexController extends ContentContainerController
             throw new NotFoundHttpException();
         }
 
-        return $this->renderAjax(WallEntryContent::widget(['model' => $model]));
+        return WallEntryContent::widget(['model' => $model]);
     }
 
     public function actionAddDateRow()

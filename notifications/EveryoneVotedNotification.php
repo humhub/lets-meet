@@ -12,7 +12,6 @@ use humhub\modules\notification\models\Notification;
 use humhub\modules\user\models\User;
 use humhub\modules\user\notifications\Mentioned;
 use Yii;
-use yii\bootstrap\Html;
 
 class EveryoneVotedNotification extends BaseNotification
 {
@@ -21,19 +20,12 @@ class EveryoneVotedNotification extends BaseNotification
      */
     public $source;
 
-    /**
-     * @inheritdoc
-     */
+    public $suppressSendToOriginator = false;
+
     public $moduleId = 'lets-meet';
 
-    /**
-     * @inheritdoc
-     */
     public $viewName = 'everyoneVoted';
 
-    /**
-     * @inheritdoc
-     */
     public function category()
     {
         return new LetsMeetNotificationCategory();
@@ -48,7 +40,7 @@ class EveryoneVotedNotification extends BaseNotification
     {
         return Yii::t('LetsMeetModule.notification', "All invited participants for the {meeting} Let's Meet in the {space} have voted.", [
             'meeting' => $this->source->title,
-            'space' => $this->source->contentContainer->name,
+            'space' => $this->source->content->container->name,
         ]);
     }
 }

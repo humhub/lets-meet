@@ -14,6 +14,7 @@ class EveryoneVotedNotificationJob extends ActiveJob
 
     public function run()
     {
+        /** @var Meeting $meeting */
         $meeting = Meeting::findOne(['id' => $this->meetingId]);
 
         if (!$meeting) {
@@ -23,7 +24,7 @@ class EveryoneVotedNotificationJob extends ActiveJob
         if ($meeting->invite_all_space_users) {
             $userIds = $meeting->content->container->getMembershipUser()->select('user.id')->column();
         } else {
-            $userIds = ArrayHelper::getColumn($meeting->invites, 'user.id');
+            $userIds = $meeting->getInvites()->select('user_id')->column();
         }
 
         $timeSlotCount = $meeting->getTimeSlots()->count();
@@ -51,6 +52,6 @@ class EveryoneVotedNotificationJob extends ActiveJob
         EveryoneVotedNotification::instance()
             ->from($meeting->createdBy)
             ->about($meeting)
-            ->sendBulk($meeting->createdBy);
+            ->send($meeting->createdBy);
     }
 }

@@ -3,6 +3,7 @@
 namespace humhub\modules\letsMeet\common;
 
 use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\letsMeet\jobs\NewInviteNotificationJob;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
@@ -244,9 +245,19 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         }
 
         if (!empty($invites->invites) || $invites->invite_all_space_members) {
-            MeetingInvite::deleteAll(['meeting_id' => $meeting->id]);
+            MeetingInvite::deleteAll([
+                'AND',
+                ['=', 'meeting_id', $meeting->id],
+                ['not in', 'user_id', $invites->userIds],
+            ]);
+
+            $currentInvites = $meeting->getInvites()->select('user_id')->column();
 
             foreach ($invites->userIds as $userId) {
+                if (in_array($userId, $currentInvites)) {
+                    continue;
+                }
+
                 $invite = new MeetingInvite();
                 $invite->meeting_id = $meeting->id;
                 $invite->user_id = $userId;
@@ -255,5 +266,9 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
                 }
             }
         }
+
+        Yii::$app->queue->push(new NewInviteNotificationJob([
+            'meetingId' => $meeting->id,
+        ]));
     }
 }
