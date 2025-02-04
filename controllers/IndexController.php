@@ -53,6 +53,18 @@ class IndexController extends ContentContainerController
         $meeting->save();
     }
 
+    public function actionReopen($id)
+    {
+        $meeting = Meeting::findOne(['id' => $id]);
+
+        if (!$meeting) {
+            throw new NotFoundHttpException();
+        }
+
+        $meeting->status = Meeting::STATUS_OPEN;
+        $meeting->save();
+    }
+
     public function actionEdit($id = null)
     {
         $model = $this->stateManager->getState(MainForm::class, new MainForm(), $id);
