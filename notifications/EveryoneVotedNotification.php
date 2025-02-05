@@ -38,7 +38,7 @@ class EveryoneVotedNotification extends BaseNotification
 
     public function html()
     {
-        return Yii::t('LetsMeetModule.notification', "All invited participants for the {meeting} Let's Meet in the {space} have voted.", [
+        return Yii::t('LetsMeetModule.notification', "All invited participants for the <strong>{meeting}</strong> Let’s Meet in the Space <strong>{space}</strong> have voted.", [
             'meeting' => $this->source->title,
             'space' => $this->source->content->container->name,
         ]);

@@ -49,9 +49,10 @@ class NewInviteNotification extends BaseNotification
 
     public function html()
     {
-        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Meeting Let's Meet", [
+        return Yii::t('LetsMeetModule.notification', "<strong>{organizer}</strong> invites you to vote on <strong>{meeting}</strong> Let’s Meet in the Space <strong>{space}</strong>.", [
             'organizer' => $this->originator->displayName,
             'meeting' => $this->source->title,
+            'space' => $this->source->content->container->name,
         ]);
     }
 }

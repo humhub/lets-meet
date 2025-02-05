@@ -42,6 +42,18 @@ class Meeting extends ContentActiveRecord implements Searchable
         return 'lets_meet_meeting';
     }
 
+    public function getContentName()
+    {
+        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
+    }
+
+    public function getContentDescription()
+    {
+        return $this->title;
+    }
+
+
+
     public function rules()
     {
         return [
@@ -103,11 +115,6 @@ class Meeting extends ContentActiveRecord implements Searchable
     public function getIcon()
     {
         return 'fa-calendar-check-o';
-    }
-
-    public function getContentName()
-    {
-        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
     }
 
     public function getSearchAttributes()

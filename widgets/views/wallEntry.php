@@ -66,7 +66,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php foreach ($meeting->daySlots as $daySlot): ?>
                     <div>
                         <div class="day-cell">
-                            <?= Yii::$app->formatter->asDate($daySlot->date, 'MMM d') ?>
+                            <?= Yii::$app->formatter->asDate($daySlot->date) ?>
                         </div>
                         <div class="times-container">
                             <?php foreach ($daySlot->timeSlots as $timeSlot): ?>
