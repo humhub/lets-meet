@@ -18,8 +18,7 @@ class MainForm extends Model
         return ArrayHelper::merge(parent::rules(), [
             [['title', 'description', 'duration'], 'required'],
             [['description'], 'string'],
-            [['duration'], 'normalizeDuration'],
-            [['duration'], 'time', 'format' => 'php:H:i'/*, 'message' => Yii::t('LetsMeetModule.base', 'The duration must be in the format hh:mm')*/],
+            [['duration'], 'time', 'format' => 'php:H:i'],
             [['make_public'], 'boolean'],
             [['title'], 'string', 'max' => 255],
         ]);

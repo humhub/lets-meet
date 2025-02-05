@@ -23,12 +23,16 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
         <div class="col-md-1 text-center">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <?= $form->field($model, "[$index]day")
-                ->widget(DatePicker::class)
+                ->widget(DatePicker::class, [
+                    'options' => [
+                        'placeholder' => $model->getAttributeLabel('day')
+                    ]
+                ])
                 ->label(false) ?>
         </div>
-        <div class="col-md-8 text-right">
+        <div class="col-md-7 text-right">
             <?= Button::asLink()->danger()
                 ->icon('fa-times')
                 ->action('letsMeet.removeDateRow')
@@ -59,7 +63,11 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
         </div>
         <div class="col-md-11">
             <?= $form->field($model, "[$index]times")
-                ->widget(TimeSlotPicker::class)
+                ->widget(TimeSlotPicker::class, [
+                    'options' => [
+                        'placeholder' => $model->getAttributeLabel('times')
+                    ]
+                ])
                 ->label(false) ?>
         </div>
     </div>

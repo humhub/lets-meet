@@ -11,7 +11,7 @@ class m250121_092111_initial extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'description' => $this->text()->notNull(),
-            'duration' => $this->integer()->notNull(),
+            'duration' => $this->time()->notNull(),
             'invite_all_space_users' => $this->boolean()->notNull()->defaultValue(0),
             'space_users_notified' => $this->boolean()->notNull()->defaultValue(0),
             'status' => $this->integer()->defaultValue(Meeting::STATUS_OPEN),

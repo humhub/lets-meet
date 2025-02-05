@@ -79,6 +79,7 @@ JS;
         $result = parent::getData();
         unset($result['picker-url']);
         $result['before-init-callback'] = 'timeSlotPickerBeforeInit';
+        $result['placeholder'] = $result['placeholder-more'] = $this->model->getAttributeLabel(Html::getAttributeName($this->attribute));
 
         return $result;
     }

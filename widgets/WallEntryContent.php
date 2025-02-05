@@ -111,6 +111,7 @@ class WallEntryContent extends Widget
             'votedUsersCount' =>  $votedUsersCount,
             'bestOptions' => $this->getBestOptions(),
             'user' => $this->model->content->createdBy,
+            'duration' => $this->formatDuration(),
         ]);
     }
 
@@ -147,5 +148,23 @@ class WallEntryContent extends Widget
         return array_filter($bestOptions, function($option) use ($maxAcceptedVotes) {
             return $option['acceptedVotes'] > 1 && $option['acceptedVotes'] === $maxAcceptedVotes;
         });
+    }
+
+    private function formatDuration() {
+        $parts = explode(':', $this->model->duration);
+        $hours = (int)$parts[0];
+        $minutes = $parts[1];
+
+        if ($hours === 0) {
+            return Yii::t('LetsMeetModule.base', '{minutes, plural, =1{# minute} other{# minutes}}', ['minutes' => $minutes]);
+        } elseif ($minutes === 0) {
+            return Yii::t('LetsMeetModule.base', '{hours, plural, =1{# hour} other{# hours}}', ['hours' => $hours]);
+        } else {
+            return Yii::t('LetsMeetModule.base', '{hours}:{minutes} {hourLabel}', [
+                'hours' => $hours,
+                'minutes' => $minutes,
+                'hourLabel' => Yii::t('LetsMeetModule.base', '{hours, plural, =1{hour} other{hours}}', ['hours' => $hours])
+            ]);
+        }
     }
 }

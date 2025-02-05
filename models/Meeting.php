@@ -14,7 +14,7 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property string $title
  * @property string $description
- * @property int $duration
+ * @property string $duration
  * @property bool $invite_all_space_users
  * @property bool $space_users_notified
  * @property int $status
@@ -59,7 +59,8 @@ class Meeting extends ContentActiveRecord implements Searchable
         return [
             [['title', 'description', 'duration'], 'required'],
             [['description'], 'string'],
-            [['duration', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['duration'], 'time', 'format' => 'php:G:i'],
             [['invite_all_space_users'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],

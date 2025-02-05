@@ -21,6 +21,7 @@ use yii\widgets\ActiveForm;
  * @var array $bestOptions
  * @var bool $canVote
  * @var bool $canEditVote
+ * @var string $duration
  */
 
 $voteModel = new MeetingVote();
@@ -45,7 +46,8 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
         <div>
             <?= Yii::t(
                 'LetsMeetModule.base',
-                '<strong>Meeting Duration</strong>: {hours, plural, =1{# hour} other{# hours}}', ['hours' => $meeting->duration]
+                '<strong>Meeting Duration</strong>: {duration}',
+                ['duration' => $duration]
             ) ?>
         </div>
     </div>

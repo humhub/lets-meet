@@ -122,7 +122,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             return new MainForm([
                 'title' => $meeting->title,
                 'description' => $meeting->description,
-                'duration' => $meeting->duration . ':00',
+                'duration' => $meeting->duration,
                 'make_public' => $meeting->content->visibility == Content::VISIBILITY_PUBLIC,
             ]);
         } elseif ($for == DayForm::class) {
@@ -185,7 +185,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         $meeting->content->visibility = $main->make_public ? Content::VISIBILITY_PUBLIC : Content::VISIBILITY_PRIVATE;
         $meeting->title = $main->title;
         $meeting->description = $main->description;
-        $meeting->duration = (int)explode(':', $main->duration)[0];
+        $meeting->duration = $main->duration;
 
         if (!$meeting->save()) {
             throw new \RuntimeException(Html::errorSummary($meeting));

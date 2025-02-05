@@ -7,6 +7,7 @@ use humhub\modules\letsMeet\assets\FormAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\components\ContentContainerActiveRecord;
+use yii\widgets\MaskedInput;
 
 /**
  * @var ActiveForm $form
@@ -30,9 +31,15 @@ $header = TabsStateManager::instance()->id
 <div class="modal-body meeting-edit-modal">
     <?php $form = ActiveForm::begin() ?>
 
-    <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
-    <?= $form->field($model, 'description')->widget(RichTextField::class) ?>
-    <?= $form->field($model, 'duration')->textInput() ?>
+    <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'placeholder' => $model->getAttributeLabel('title')]) ?>
+    <?= $form->field($model, 'description')->widget(RichTextField::class, ['placeholder' => $model->getAttributeLabel('description')]) ?>
+    <?= $form->field($model, 'duration')->widget(MaskedInput::class, [
+        'mask' => '99:99',
+        'options' => [
+            'inputmode' => 'numeric',
+            'placeholder' => 'HH:MM',
+        ],
+    ]) ?>
     <?= $form->field($model, 'make_public')->checkbox() ?>
 
 
