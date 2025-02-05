@@ -1,11 +1,78 @@
 humhub.module('letsMeet', function (module, require, $) {
+    const Widget = require('ui.widget.Widget');
+    const object = require('util.object');
     const client = require('client');
     const additions = require('ui.additions');
     const modal = require('ui.modal');
     const event = require('event');
 
+    const WallEntry = function (node, options) {
+        Widget.call(this, node, options);
+    };
 
-    const addDateRow = function (event) {
+    object.inherits(WallEntry, Widget);
+
+    WallEntry.prototype.init = function() {
+        this.renderScrollButtons();
+        $(window).resize(this.renderScrollButtons.bind(this));
+    }
+
+    WallEntry.prototype.renderScrollButtons = function() {
+        const scrollableContainer = this.$.find('.scrollable-container').first();
+        const scrollLeftButton = this.$.find('.scroll-left');
+        const scrollRightButton = this.$.find('.scroll-right');
+
+        if (scrollableContainer.width() < scrollableContainer[0].scrollWidth) {
+            scrollLeftButton.show();
+            scrollRightButton.show();
+        } else {
+            scrollLeftButton.hide();
+            scrollRightButton.hide();
+        }
+    }
+
+    WallEntry.prototype.scrollLeft = function(event) {
+        this.smoothScroll(event, '-');
+    }
+    WallEntry.prototype.scrollRight = function(event) {
+        this.smoothScroll(event, '+');
+    }
+
+    WallEntry.prototype.smoothScroll = function(event, direction) {
+        this.$.find('.scrollable-container').animate(
+            {
+                scrollLeft: direction + '=' + this.$.width() * 0.8
+            },
+            500
+        );
+    }
+
+    WallEntry.prototype.vote = function(event) {
+        const voteContainer = this.$.find('.votes-container');
+        const voteCell = event.$target.closest('.expanded-vote');
+
+        const alreadyVoted = event.$target.hasClass('voted');
+        voteCell.find('.time-slot-vote').removeClass('voted');
+        if (alreadyVoted) {
+            event.$target.removeClass('voted');
+            voteCell.removeClass('voted');
+            voteCell.find('.vote-value').val('');
+        } else {
+            event.$target.addClass('voted');
+            voteCell.addClass('voted');
+            voteCell.find('.vote-value').val(event.$target.data('value'));
+        }
+
+        this.$.find(':submit').prop('disabled', voteContainer.find('.time-slot-vote.voted').length !== this.$.find('.expanded-vote').length)
+    };
+
+    const Form = function (node, options) {
+        Widget.call(this, node, options);
+    };
+
+    object.inherits(Form, Widget);
+
+    Form.prototype.addDateRow = function (event) {
         event.preventDefault();
 
         const rowsContainer = $('#date-rows');
@@ -20,12 +87,12 @@ humhub.module('letsMeet', function (module, require, $) {
         })
     }
 
-    const removeDateRow = function(event) {
+    Form.prototype.removeDateRow = function(event) {
         event.$target.closest('.date-row').remove();
         renderButtons();
     }
 
-    const renderButtons = function() {
+    Form.prototype.renderButtons = function() {
         const rowsContainer = $('#date-rows');
 
         rowsContainer.find('.add-row').hide();
@@ -39,7 +106,7 @@ humhub.module('letsMeet', function (module, require, $) {
         rowsContainer.find('.add-row').last().show();
     }
 
-    const inviteAllMembers = function(event) {
+    Form.prototype.inviteAllMembers = function(event) {
         const newInvitesForm = $('#new-invites-form');
         const invitesList = $('.invites');
 
@@ -51,27 +118,22 @@ humhub.module('letsMeet', function (module, require, $) {
             invitesList.show();
         }
     }
-    
-    const removeParticipant = function(event) {
+
+    Form.prototype.removeParticipant = function(event) {
         const participant = event.$target.closest('li');
 
         $('input[value="' + participant.find('input').val() + '"]').closest('.form-group').remove();
         participant.remove();
     }
 
-    const loadTab = function(url) {
-
-        client.get(url).then(function (response) {
-            modal.global.setDialog(response);
-        })
-    }
-
-    const submit = function(evt) {
+    Form.prototype.submit = function(evt) {
         evt.originalEvent.preventDefault();
 
         client.submit(evt).then(function(response) {
             if (response.dataType === 'json' && response.data.next) {
-                loadTab(response.data.next)
+                client.get(response.data.next).then(function (response) {
+                    modal.global.setDialog(response);
+                })
             } else if (response.dataType === 'json' && response.reloadWall) {
                 modal.global.close(true);
                 event.trigger('humhub:content:newEntry', response.output, this);
@@ -86,11 +148,17 @@ humhub.module('letsMeet', function (module, require, $) {
         })
     }
 
+    const changeState = function(event) {
+        client.post(event).then(function () {
+            Widget.closest(event.$trigger).reload()
+        }).catch(function (err) {
+            module.log.error(err, true);
+        });
+    };
+
     module.export({
-        addDateRow: addDateRow,
-        removeDateRow: removeDateRow,
-        submit: submit,
-        inviteAllMembers: inviteAllMembers,
-        removeParticipant: removeParticipant,
+        WallEntry: WallEntry,
+        Form: Form,
+        changeState: changeState,
     });
 });

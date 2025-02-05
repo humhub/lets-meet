@@ -35,7 +35,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
         <div class="col-md-7 text-right">
             <?= Button::asLink()->danger()
                 ->icon('fa-times')
-                ->action('letsMeet.removeDateRow')
+                ->action('removeDateRow')
                 ->confirm(
                     Yii::t('LetsMeetModule.base', 'Delete'),
                     Yii::t('LetsMeetModule.base', 'Are you sure you want to delete this date?'),
@@ -48,7 +48,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
             ?>
             <?= Button::asLink()->primary()
                 ->icon('fa-plus')
-                ->action('letsMeet.addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
+                ->action('addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Delete'),
                     'class' => 'add-row',

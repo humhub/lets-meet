@@ -53,8 +53,8 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
     </div>
 
 
-    <?php Pjax::begin(['enablePushState' => '', 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
-        <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>">
+    <?php Pjax::begin(['enablePushState' => 0, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
+        <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>" data-ui-widget="letsMeet.WallEntry" data-ui-init>
         <div class="slots-container">
             <div class="icons-cell">
                 <div>
@@ -93,7 +93,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             ]) ?>
             <div class="controls-container">
                 <div class="scroll-left">
-                    <?= Button::defaultType()->icon('arrow-left')->action('letsMeetWallEntry.scrollLeft')->loader(false) ?>
+                    <?= Button::defaultType()->icon('arrow-left')->action('scrollLeft')->loader(false) ?>
                 </div>
                 <div class="control-buttons">
                     <?php if ($canVote): ?>
@@ -108,7 +108,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
 
                 </div>
                 <div class="scroll-right">
-                    <?= Button::defaultType()->icon('arrow-right')->action('letsMeetWallEntry.scrollRight')->loader(false) ?>
+                    <?= Button::defaultType()->icon('arrow-right')->action('scrollRight')->loader(false) ?>
                 </div>
             </div>
 

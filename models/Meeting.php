@@ -3,6 +3,7 @@
 namespace humhub\modules\letsMeet\models;
 
 
+use DateTime;
 use Yii;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
@@ -60,7 +61,7 @@ class Meeting extends ContentActiveRecord implements Searchable
             [['title', 'description', 'duration'], 'required'],
             [['description'], 'string'],
             [['status', 'created_by', 'updated_by'], 'integer'],
-            [['duration'], 'time', 'format' => 'php:G:i'],
+            [['duration'], 'time', 'format' => 'php:H:i:s'],
             [['invite_all_space_users'], 'boolean'],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
@@ -124,5 +125,24 @@ class Meeting extends ContentActiveRecord implements Searchable
             'title' => $this->title,
             'description' => $this->description,
         ];
+    }
+
+    public function beforeValidate()
+    {
+        $this->normalizeDuration();
+
+        return parent::beforeValidate();
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->normalizeDuration();
+
+        return parent::beforeSave($insert);
+    }
+
+    private function normalizeDuration()
+    {
+        $this->duration = Yii::$app->formatter->asTime(new DateTime($this->duration), 'php:H:i:s');
     }
 }

@@ -6,7 +6,7 @@ use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\widgets\richtext\RichTextField;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\FormAsset;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 
@@ -17,7 +17,7 @@ use humhub\widgets\ModalButton;
  * @var ContentContainerActiveRecord $contentContainer
  */
 
-FormAsset::register($this);
+LetsMeetAsset::register($this);
 
 $tabStateManager = TabsStateManager::instance();
 $prevUrl = $contentContainer->createUrl(
@@ -33,7 +33,7 @@ $header = TabsStateManager::instance()->id
 ?>
 
 <?php ModalDialog::begin(['header' => $header]) ?>
-    <div class="modal-body meeting-edit-modal">
+    <div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
         <div class="form-heading">
             <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
             <div>
@@ -69,7 +69,7 @@ $header = TabsStateManager::instance()->id
         <div class="text-center">
             <?= ModalButton::defaultType('Previous')->load($prevUrl); ?>
             <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
-                ->action('letsMeet.submit')->loader(false)?>
+                ->action('submit')->loader(false)?>
         </div>
 
         <?php ActiveForm::end() ?>

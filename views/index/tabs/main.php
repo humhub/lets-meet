@@ -3,7 +3,7 @@
 use humhub\modules\content\widgets\richtext\RichTextField;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\FormAsset;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\components\ContentContainerActiveRecord;
@@ -16,7 +16,7 @@ use yii\widgets\MaskedInput;
  * @var ContentContainerActiveRecord $contentContainer
  */
 
-FormAsset::register($this);
+LetsMeetAsset::register($this);
 
 $header = TabsStateManager::instance()->id
     ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
@@ -28,7 +28,7 @@ $header = TabsStateManager::instance()->id
 
 <?php ModalDialog::begin(['header' => $header]) ?>
 
-<div class="modal-body meeting-edit-modal">
+<div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
     <?php $form = ActiveForm::begin() ?>
 
     <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'placeholder' => $model->getAttributeLabel('title')]) ?>
@@ -45,7 +45,7 @@ $header = TabsStateManager::instance()->id
 
     <div class="text-center">
         <?= ModalButton::cancel(); ?>
-        <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('letsMeet.submit')->loader(false)?>
+        <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Next'))->action('submit')->loader(false)?>
     </div>
 
     <?php ActiveForm::end() ?>

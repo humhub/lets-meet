@@ -4,7 +4,9 @@ namespace humhub\modules\letsMeet\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;
-class FormAsset extends AssetBundle
+
+
+class LetsMeetAsset extends AssetBundle
 {
     public $sourcePath = '@lets-meet/resources';
     public $css = [

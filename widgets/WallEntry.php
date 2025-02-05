@@ -49,7 +49,7 @@ class WallEntry extends WallStreamModuleEntryWidget
                 [
                     'label' => Yii::t('LetsMeetModule.base', 'Reopen'),
                     'icon' => 'fa-check',
-                    'action' => 'letsMeetWallEntry.close',
+                    'action' => 'letsMeet.changeState',
                     'options' => [
                         'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/reopen', ['id' => $this->model->id]),
                         'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Reopen Let\'s Meet'),
@@ -81,7 +81,7 @@ class WallEntry extends WallStreamModuleEntryWidget
                 [
                     'label' => Yii::t('LetsMeetModule.base', 'Close'),
                     'icon' => 'fa-times',
-                    'action' => 'letsMeetWallEntry.close',
+                    'action' => 'letsMeet.changeState',
                     'options' => [
                         'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
                         'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Let\'s Meet'),

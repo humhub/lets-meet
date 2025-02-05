@@ -7,7 +7,7 @@ use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use yii\widgets\ActiveForm;
-use humhub\modules\letsMeet\assets\FormAsset;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\widgets\Button;
@@ -29,7 +29,7 @@ use humhub\widgets\Pjax;
  * @var string $searchUsersUrl
  */
 
-FormAsset::register($this);
+LetsMeetAsset::register($this);
 
 $invites = $invitesDataProvider->models;
 
@@ -45,7 +45,7 @@ $header = TabsStateManager::instance()->id
 
 <?php ModalDialog::begin(['header' => $header]) ?>
 
-<div class="modal-body meeting-edit-modal">
+<div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
     <div class="form-heading">
         <h5><?= Yii::t('LetsMeetModule.base', 'Invite users') ?></h5>
         <div>
@@ -97,7 +97,7 @@ $header = TabsStateManager::instance()->id
                                 <?= Button::danger()->sm()
                                     ->icon('remove')
                                     ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
-                                    ->action('letsMeet.removeParticipant') ?>
+                                    ->action('removeParticipant') ?>
                             </div>
                         </div>
                     </li>
@@ -124,7 +124,7 @@ $header = TabsStateManager::instance()->id
                         ->hiddenInput(['value' => $user->guid])
                         ->label(false) ?>
                 <?php endforeach; ?>
-            <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'letsMeet.inviteAllMembers']]) ?>
+            <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'inviteAllMembers']]) ?>
 
             <div class="text-center">
                 <?php if (TabsStateManager::instance()->id): ?>
@@ -132,7 +132,7 @@ $header = TabsStateManager::instance()->id
                 <?php else: ?>
                     <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
                 <?php endif; ?>
-                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Save'))->action('letsMeet.submit')->loader()?>
+                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Save'))->action('submit')->loader()?>
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>
