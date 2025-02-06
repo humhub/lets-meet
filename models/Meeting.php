@@ -143,6 +143,6 @@ class Meeting extends ContentActiveRecord implements Searchable
 
     private function normalizeDuration()
     {
-        $this->duration = Yii::$app->formatter->asTime(new DateTime($this->duration), 'php:H:i:s');
+        $this->duration = (new DateTime($this->duration))->format('H:i:s');
     }
 }
