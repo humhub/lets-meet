@@ -48,10 +48,10 @@ humhub.module('letsMeet', function (module, require, $) {
     }
 
     WallEntry.prototype.vote = function(event) {
-        const voteContainer = this.$.find('.votes-container');
         const voteCell = event.$target.closest('.expanded-vote');
-
+        const voteContainer = voteCell.closest('.votes-container');
         const alreadyVoted = event.$target.hasClass('voted');
+
         voteCell.find('.time-slot-vote').removeClass('voted');
         if (alreadyVoted) {
             event.$target.removeClass('voted');
