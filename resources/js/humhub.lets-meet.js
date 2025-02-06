@@ -75,9 +75,8 @@ humhub.module('letsMeet', function (module, require, $) {
     Form.prototype.addDateRow = function (event) {
         event.preventDefault();
 
+        const rowsContainer = this.$.find('#date-rows');
         const self = this;
-
-        const rowsContainer = $('#date-rows');
 
         client.post(
             event,
@@ -95,7 +94,7 @@ humhub.module('letsMeet', function (module, require, $) {
     }
 
     Form.prototype.renderButtons = function() {
-        const rowsContainer = $('#date-rows');
+        const rowsContainer = this.$.find('#date-rows');
 
         rowsContainer.find('.add-row').hide();
 
@@ -109,8 +108,8 @@ humhub.module('letsMeet', function (module, require, $) {
     }
 
     Form.prototype.inviteAllMembers = function(event) {
-        const newInvitesForm = $('#new-invites-form');
-        const invitesList = $('.invites');
+        const newInvitesForm = this.$.find('#new-invites-form');
+        const invitesList = this.$.find('.invites');
 
         if (event.$target.prop('checked')) {
             newInvitesForm.hide();
