@@ -75,6 +75,8 @@ humhub.module('letsMeet', function (module, require, $) {
     Form.prototype.addDateRow = function (event) {
         event.preventDefault();
 
+        const self = this;
+
         const rowsContainer = $('#date-rows');
 
         client.post(
@@ -83,13 +85,13 @@ humhub.module('letsMeet', function (module, require, $) {
         ).then(function (response) {
             rowsContainer.append(response.response);
             additions.applyTo(rowsContainer);
-            renderButtons();
+            self.renderButtons();
         })
     }
 
     Form.prototype.removeDateRow = function(event) {
         event.$target.closest('.date-row').remove();
-        renderButtons();
+        this.renderButtons();
     }
 
     Form.prototype.renderButtons = function() {
