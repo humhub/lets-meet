@@ -113,6 +113,7 @@ $header = TabsStateManager::instance()->id
         <?php ActiveForm::end() ?>
 
         <?php $form = ActiveForm::begin([
+            'id' => 'invites-form',
             'options' => [
                 'data-pjax' => 0,
             ],

@@ -130,6 +130,13 @@ humhub.module('letsMeet', function (module, require, $) {
     Form.prototype.submit = function(evt) {
         evt.originalEvent.preventDefault();
 
+        if (this.$.find('#new-invites-form').length) {
+            this.$.find('[name="NewInvitesForm[invites][]"]').val().forEach(function(userGuid) {
+                $('<input type="hidden" name="InvitesForm[invites][]" value="' + userGuid + '">')
+                    .insertAfter(this.$.find('[name="InvitesForm[invites]"]'));
+            }.bind(this));
+        }
+
         client.submit(evt).then(function(response) {
             if (response.dataType === 'json' && response.data.next) {
                 client.get(response.data.next).then(function (response) {
