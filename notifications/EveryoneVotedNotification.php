@@ -24,8 +24,6 @@ class EveryoneVotedNotification extends BaseNotification
 
     public $moduleId = 'lets-meet';
 
-    public $viewName = 'everyoneVoted';
-
     public function category()
     {
         return new LetsMeetNotificationCategory();

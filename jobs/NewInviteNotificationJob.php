@@ -7,7 +7,6 @@ use humhub\modules\letsMeet\models\MeetingInvite;
 use humhub\modules\letsMeet\notifications\NewInviteNotification;
 use humhub\modules\queue\ActiveJob;
 use Yii;
-use yii\helpers\ArrayHelper;
 
 class NewInviteNotificationJob extends ActiveJob
 {
