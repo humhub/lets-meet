@@ -3,6 +3,7 @@
 namespace humhub\modules\letsMeet;
 
 use humhub\modules\letsMeet\models\Meeting;
+use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\space\models\Space;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\components\ContentContainerModule;
@@ -21,7 +22,16 @@ class Module extends ContentContainerModule
         ];
     }
 
-    
+    protected function getAccessRules()
+    {
+        return [
+            [
+                'permission' => ManagePermission::class,
+                'actions' => ['*'],
+            ],
+        ];
+    }
+
     public function disable()
     {
         foreach (Meeting::find()->all() as $meeting) {
@@ -44,7 +54,7 @@ class Module extends ContentContainerModule
     {
         if ($contentContainer) {
             return [
-                new permissions\CreateLetsMeet(),
+                new ManagePermission(),
             ];
         }
 

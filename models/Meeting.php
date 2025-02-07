@@ -4,6 +4,7 @@ namespace humhub\modules\letsMeet\models;
 
 
 use DateTime;
+use humhub\modules\letsMeet\permissions\ManagePermission;
 use Yii;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
@@ -37,6 +38,10 @@ class Meeting extends ContentActiveRecord implements Searchable
 
     public $wallEntryClass = WallEntry::class;
     public $moduleId = 'lets-meet';
+
+    protected $createPermission = ManagePermission::class;
+
+    protected $managePermission = ManagePermission::class;
 
     public static function tableName()
     {

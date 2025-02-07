@@ -9,7 +9,7 @@ use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\modules\letsMeet\models\Meeting;
-use humhub\modules\letsMeet\widgets\WallEntry;
+use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\letsMeet\widgets\WallEntryContent;
 use humhub\modules\user\models\UserFilter;
 use Yii;
@@ -17,6 +17,7 @@ use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
 use humhub\modules\user\models\UserPicker;
@@ -43,11 +44,7 @@ class IndexController extends ContentContainerController
 
     public function actionClose($id)
     {
-        $meeting = Meeting::findOne(['id' => $id]);
-
-        if (!$meeting) {
-            throw new NotFoundHttpException();
-        }
+        $meeting = $this->getMeeting($id);
 
         $meeting->status = Meeting::STATUS_CLOSED;
         $meeting->save();
@@ -55,11 +52,7 @@ class IndexController extends ContentContainerController
 
     public function actionReopen($id)
     {
-        $meeting = Meeting::findOne(['id' => $id]);
-
-        if (!$meeting) {
-            throw new NotFoundHttpException();
-        }
+        $meeting = $this->getMeeting($id);
 
         $meeting->status = Meeting::STATUS_OPEN;
         $meeting->save();
@@ -67,6 +60,10 @@ class IndexController extends ContentContainerController
 
     public function actionEdit($id = null)
     {
+        if ($id) {
+            $this->getMeeting($id);
+        }
+
         $model = $this->stateManager->getState(MainForm::class, new MainForm(), $id);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -90,6 +87,10 @@ class IndexController extends ContentContainerController
 
     public function actionDates($id = null)
     {
+        if ($id) {
+            $this->getMeeting($id);
+        }
+
         $models = $this->stateManager->getState(DayForm::class, [new DayForm()], $id);
 
         if (Yii::$app->request->isPost) {
@@ -121,6 +122,10 @@ class IndexController extends ContentContainerController
 
     public function actionInvites($id = null)
     {
+        if ($id) {
+            $this->getMeeting($id);
+        }
+
         $newInvites = new NewInvitesForm();
         $model = $this->stateManager->getState(InvitesForm::class, new InvitesForm(), $id);
 
@@ -170,6 +175,10 @@ class IndexController extends ContentContainerController
 
     public function actionSearchParticipants(string $keyword, $id = null)
     {
+        if (!$this->contentContainer->getPermissionManager()->can(new ManagePermission())) {
+            throw new ForbiddenHttpException();
+        }
+
         return $this->asJson(UserPicker::filter([
             'query' => $this->contentContainer->getMembershipUser()->andWhere(['<>', 'user.id', Yii::$app->user->id]),
             'keyword' => $keyword,
@@ -184,17 +193,16 @@ class IndexController extends ContentContainerController
 
     public function actionContent($id)
     {
-        $model = Meeting::findOne(['id' => $id]);
-
-        if (!$model) {
-            throw new NotFoundHttpException();
-        }
-
+        $model = $this->getMeeting($id);
         return WallEntryContent::widget(['model' => $model]);
     }
 
     public function actionAddDateRow()
     {
+        if (!$this->contentContainer->getPermissionManager()->can(new ManagePermission())) {
+            throw new ForbiddenHttpException();
+        }
+
         $model = new DayForm();
         $form = new ActiveForm();
         $index = Yii::$app->request->post('index', 0);
@@ -206,5 +214,20 @@ class IndexController extends ContentContainerController
             'index' => $index,
             'contentContainer' => $this->contentContainer,
         ]);
+    }
+
+    private function getMeeting(int $id): Meeting
+    {
+        $meeting = Meeting::findOne(['id' => $id]);
+
+        if (!$meeting) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$meeting->content->canEdit()) {
+            throw new ForbiddenHttpException();
+        }
+
+        return $meeting;
     }
 }

@@ -16,9 +16,9 @@ use Yii;
 /**
  * CreatePost Permission
  */
-class CreateLetsMeet extends BasePermission
+class ManagePermission extends BasePermission
 {
-    public $defaultAllowedGroups = [
+    protected $defaultAllowedGroups = [
         Space::USERGROUP_OWNER,
         Space::USERGROUP_ADMIN,
         Space::USERGROUP_MODERATOR,
@@ -26,18 +26,23 @@ class CreateLetsMeet extends BasePermission
     ];
 
     protected $fixedGroups = [
-//        Space::USERGROUP_OWNER,
+        Space::USERGROUP_GUEST,
+        Space::USERGROUP_USER,
+        User::USERGROUP_SELF,
+        User::USERGROUP_FRIEND,
+        User::USERGROUP_USER,
+        User::USERGROUP_GUEST,
     ];
 
     protected $moduleId = 'lets-meet';
 
     public function getTitle()
     {
-        return Yii::t('LetsMeetModule.base', 'Let\'s Meet');
+        return Yii::t('LetsMeetModule.base', 'Manage Let\'s Meet');
     }
 
     public function getDescription()
     {
-        return Yii::t('LetsMeetModule.base', 'Let\'s Meet description');
+        return Yii::t('LetsMeetModule.base', 'Can manage Let\'s Meet');
     }
 }
