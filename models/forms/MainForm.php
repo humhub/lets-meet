@@ -34,10 +34,10 @@ class MainForm extends Model
     public function attributeLabels()
     {
         return [
-            'title' => Yii::t('LetsMeetModule.base', 'Title'),
-            'description' => Yii::t('LetsMeetModule.base', 'Description'),
-            'duration' => Yii::t('LetsMeetModule.base', 'Meeting duration'),
-            'make_public' => Yii::t('LetsMeetModule.base', 'Make Public'),
+            'title' => Yii::t('LetsMeetModule.form', 'Title'),
+            'description' => Yii::t('LetsMeetModule.form', 'Description'),
+            'duration' => Yii::t('LetsMeetModule.form', 'Meeting duration'),
+            'make_public' => Yii::t('LetsMeetModule.form', 'Make Public'),
         ];
     }
 }

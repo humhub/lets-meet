@@ -38,11 +38,11 @@ class ManagePermission extends BasePermission
 
     public function getTitle()
     {
-        return Yii::t('LetsMeetModule.base', 'Manage Let\'s Meet');
+        return Yii::t('LetsMeetModule.permission', 'Manage Let\'s Meet');
     }
 
     public function getDescription()
     {
-        return Yii::t('LetsMeetModule.base', 'Can manage Let\'s Meet');
+        return Yii::t('LetsMeetModule.permission', 'Can manage Let\'s Meet');
     }
 }

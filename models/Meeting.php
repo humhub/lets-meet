@@ -73,22 +73,6 @@ class Meeting extends ContentActiveRecord implements Searchable
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('LetsMeetModule.base', 'ID'),
-            'title' => Yii::t('LetsMeetModule.base', 'Title'),
-            'description' => Yii::t('LetsMeetModule.base', 'Description'),
-            'duration' => Yii::t('LetsMeetModule.base', 'Meeting duration'),
-            'invite_all_space_users' => Yii::t('LetsMeetModule.base', 'Invite All Space Users'),
-            'status' => Yii::t('LetsMeetModule.base', 'Status'),
-            'created_at' => Yii::t('LetsMeetModule.base', 'Created At'),
-            'created_by' => Yii::t('LetsMeetModule.base', 'Created By'),
-            'updated_at' => Yii::t('LetsMeetModule.base', 'Updated At'),
-            'updated_by' => Yii::t('LetsMeetModule.base', 'Updated By'),
-        ];
-    }
-
     public function getInvites() : ActiveQuery
     {
         return $this->hasMany(MeetingInvite::class, ['meeting_id' => 'id']);

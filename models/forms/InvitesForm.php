@@ -36,8 +36,8 @@ class InvitesForm extends Model
     public function attributeLabels()
     {
         return [
-            'invites' => Yii::t('LetsMeetModule.base', 'Participants'),
-            'invite_all_space_members' => Yii::t('LetsMeetModule.base', 'Invite all Space members'),
+            'invites' => Yii::t('LetsMeetModule.form', 'Participants'),
+            'invite_all_space_members' => Yii::t('LetsMeetModule.form', 'Invite all Space members'),
         ];
     }
 

@@ -27,7 +27,7 @@ class NewInvitesForm extends Model
     public function attributeLabels()
     {
         return [
-            'invites' => Yii::t('LetsMeetModule.base', 'New Participant'),
+            'invites' => Yii::t('LetsMeetModule.form', 'New Participant'),
         ];
     }
 }

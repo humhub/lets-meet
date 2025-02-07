@@ -28,8 +28,8 @@ class DayForm extends Model
     public function attributeLabels()
     {
         return [
-            'day' => Yii::t('LetsMeetModule.base', 'Day'),
-            'times' => Yii::t('LetsMeetModule.base', 'Times'),
+            'day' => Yii::t('LetsMeetModule.form', 'Day'),
+            'times' => Yii::t('LetsMeetModule.form', 'Times'),
         ];
     }
 }

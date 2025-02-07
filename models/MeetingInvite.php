@@ -31,15 +31,6 @@ class MeetingInvite extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
-            'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
-            'notified' => Yii::t('LetsMeetModule.base', 'Notified'),
-        ];
-    }
-
     public function getMeeting() : ActiveQuery
     {
         return $this->hasOne(Meeting::class, ['id' => 'meeting_id']);

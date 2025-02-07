@@ -35,15 +35,6 @@ class MeetingVote extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'time_slot_id' => Yii::t('LetsMeetModule.base', 'Time Slot ID'),
-            'user_id' => Yii::t('LetsMeetModule.base', 'User ID'),
-            'vote' => Yii::t('LetsMeetModule.base', 'Vote'),
-        ];
-    }
-
     public function getTimeSlot()
     {
         return $this->hasOne(MeetingTimeSlot::class, ['id' => 'time_slot_id']);

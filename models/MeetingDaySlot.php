@@ -29,15 +29,6 @@ class MeetingDaySlot extends ActiveRecord
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('LetsMeetModule.base', 'ID'),
-            'date' => Yii::t('LetsMeetModule.base', 'Date'),
-            'meeting_id' => Yii::t('LetsMeetModule.base', 'Meeting ID'),
-        ];
-    }
-
     public function getMeeting()
     {
         return $this->hasOne(Meeting::class, ['id' => 'meeting_id']);
