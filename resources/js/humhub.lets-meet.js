@@ -5,6 +5,7 @@ humhub.module('letsMeet', function (module, require, $) {
     const additions = require('ui.additions');
     const modal = require('ui.modal');
     const event = require('event');
+    const status = require('ui.status');
 
     const WallEntry = function (node, options) {
         Widget.call(this, node, options);
@@ -152,13 +153,12 @@ humhub.module('letsMeet', function (module, require, $) {
                 modal.global.close(true);
                 event.trigger('humhub:content:newEntry', response.output, this);
                 event.trigger('humhub:content:afterSubmit', response.output, this);
-                module.log.success('success.saved');
             } else {
                 modal.global.setDialog(response);
             }
         }).error(function() {
             modal.global.close();
-            module.log.error('error.unsuccessful');
+            status.success(module.config.text.error.unsuccessful);
         })
     }
 

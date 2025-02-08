@@ -2,7 +2,7 @@
 
 namespace humhub\modules\letsMeet\widgets;
 
-use humhub\modules\letsMeet\assets\WallEntryAsset;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\modules\letsMeet\jobs\EveryoneVotedNotificationJob;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
@@ -20,7 +20,7 @@ class WallEntryContent extends Widget
     public function init()
     {
         parent::init();
-        WallEntryAsset::register($this->view);
+        LetsMeetAsset::register($this->view);
     }
 
     public function run()

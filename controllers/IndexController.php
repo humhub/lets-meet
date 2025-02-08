@@ -48,6 +48,8 @@ class IndexController extends ContentContainerController
 
         $meeting->status = Meeting::STATUS_CLOSED;
         $meeting->save();
+
+        return $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully closed.'));
     }
 
     public function actionReopen($id)
@@ -56,6 +58,8 @@ class IndexController extends ContentContainerController
 
         $meeting->status = Meeting::STATUS_OPEN;
         $meeting->save();
+
+        return $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully reopened.'));
     }
 
     public function actionEdit($id = null)
@@ -103,7 +107,7 @@ class IndexController extends ContentContainerController
             $this->stateManager->saveState(DayForm::class, $models, $id);
 
             if ($id) {
-                return $this->asJson([]);
+                return $this->view->saved();
             }
 
             return $this->asJson([
@@ -140,6 +144,8 @@ class IndexController extends ContentContainerController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $this->stateManager->saveState(InvitesForm::class, $model, $id);
+
+            $this->view->saved();
 
             if (!$id) {
                 $model = $this->stateManager->saveFromTempState($this->contentContainer);
