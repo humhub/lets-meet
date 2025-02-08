@@ -149,6 +149,10 @@
     margin-bottom: 8px;
 }
 
+.results-container .votes-container:last-of-type {
+    margin-bottom: 0;
+}
+
 .results-container .votes-container .time-slot-vote {
     cursor: default;
 }
