@@ -43,7 +43,6 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Add'),
                     'class' => 'remove-row',
-                    'style' => ['display' => $index === 0 ? 'none' : '']
                 ])
             ?>
             <?= Button::asLink()->primary()
