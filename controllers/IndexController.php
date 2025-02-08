@@ -193,8 +193,17 @@ class IndexController extends ContentContainerController
 
     public function actionContent($id)
     {
-        $model = $this->getMeeting($id);
-        return WallEntryContent::widget(['model' => $model]);
+        $meeting = Meeting::findOne(['id' => $id]);
+
+        if (!$meeting) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$meeting->content->canView()) {
+            throw new ForbiddenHttpException();
+        }
+
+        return WallEntryContent::widget(['model' => $meeting]);
     }
 
     public function actionAddDateRow()
