@@ -87,18 +87,20 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             'action' => $meeting->content->container->createUrl('/lets-meet/index/content', ['id' => $meeting->id]),
             'options' => ['data' => ['pjax' => 1]]]
         ) ?>
-            <?= $this->render('votes_row', [
-                'meeting' => $meeting,
-                'canVote' => $canVote && (empty($userVotes) || $canEditVote),
-                'votes' => $userVotes,
-                'user' => Yii::$app->user->identity,
-            ]) ?>
+            <?php if ($canVote): ?>
+                <?= $this->render('votes_row', [
+                    'meeting' => $meeting,
+                    'canVote' => $meeting->status != $meeting::STATUS_CLOSED && (empty($userVotes) || $canEditVote),
+                    'votes' => $userVotes,
+                    'user' => Yii::$app->user->identity,
+                ]) ?>
+            <?php endif; ?>
             <div class="controls-container">
                 <div class="scroll-left">
                     <?= Button::defaultType()->icon('arrow-left')->action('scrollLeft')->loader(false) ?>
                 </div>
                 <div class="control-buttons">
-                    <?php if ($canVote): ?>
+                    <?php if ($canVote && $meeting->status != $meeting::STATUS_CLOSED): ?>
                         <?php if (empty($userVotes) || $canEditVote): ?>
                             <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
                                 ->options(['name' => 'action', 'value' => 'vote', 'disabled' => !$canEditVote])  ?>

@@ -19,15 +19,21 @@ humhub.module('letsMeet', function (module, require, $) {
 
     WallEntry.prototype.renderScrollButtons = function() {
         const scrollableContainer = this.$.find('.scrollable-container').first();
+        const controlsContainer = this.$.find('.controls-container');
         const scrollLeftButton = this.$.find('.scroll-left');
         const scrollRightButton = this.$.find('.scroll-right');
 
         if (scrollableContainer.width() < scrollableContainer[0].scrollWidth) {
+            controlsContainer.show();
             scrollLeftButton.show();
             scrollRightButton.show();
         } else {
             scrollLeftButton.hide();
             scrollRightButton.hide();
+
+            if (controlsContainer.find('.control-buttons').children().length === 0) {
+                controlsContainer.hide();
+            }
         }
     }
 
