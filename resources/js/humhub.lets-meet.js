@@ -23,6 +23,7 @@ humhub.module('letsMeet', function (module, require, $) {
         const controlsContainer = this.$.find('.controls-container');
         const scrollLeftButton = this.$.find('.scroll-left');
         const scrollRightButton = this.$.find('.scroll-right');
+        const scrollTolerance = 1;
 
         if (scrollableContainer.width() < scrollableContainer[0].scrollWidth) {
             controlsContainer.show();
@@ -36,6 +37,9 @@ humhub.module('letsMeet', function (module, require, $) {
                 controlsContainer.hide();
             }
         }
+
+        scrollLeftButton.find('button').prop('disabled', scrollableContainer.scrollLeft() <= scrollTolerance);
+        scrollRightButton.find('button').prop('disabled', scrollableContainer.scrollLeft() + scrollableContainer.innerWidth() >= scrollableContainer[0].scrollWidth - scrollTolerance);
     }
 
     WallEntry.prototype.scrollLeft = function(event) {
@@ -50,7 +54,8 @@ humhub.module('letsMeet', function (module, require, $) {
             {
                 scrollLeft: direction + '=' + this.$.width() * 0.8
             },
-            500
+            500,
+            this.renderScrollButtons.bind(this)
         );
     }
 
