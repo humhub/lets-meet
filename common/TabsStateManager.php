@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet\common;
 
 use humhub\modules\content\components\ContentContainerActiveRecord;
@@ -169,7 +175,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         } catch (\Throwable $e) {
             $transaction->rollBack();
 
-            throw $e;
+            Yii::error($e);
 
             return null;
         }

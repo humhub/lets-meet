@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet\controllers;
 
 use humhub\modules\letsMeet\common\TabsStateManager;
@@ -12,16 +18,16 @@ use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\letsMeet\widgets\WallEntryContent;
 use humhub\modules\user\models\UserFilter;
-use Yii;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
+use humhub\modules\user\models\UserPicker;
+use humhub\modules\stream\actions\StreamEntryResponse;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
-use humhub\modules\user\models\UserPicker;
-use humhub\modules\stream\actions\StreamEntryResponse;
 
 class IndexController extends ContentContainerController
 {

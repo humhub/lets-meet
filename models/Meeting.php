@@ -1,16 +1,22 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet\models;
 
 
 use DateTime;
-use humhub\modules\letsMeet\permissions\ManagePermission;
 use Yii;
+use yii\db\ActiveQuery;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\search\interfaces\Searchable;
-use yii\db\ActiveQuery;
+use humhub\modules\letsMeet\permissions\ManagePermission;
 
 /**
  * @property int $id

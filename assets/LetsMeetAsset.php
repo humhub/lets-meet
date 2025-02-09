@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet\assets;
 
 use Yii;
 use yii\web\AssetBundle;
-use yii\web\View;
 
 
 class LetsMeetAsset extends AssetBundle

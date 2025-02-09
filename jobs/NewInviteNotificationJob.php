@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet\jobs;
 
 use humhub\modules\letsMeet\models\Meeting;
@@ -47,6 +53,7 @@ class NewInviteNotificationJob extends ActiveJob
             $transaction->commit();
         } catch (\Throwable $e) {
             $transaction->rollBack();
+            Yii::error($e);
             throw $e;
         }
     }

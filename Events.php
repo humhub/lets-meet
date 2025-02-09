@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 namespace humhub\modules\letsMeet;
 
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\space\models\Space;
 use Yii;
-use yii\base\Event;
 
 class Events
 {
@@ -13,7 +18,7 @@ class Events
     {
         $object = $event->sender->object;
 
-        if(!$object instanceof Meet) {
+        if(!$object instanceof Meeting) {
             return;
         }
     }
