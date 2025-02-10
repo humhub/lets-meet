@@ -29,12 +29,12 @@ class TimeSlotPicker extends BasePicker
 window.timeSlotPickerBeforeInit = function(options) {
     options.createTag = function (params) {
         const inputValue = params.term.trim();
-
-        // Single digit: Convert to x:00 if x is in range 1-24
-        const singleDigitRegex = /^([1-9]|1[0-9]|2[0-4])$/;
-
-        // Full time: Validate hh:mm (hh: 1-24, mm: 00-59)
-        const fullTimeRegex = /^([1-9]|1[0-9]|2[0-4]):([0-5][0-9])$/;
+        
+        // Single digit or two-digit hour: Convert to x:00 if x is in range 0-23
+        const singleDigitRegex = /^(0|00|[1-9]|1[0-9]|2[0-3])$/;
+    
+        // Full time: Validate hh:mm (hh: 00-23, mm: 00-59)
+        const fullTimeRegex = /^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
 
         if (singleDigitRegex.test(inputValue)) {
             // Convert single digit to x:00
