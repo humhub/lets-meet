@@ -1,3 +1,9 @@
+/*!
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2025 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
 humhub.module('letsMeet', function (module, require, $) {
     const Widget = require('ui.widget.Widget');
     const object = require('util.object');
@@ -15,7 +21,25 @@ humhub.module('letsMeet', function (module, require, $) {
 
     WallEntry.prototype.init = function() {
         this.renderScrollButtons();
+        this.listenResize();
+        this.listenScrollWheel();
+    }
+
+    WallEntry.prototype.listenResize = function() {
         $(window).resize(this.renderScrollButtons.bind(this));
+    }
+
+    WallEntry.prototype.listenScrollWheel = function(event) {
+        const scrollableContainer = this.$.find('.scrollable-container');
+        const self = this;
+
+        scrollableContainer.on('wheel', function(event) {
+            if (event.originalEvent.deltaX !== 0) {
+                event.preventDefault();
+                scrollableContainer.scrollLeft($(this).scrollLeft() + event.originalEvent.deltaX);
+                self.renderScrollButtons();
+            }
+        });
     }
 
     WallEntry.prototype.renderScrollButtons = function() {
