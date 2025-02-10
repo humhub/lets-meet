@@ -78,7 +78,7 @@ humhub.module('letsMeet', function (module, require, $) {
             {
                 scrollLeft: direction + '=' + this.$.width() * 0.8
             },
-            500,
+            300,
             this.renderScrollButtons.bind(this)
         );
     }
