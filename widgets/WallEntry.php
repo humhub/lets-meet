@@ -60,11 +60,11 @@ class WallEntry extends WallStreamModuleEntryWidget
                         'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/reopen', ['id' => $this->model->id]),
                         'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Reopen Let\'s Meet'),
                         'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to reopen this Let\'s Meet?'),
-                    ]
+                    ],
                 ],
                 [
                     'sortOrder' => 200,
-                ]
+                ],
             ];
         } else {
             $result[] = [
@@ -75,11 +75,11 @@ class WallEntry extends WallStreamModuleEntryWidget
                     'action' => 'editModal',
                     'options' => [
                         'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/invites', ['id' => $this->model->id]),
-                    ]
+                    ],
                 ],
                 [
                     'sortOrder' => 100,
-                ]
+                ],
             ];
 
             $result[] = [
@@ -92,11 +92,11 @@ class WallEntry extends WallStreamModuleEntryWidget
                         'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
                         'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Let\'s Meet'),
                         'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to close this Let\'s Meet?'),
-                    ]
+                    ],
                 ],
                 [
                     'sortOrder' => 200,
-                ]
+                ],
             ];
         }
 

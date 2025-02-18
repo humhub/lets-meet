@@ -16,6 +16,6 @@ class CommentFixture extends ActiveFixture
     public $modelClass = Comment::class;
     public $dataFile = '@lets-meet/tests/codeception/fixtures/data/Comment.php';
     public $depends = [
-        ActivityFixture::class
+        ActivityFixture::class,
     ];
 }
