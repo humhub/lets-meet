@@ -17,7 +17,7 @@ use Yii;
 class NewInviteNotificationJob extends ActiveJob
 {
     public int $meetingId;
-    
+
     public function run()
     {
         /** @var Meeting $meeting */

@@ -8,7 +8,6 @@
 
 namespace humhub\modules\letsMeet\models;
 
-
 use DateTime;
 use Yii;
 use yii\db\ActiveQuery;
@@ -39,8 +38,8 @@ use humhub\modules\letsMeet\permissions\ManagePermission;
  */
 class Meeting extends ContentActiveRecord implements Searchable
 {
-    const STATUS_OPEN = 1;
-    const STATUS_CLOSED = 2;
+    public const STATUS_OPEN = 1;
+    public const STATUS_CLOSED = 2;
 
     public $wallEntryClass = WallEntry::class;
     public $moduleId = 'lets-meet';
@@ -79,32 +78,32 @@ class Meeting extends ContentActiveRecord implements Searchable
         ];
     }
 
-    public function getInvites() : ActiveQuery
+    public function getInvites(): ActiveQuery
     {
         return $this->hasMany(MeetingInvite::class, ['meeting_id' => 'id']);
     }
 
-    public function getDaySlots() : ActiveQuery
+    public function getDaySlots(): ActiveQuery
     {
         return $this->hasMany(MeetingDaySlot::class, ['meeting_id' => 'id']);
     }
 
-    public function getTimeSlots() : ActiveQuery
+    public function getTimeSlots(): ActiveQuery
     {
         return $this->hasMany(MeetingTimeSlot::class, ['day_id' => 'id'])->via('daySlots');
     }
 
-    public function getVotes() : ActiveQuery
+    public function getVotes(): ActiveQuery
     {
         return $this->hasMany(MeetingVote::class, ['time_slot_id' => 'id'])->via('timeSlots');
     }
 
-    public function getCreatedBy() : ActiveQuery
+    public function getCreatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-    public function getUpdatedBy() : ActiveQuery
+    public function getUpdatedBy(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }

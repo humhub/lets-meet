@@ -18,14 +18,14 @@ class Events
     {
         $object = $event->sender->object;
 
-        if(!$object instanceof Meeting) {
+        if (!$object instanceof Meeting) {
             return;
         }
     }
 
     public static function onUserDelete($event)
     {
-        foreach (Meeting::findAll(array('created_by' => $event->sender->id)) as $meet) {
+        foreach (Meeting::findAll(['created_by' => $event->sender->id]) as $meet) {
             $meet->delete();
         }
 
@@ -46,7 +46,7 @@ class Events
     {
         /* @var \humhub\modules\rest\Module $restModule */
         $restModule = Yii::$app->getModule('rest');
-//        $restModule->addRules([], 'letsMeet');
+        //        $restModule->addRules([], 'letsMeet');
     }
 
 }
