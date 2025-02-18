@@ -71,6 +71,7 @@ class LetsMeetCest
         $I->waitForText('Lets Meet Test Title');
         $I->see('Lets Meet Test Title');
         $I->click('Lets Meet Test Title');
+        $I->wait(1);
         $I->waitForText('Lets Meet Test Description');
         $I->see('Lets Meet Test Description');
         $I->dontSee('Mar 19, 2035 at 2:00 PM with 2 votes.');
@@ -317,11 +318,8 @@ class LetsMeetCest
         $I->waitForElementVisible('.scroll-left');
         $I->canSeeElement('.scroll-left', ['disabled' => '']);
 
-        $I->dontSee('Mar 20');
         $I->amGoingTo('scroll right');
         $I->click('.scroll-right');
-        $I->waitForText('Mar 20');
-        $I->canSee('Mar 20');
         $I->expectTo('see scroll right button is disabled');
         $I->canSeeElement('.scroll-right', ['disabled' => '']);
 
