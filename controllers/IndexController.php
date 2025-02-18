@@ -83,8 +83,8 @@ class IndexController extends ContentContainerController
                 return $this->asJson([
                     'next' => $this->contentContainer->createUrl(
                         '/lets-meet/index/dates',
-                        $id ? ['id' => $id] : ['hash' => $this->stateManager->hash]
-                    )
+                        $id ? ['id' => $id] : ['hash' => $this->stateManager->hash],
+                    ),
                 ]);
             }
         }
@@ -104,7 +104,7 @@ class IndexController extends ContentContainerController
         $models = $this->stateManager->getState(DayForm::class, [new DayForm()], $id);
 
         if (Yii::$app->request->isPost) {
-            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm)->formName()), function() {
+            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm())->formName()), function () {
                 return new DayForm();
             });
         }
@@ -119,7 +119,7 @@ class IndexController extends ContentContainerController
             return $this->asJson([
                 'next' => $this->contentContainer->createUrl(
                     '/lets-meet/index/invites',
-                    ['hash' => $this->stateManager->hash]
+                    ['hash' => $this->stateManager->hash],
                 ),
             ]);
         }
@@ -170,7 +170,7 @@ class IndexController extends ContentContainerController
             'query' => User::find()->where(['guid' => $newInvites->currentInvites]),
             'pagination' => [
                 'pageSize' => 100,
-            ]
+            ],
         ]);
 
 

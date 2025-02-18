@@ -128,7 +128,7 @@ class LetsMeetCest
             '00:15' => '15 minutes',
             '01:30' => '1:30 hour',
             '03:00' => '3:00 hours',
-                 ] as $duration => $formattedDuration) {
+        ] as $duration => $formattedDuration) {
 
             $I->amGoingTo("edit duration to $formattedDuration");
             $I->clickEditFromContextMenu();
