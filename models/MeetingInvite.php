@@ -37,17 +37,17 @@ class MeetingInvite extends ActiveRecord
         ];
     }
 
-    public function getMeeting() : ActiveQuery
+    public function getMeeting(): ActiveQuery
     {
         return $this->hasOne(Meeting::class, ['id' => 'meeting_id']);
     }
 
-    public function getUser() : ActiveQuery
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getVotes() : ActiveQuery
+    public function getVotes(): ActiveQuery
     {
         return $this->hasMany(MeetingVote::class, ['user_id' => 'id']);
     }

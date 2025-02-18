@@ -11,7 +11,6 @@ namespace humhub\modules\letsMeet\assets;
 use Yii;
 use yii\web\AssetBundle;
 
-
 class LetsMeetAsset extends AssetBundle
 {
     public $sourcePath = '@lets-meet/resources';

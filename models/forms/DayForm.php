@@ -26,7 +26,7 @@ class DayForm extends Model
             [['day', 'times'], 'required'],
             [['day'], DbDateValidator::class, 'convertToFormat' => 'Y-m-d'],
             [['times'], 'each', 'rule' => [
-                'time', 'format' => 'php:G:i'
+                'time', 'format' => 'php:G:i',
             ]],
         ]);
     }

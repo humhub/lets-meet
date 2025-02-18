@@ -8,7 +8,6 @@
 
 namespace humhub\modules\letsMeet\models;
 
-
 use Yii;
 use yii\db\ActiveRecord;
 use humhub\modules\user\models\User;
@@ -22,9 +21,9 @@ use humhub\modules\user\models\User;
  */
 class MeetingVote extends ActiveRecord
 {
-    const VOTE_DECLINE = 0;
-    const VOTE_ACCEPT = 1;
-    const VOTE_MAYBE = 2;
+    public const VOTE_DECLINE = 0;
+    public const VOTE_ACCEPT = 1;
+    public const VOTE_MAYBE = 2;
 
     public static function tableName()
     {

@@ -17,10 +17,9 @@ use Yii;
 
 class Module extends ContentContainerModule
 {
-    
     public $resourcesPath = 'resources';
 
-    
+
     public function getContentContainerTypes()
     {
         return [
