@@ -16,7 +16,6 @@ use humhub\modules\ui\form\widgets\BasePicker;
 use humhub\modules\ui\view\components\View;
 use yii\helpers\Html;
 
-
 class TimeSlotPicker extends BasePicker
 {
     public $itemClass = MeetingTimeSlot::class;

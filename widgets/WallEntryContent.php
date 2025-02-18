@@ -35,16 +35,18 @@ class WallEntryContent extends Widget
 
         /** @var MeetingVote[] $voteModels */
         $voteModels = ArrayHelper::index(
-            ArrayHelper::merge([], [], ...ArrayHelper::getColumn($this->model->daySlots,
-                function(MeetingDaySlot $daySlot) {
-                    return ArrayHelper::getColumn($daySlot->timeSlots, function(MeetingTimeSlot $timeSlot) {
+            ArrayHelper::merge([], [], ...ArrayHelper::getColumn(
+                $this->model->daySlots,
+                function (MeetingDaySlot $daySlot) {
+                    return ArrayHelper::getColumn($daySlot->timeSlots, function (MeetingTimeSlot $timeSlot) {
                         return new MeetingVote([
                             'time_slot_id' => $timeSlot->id,
                             'user_id' => Yii::$app->user->id,
                         ]);
                     });
-                })),
-            'time_slot_id'
+                },
+            )),
+            'time_slot_id',
         );
 
         $votedUserIdsQuery = $this->model->getVotes()
@@ -64,7 +66,7 @@ class WallEntryContent extends Widget
                     try {
                         MeetingVote::deleteAll([
                             'user_id' => Yii::$app->user->id,
-                            'time_slot_id' => $this->model->getTimeSlots()->select('id')->column()
+                            'time_slot_id' => $this->model->getTimeSlots()->select('id')->column(),
                         ]);
 
                         foreach ($voteModels as $voteModel) {
@@ -99,7 +101,8 @@ class WallEntryContent extends Widget
                 ->where(['user_id' => $votedUserIdsQuery->column()])
                 ->orderBy(['user_id' => SORT_ASC])
                 ->all(),
-            null, 'user_id'
+            null,
+            'user_id',
         );
 
         $canVote = (
@@ -146,20 +149,21 @@ class WallEntryContent extends Widget
             }
         }
 
-        usort($bestOptions, function($a, $b) {
+        usort($bestOptions, function ($a, $b) {
             return $b['acceptedVotes'] <=> $a['acceptedVotes'];
         });
 
-        $maxAcceptedVotes = max(array_map(function($option) {
+        $maxAcceptedVotes = max(array_map(function ($option) {
             return $option['acceptedVotes'];
         }, $bestOptions));
 
-        return array_filter($bestOptions, function($option) use ($maxAcceptedVotes) {
+        return array_filter($bestOptions, function ($option) use ($maxAcceptedVotes) {
             return $option['acceptedVotes'] > 1 && $option['acceptedVotes'] === $maxAcceptedVotes;
         });
     }
 
-    private function formatDuration() {
+    private function formatDuration()
+    {
         $parts = explode(':', $this->model->duration);
         $hours = (int)$parts[0];
         $minutes = $parts[1];
@@ -172,7 +176,7 @@ class WallEntryContent extends Widget
             return Yii::t('LetsMeetModule.base', '{hours}:{minutes} {hourLabel}', [
                 'hours' => $hours,
                 'minutes' => $minutes,
-                'hourLabel' => Yii::t('LetsMeetModule.base', '{hours, plural, =1{hour} other{hours}}', ['hours' => $hours])
+                'hourLabel' => Yii::t('LetsMeetModule.base', '{hours, plural, =1{hour} other{hours}}', ['hours' => $hours]),
             ]);
         }
     }

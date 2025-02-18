@@ -6,7 +6,6 @@
  * @license https://www.humhub.com/licences
  */
 
-
 namespace humhub\modules\letsMeet\notifications;
 
 use Yii;

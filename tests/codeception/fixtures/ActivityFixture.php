@@ -8,7 +8,9 @@
 
 namespace humhub\modules\letsMeet\tests\codeception\fixtures;
 
-use humhub\modules\activity\models\Activity;;
+use humhub\modules\activity\models\Activity;
+
+;
 use yii\test\ActiveFixture;
 
 class ActivityFixture extends ActiveFixture
