@@ -16,11 +16,10 @@ modules:
         - tests\codeception\_support\DynamicFixtureHelper
     config:
         WebDriver:
-            url: 'http://php:8080/'
+            url: 'http://localhost:8080/'
             browser: chrome
             window_size: maximize
             restart: true
-            host: selenium
             port: 4444
             capabilities:
                 chromeOptions:
