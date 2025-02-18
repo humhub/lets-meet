@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @link https://www.humhub.org/
+ * @copyright Copyright (c) 2015 HumHub GmbH & Co. KG
+ * @license https://www.humhub.com/licences
+ */
+
+return [
+    [
+        'guid' => '00abe243-9b50-4a31-81f3-2798cfc0dc38',
+        'object_model' => 'humhub\modules\letsMeet\models\Meeting',
+        'object_id' => 1,
+        'contentcontainer_id' => 6,
+        'stream_channel' => 'default',
+        'stream_sort_date' => '2025-03-10 14:00:00.000',
+        'visibility' => 1,
+        'state' => 1,
+        'was_published' => 0,
+        'pinned' => 0,
+        'archived' => 0,
+        'hidden' => 0,
+        'locked_comments' => 0,
+        'scheduled_at' => null,
+        'created_at' => '2025-03-10 14:00:00.000',
+        'created_by' => 1,
+        'updated_at' => '2025-03-10 14:00:00.000',
+        'updated_by' => 1,
+    ],
+    [
+        'guid' => '55376c59-964c-42eb-9f9c-80d87e2e5422',
+        'object_model' => 'humhub\modules\activity\models\Activity',
+        'object_id' => 101,
+        'contentcontainer_id' => 6,
+        'stream_channel' => 'activity',
+        'stream_sort_date' => '2025-03-10 14:00:00.000',
+        'visibility' => 1,
+        'state' => 1,
+        'was_published' => 0,
+        'pinned' => 0,
+        'archived' => 0,
+        'hidden' => 0,
+        'locked_comments' => 0,
+        'scheduled_at' => null,
+        'created_at' => '2025-03-10 14:00:00.000',
+        'created_by' => 1,
+        'updated_at' => '2025-03-10 14:00:00.000',
+        'updated_by' => 1,
+    ],
+    [
+        'guid' => '9c984e70-19d1-47a3-a5e9-417ec4f0b886',
+        'object_model' => 'humhub\modules\activity\models\Activity',
+        'object_id' => 102,
+        'contentcontainer_id' => 6,
+        'stream_channel' => 'activity',
+        'stream_sort_date' => '2025-03-10 14:00:00.000',
+        'visibility' => 1,
+        'state' => 1,
+        'was_published' => 0,
+        'pinned' => 0,
+        'archived' => 0,
+        'hidden' => 0,
+        'locked_comments' => 0,
+        'scheduled_at' => null,
+        'created_at' => '2025-03-10 14:00:00.000',
+        'created_by' => 1,
+        'updated_at' => '2025-03-10 14:00:00.000',
+        'updated_by' => 1,
+    ],
+];

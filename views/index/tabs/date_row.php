@@ -18,7 +18,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 
 ?>
 
-<div class="date-row">
+<div class="date-row" id="date-row-<?= $index ?>">
     <div class="row">
         <div class="col-md-1 text-center">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>

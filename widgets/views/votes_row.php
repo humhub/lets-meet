@@ -58,7 +58,7 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
                     $vote = ArrayHelper::getValue($votes, $timeSlot->id);
                     ?>
                     <?php if ($canVote): ?>
-                        <div class="expanded-vote <?= $vote?->vote ? 'voted' : '' ?>">
+                        <div id="expanded-vote-" class="expanded-vote <?= $vote?->vote ? 'voted' : '' ?>">
                             <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]time_slot_id", ['value' => $timeSlot->id]) ?>
                             <?= Html::activeHiddenInput($voteModel, "[$timeSlot->id]vote", ['value' => $vote?->vote, 'class' => 'vote-value']) ?>
                             <?php foreach ($voteOptions as $value => $options): ?>

@@ -34,7 +34,7 @@ LetsMeetAsset::register($this);
 $invites = $invitesDataProvider->models;
 
 $header = TabsStateManager::instance()->id
-    ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
+    ? Yii::t('LetsMeetModule.base', 'Let\'s Meet Participants')
     : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
 ;
 
