@@ -20,10 +20,10 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 
 <div class="date-row" id="date-row-<?= $index ?>">
     <div class="row">
-        <div class="col-md-1 text-center">
+        <div class="col-xs-2 col-md-1 row-icons">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-xs-5 col-md-6">
             <?= $form->field($model, "[$index]day")
                 ->widget(DatePicker::class, [
                     'options' => [
@@ -32,7 +32,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                 ])
                 ->label(false) ?>
         </div>
-        <div class="col-md-7 text-right">
+        <div class="col-xs-5 text-right">
             <?= Button::asLink()->danger()
                 ->icon('fa-times')
                 ->action('removeDateRow')
@@ -57,10 +57,10 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 text-center">
+        <div class="col-xs-2 col-md-1 row-icons">
             <?= Icon::get('clock-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-md-11">
+        <div class="col-xs-10 col-md-11">
             <?= $form->field($model, "[$index]times")
                 ->widget(TimeSlotPicker::class, [
                     'options' => [

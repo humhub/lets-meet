@@ -61,7 +61,7 @@ $header = TabsStateManager::instance()->id
             ],
         ]) ?>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-xs-10">
                     <?= UserPickerField::widget([
                         'model' => $newInvitesModel,
                         'attribute' => 'invites',
@@ -70,7 +70,7 @@ $header = TabsStateManager::instance()->id
                         'url' => $searchUsersUrl,
                     ]) ?>
                 </div>
-                <div class="col-md-2 text-right">
+                <div class="col-xs-2 text-right">
                     <?= Button::info()
                         ->submit()
                         ->options(['name' => 'add'])

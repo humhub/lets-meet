@@ -34,6 +34,14 @@
     margin-bottom: 16px;
 }
 
+#date-rows .row-icons.col-md-1 {
+    padding-left: 25px;
+    padding-right: 0;
+}
+#date-rows .row-icons {
+    text-align: center;
+}
+
 #date-rows .date-row {
     padding: 8px;
     border-radius: 4px;
