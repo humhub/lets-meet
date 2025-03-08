@@ -163,7 +163,7 @@ class LetsMeetCest
         $I->amGoingTo('change date');
         $I->fillField('DayForm[1][day]', Yii::$app->formatter->asDate((new \DateTime('3/19/35'))->modify('+1 day'), 'short'));
         $I->amGoingTo('change time');
-        $I->selectFromPicker('#dayform-1-times', ['12:00 AM', '1:00 PM', '3:00 PM']);
+        $I->selectFromPicker('#dayform-1-times', ['3:00 PM']);
         $I->clickSave();
 
         $I->waitForText('Mar 20');
