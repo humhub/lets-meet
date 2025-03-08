@@ -38,12 +38,12 @@ class LetsMeetCest
         $I->see('Select dates for your poll');
         $tomorrow = new \DateTimeImmutable('tomorrow');
         $I->fillField('DayForm[0][day]', Yii::$app->formatter->asDate($tomorrow, 'short'));
-        $I->selectFromPicker('#dayform-0-times', ['09:00', '10:00', '11:00']);
+        $I->selectFromPicker('#dayform-0-times', ['9:00 AM', '10:00 AM', '11:00 AM']);
 
         $I->click('.add-row', '#date-row-0');
         $I->waitForElementVisible('#dayform-1-day');
         $I->fillField('DayForm[1][day]', Yii::$app->formatter->asDate($tomorrow->modify('+1 day'), 'short'));
-        $I->selectFromPicker('#dayform-1-times', ['12:00', '13:00', '14:00']);
+        $I->selectFromPicker('#dayform-1-times', ['12:00 PM', '1:00 PM', '2:00 PM']);
 
         $I->clickNext();
 
@@ -163,7 +163,7 @@ class LetsMeetCest
         $I->amGoingTo('change date');
         $I->fillField('DayForm[1][day]', Yii::$app->formatter->asDate((new \DateTime('3/19/35'))->modify('+1 day'), 'short'));
         $I->amGoingTo('change time');
-        $I->selectFromPicker('#dayform-1-times', ['12:00', '13:00', '15:00']);
+        $I->selectFromPicker('#dayform-1-times', ['12:00 AM', '1:00 PM', '3:00 PM']);
         $I->clickSave();
 
         $I->waitForText('Mar 20');
@@ -313,7 +313,7 @@ class LetsMeetCest
         $I->click('.add-row', '#date-row-1');
         $I->waitForElementVisible('#dayform-2-day');
         $I->fillField('DayForm[2][day]', Yii::$app->formatter->asDate((new \DateTime('3/19/35'))->modify('+1 day'), 'short'));
-        $I->selectFromPicker('#dayform-2-times', ['12:00', '13:00', '14:00']);
+        $I->selectFromPicker('#dayform-2-times', ['12:00 AM', '1:00 PM', '2:00 PM']);
         $I->clickSave();
         $I->waitForElementVisible('.scroll-left');
         $I->canSeeElement('.scroll-left', ['disabled' => '']);
