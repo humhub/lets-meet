@@ -14,6 +14,7 @@ use humhub\modules\content\models\ContentTag;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\ui\form\widgets\BasePicker;
 use humhub\modules\ui\view\components\View;
+use Yii;
 use yii\helpers\Html;
 
 class TimeSlotPicker extends BasePicker
@@ -24,34 +25,64 @@ class TimeSlotPicker extends BasePicker
 
     public function init()
     {
+        $this->view->registerJsVar('isMeridiem', Yii::$app->formatter->isShowMeridiem());
+
         $js = <<<JS
 window.timeSlotPickerBeforeInit = function(options) {
     options.createTag = function (params) {
-        const inputValue = params.term.trim();
+        const isMeridiem = !!window.isMeridiem;
+        const inputValue = params.term.trim().toLowerCase();
         
-        // Single digit or two-digit hour: Convert to x:00 if x is in range 0-23
-        const singleDigitRegex = /^(0|00|[1-9]|1[0-9]|2[0-3])$/;
-    
-        // Full time: Validate hh:mm (hh: 00-23, mm: 00-59)
-        const fullTimeRegex = /^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
+        const fullTimeRegex = /^([0-9]|[01][0-9]|2[0-3]):([0-5][0-9])$/;
+        const fullPartialTimeRegex = /^(0?[0-9]|1[0-9]|2[0-3])(:([0-5]?([0-9])?)?)?$/;
+        const twelveHourRegex = /^(0?[1-9]|1[0-2]):([0-5][0-9])\s?(a|am|p|pm)?$/i;
+        const twelveHourPartialTimeRegex = /^(0?[1-9]|1[0-2])(:([0-5]?([0-9])?)?)?\s?(a|am|p|pm)?$/i;
 
-        if (singleDigitRegex.test(inputValue)) {
-            // Convert single digit to x:00
-            const hour = parseInt(inputValue, 10);
-            return {
-                id: `\${hour}:00`,
-                text: `\${hour}:00`
-            };
-        } else if (fullTimeRegex.test(inputValue)) {
-            // Validate full time format
-            const [hour, minute] = inputValue.split(':');
-            return {
-                id: `\${hour}:\${minute}`,
-                text: `\${hour}:\${minute}`
-            };
+        if (isMeridiem) {
+            if (twelveHourRegex.test(inputValue)) {
+                const match = inputValue.match(twelveHourRegex);
+                const hour = match[1];
+                const minute = match[2];
+                const period = match[3] ? (match[3].toLowerCase().startsWith('a') ? 'AM' : 'PM') : 'AM';
+
+                return {
+                    id: `\${hour}:\${minute} \${period}`,
+                    text: `\${hour}:\${minute} \${period}`
+                };
+            } else if (twelveHourPartialTimeRegex.test(inputValue)) {
+                const match = inputValue.match(twelveHourPartialTimeRegex);
+                let hour = match[1].padStart(2, '0');
+                let minute = match[3] || '00';
+                const period = match[5] ? (match[5].toLowerCase().startsWith('a') ? 'AM' : 'PM') : 'AM';
+                
+                if (minute.length === 1) minute += '0';
+                
+                return {
+                    id: `\${hour}:\${minute} \${period}`.trim(),
+                    text: `\${hour}:\${minute} \${period}`.trim()
+                };
+            }
+        } else {
+            if (fullTimeRegex.test(inputValue)) {
+                const [hour, minute] = inputValue.split(':');
+                return {
+                    id: `\${hour.padStart(2, '0')}:\${minute}`,
+                    text: `\${hour.padStart(2, '0')}:\${minute}`
+                };
+            } else if (fullPartialTimeRegex.test(inputValue)) {
+                const match = inputValue.match(fullPartialTimeRegex);
+                const hour = match[1].padStart(2, '0');
+                let minute = match[3] || '00';
+                
+                if (minute.length === 1) minute += '0';
+
+                return {
+                    id: `\${hour}:\${minute}`,
+                    text: `\${hour}:\${minute}`
+                };
+            }
         }
 
-        // Invalid input: Ignore
         return null;
     }
     

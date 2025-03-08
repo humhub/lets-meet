@@ -3,7 +3,8 @@ Changelog
 
 1.0.1 (Unreleased)
 ------------------
-- Fix Layout issues
+- Fix: Layout issues
+- Enh: 12-hour vs. 24-hour Time Format & Language
 
 1.0.0 (March 6, 2025)
 ---------------------

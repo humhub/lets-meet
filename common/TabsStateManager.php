@@ -137,7 +137,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
                 $days[] = new DayForm([
                     'day' => $day->date,
                     'times' => ArrayHelper::getColumn($day->timeSlots, function (MeetingTimeSlot $timeSlot) {
-                        return Yii::$app->formatter->asTime($timeSlot->time, 'php:G:i');
+                        return Yii::$app->formatter->asTime($timeSlot->time, 'short');
                     }),
                 ]);
             }
@@ -212,6 +212,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
 
             $existingTimeIds = [];
             foreach ($day->times as $time) {
+                $time = Yii::$app->formatter->asTime($time, 'php:H:i');
                 $meetingDayTime = MeetingTimeSlot::findOne(['day_id' => $meetingDay->id, 'time' => $time]) ?: new MeetingTimeSlot();
                 $meetingDayTime->day_id = $meetingDay->id;
                 $meetingDayTime->time = $time;
