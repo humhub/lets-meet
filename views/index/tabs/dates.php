@@ -35,7 +35,7 @@ $title = TabsStateManager::instance()->id
 
 <?php $form = Modal::beginFormDialog([
         'title' => $title,
-        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal']
+        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
         'footer' => '<div class="text-center">' .
             . ModalButton::light('Previous')->load($prevUrl)
             . ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))->action('submit')->loader(false)

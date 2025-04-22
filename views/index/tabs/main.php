@@ -28,7 +28,7 @@ $title = TabsStateManager::instance()->id
 
 <?php $form = Modal::beginFormDialog([
         'title' => $title,
-        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal'],
+        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
     ]) ?>
 
     <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'placeholder' => $model->getAttributeLabel('title')]) ?>

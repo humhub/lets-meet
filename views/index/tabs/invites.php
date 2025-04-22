@@ -43,10 +43,10 @@ $title = TabsStateManager::instance()->id
 ?>
 
 <?php Modal::beginDialog([
-        'title' => $title
+        'title' => $title,
+        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
     ]) ?>
 
-<div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
     <div class="form-heading">
         <h5><?= Yii::t('LetsMeetModule.base', 'Invite users') ?></h5>
         <div>
@@ -138,6 +138,5 @@ $title = TabsStateManager::instance()->id
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>
-</div>
 
 <?php Modal::endDialog() ?>
