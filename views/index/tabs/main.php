@@ -45,7 +45,7 @@ $title = TabsStateManager::instance()->id
 
     <div class="text-center">
         <?= ModalButton::cancel(); ?>
-        <?= ModalButton::save(Yii::t('LetsMeetModule.base', 'Next')) ?>
+        <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Next'))->action('submit')->loader(false) ?>
     </div>
 </div>
 

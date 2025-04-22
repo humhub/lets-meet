@@ -134,7 +134,7 @@ $title = TabsStateManager::instance()->id
                 <?php else: ?>
                     <?= ModalButton::light('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
                 <?php endif; ?>
-                <?= ModalButton::save(Yii::t('LetsMeetModule.base', 'Save')) ?>
+                <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Save'))->action('submit')->loader(false) ?>
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>

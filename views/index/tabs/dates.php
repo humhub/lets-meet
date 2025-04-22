@@ -38,7 +38,7 @@ $title = TabsStateManager::instance()->id
         'bodyOptions' => ['class' => 'modal-body meeting-edit-modal']
         'footer' => '<div class="text-center">' .
             . ModalButton::light('Previous')->load($prevUrl)
-            . ModalButton::save(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
+            . ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))->action('submit')->loader(false)
             . '</div>',
     ]) ?>
     <div class="form-heading">
