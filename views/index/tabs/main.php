@@ -8,11 +8,12 @@ use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use yii\widgets\MaskedInput;
+use yii\web\View;
 
 /**
  * @var ActiveForm $form
  * @var EditForm $model
- * @var \yii\web\View $this
+ * @var View $this
  * @var ContentContainerActiveRecord $contentContainer
  */
 

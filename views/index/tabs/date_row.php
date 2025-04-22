@@ -4,7 +4,7 @@ use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
 use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\models\forms\DayForm;

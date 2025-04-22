@@ -10,21 +10,23 @@ use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
-use yii\helpers\Html;
+use humhub\helpers\Html;
 use humhub\widgets\LinkPager;
 use humhub\widgets\Pjax;
+use yii\web\View;
+use yii\data\ActiveDataProvider;
 
 /**
  * @var ActiveForm $form
  * @var NewInvitesForm $newInvitesModel
  * @var InvitesForm $model
- * @var \yii\data\ActiveDataProvider $invitesDataProvider
+ * @var ActiveDataProvider $invitesDataProvider
  * @var User[] $invites
- * @var \yii\web\View $this
+ * @var View $this
  * @var ContentContainerActiveRecord $contentContainer
  * @var string $searchUsersUrl
  */
@@ -131,7 +133,7 @@ $header = TabsStateManager::instance()->id
                 <?php if (TabsStateManager::instance()->id): ?>
                     <?= ModalButton::cancel(); ?>
                 <?php else: ?>
-                    <?= ModalButton::defaultType('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
+                    <?= ModalButton::light('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
                 <?php endif; ?>
                 <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Save'))->action('submit')->loader()?>
             </div>
