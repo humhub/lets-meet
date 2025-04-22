@@ -10,7 +10,7 @@ use yii\web\View;
 use humhub\widgets\Pjax;
 use humhub\widgets\Button;
 use humhub\modules\user\widgets\Image;
-use yii\widgets\ActiveForm;
+use humhub\widgets\form\ActiveForm;
 
 /**
  * @var View $this

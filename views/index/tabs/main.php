@@ -2,7 +2,7 @@
 
 use humhub\modules\content\widgets\richtext\RichTextField;
 use humhub\modules\letsMeet\common\TabsStateManager;
-use yii\widgets\ActiveForm;
+use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;

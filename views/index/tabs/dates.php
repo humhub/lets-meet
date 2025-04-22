@@ -5,7 +5,7 @@ use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\widgets\richtext\RichTextField;
-use yii\widgets\ActiveForm;
+use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\ModalDialog;
 use humhub\widgets\ModalButton;

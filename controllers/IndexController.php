@@ -22,12 +22,12 @@ use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\UserPicker;
 use humhub\modules\stream\actions\StreamEntryResponse;
+use humhub\widgets\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\widgets\ActiveForm;
 
 class IndexController extends ContentContainerController
 {

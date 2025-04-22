@@ -6,11 +6,14 @@ use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\Button;
 use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\widgets\form\ActiveForm;
+use humhub\modules\letsMeet\models\forms\DayForm;
+use yii\web\View;
 
 /**
- * @var \yii\widgets\ActiveForm $form
- * @var \humhub\modules\letsMeet\models\forms\DayForm $model
- * @var \yii\web\View $this
+ * @var ActiveForm $form
+ * @var DayForm $model
+ * @var View $this
  * @var int|string $index
  * @var bool $last
  * @var ContentContainerActiveRecord $contentContainer
