@@ -2,7 +2,6 @@
 
 
 use humhub\modules\content\components\ContentContainerActiveRecord;
-use humhub\modules\content\widgets\richtext\RichTextField;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
