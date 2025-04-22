@@ -8,8 +8,8 @@ use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
-use humhub\widgets\ModalDialog;
-use humhub\widgets\ModalButton;
+use humhub\widgets\modal\Modal;
+use humhub\widgets\modal\ModalButton;
 use humhub\widgets\bootstrap\Button;
 use humhub\modules\user\widgets\UserPickerField;
 use humhub\modules\user\models\User;
@@ -35,17 +35,16 @@ LetsMeetAsset::register($this);
 
 $invites = $invitesDataProvider->models;
 
-$header = TabsStateManager::instance()->id
+$title = TabsStateManager::instance()->id
     ? Yii::t('LetsMeetModule.base', 'Let\'s Meet Participants')
     : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
 ;
 
 ?>
 
-
-
-
-<?php ModalDialog::begin(['header' => $header]) ?>
+<?php Modal::beginDialog([
+        'title' => $title
+    ]) ?>
 
 <div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
     <div class="form-heading">
@@ -135,10 +134,10 @@ $header = TabsStateManager::instance()->id
                 <?php else: ?>
                     <?= ModalButton::light('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
                 <?php endif; ?>
-                <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', 'Save'))->action('submit')->loader()?>
+                <?= ModalButton::save(Yii::t('LetsMeetModule.base', 'Save')) ?>
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>
 </div>
 
-<?php ModalDialog::end() ?>
+<?php Modal::endDialog() ?>

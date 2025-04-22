@@ -8,7 +8,7 @@ use humhub\modules\content\widgets\richtext\RichTextField;
 use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\modal\Modal;
-use humhub\widgets\ModalButton;
+use humhub\widgets\modal\ModalButton;
 use \yii\web\View;
 
 /**
@@ -26,54 +26,49 @@ $prevUrl = $contentContainer->createUrl(
     $tabStateManager->id ? ['id' => $tabStateManager->id] : ['hash' => $tabStateManager->hash]
 );
 
-$header = TabsStateManager::instance()->id
+$title = TabsStateManager::instance()->id
     ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
     : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
 ;
 
 ?>
 
-<?php Modal::begin(['header' => $header]) ?>
-    <div class="modal-body meeting-edit-modal" data-ui-widget="letsMeet.Form" data-ui-init>
-        <div class="form-heading">
-            <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
-            <div>
-                <?= Yii::t('LetsMeetModule.base', 'To schedule an event, provide at least two options, different time slots or days.') ?>
-            </div>
+<?php $form = Modal::beginFormDialog([
+        'title' => $title,
+        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal']
+        'footer' => '<div class="text-center">' .
+            . ModalButton::light('Previous')->load($prevUrl)
+            . ModalButton::save(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
+            . '</div>',
+    ]) ?>
+    <div class="form-heading">
+        <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
+        <div>
+            <?= Yii::t('LetsMeetModule.base', 'To schedule an event, provide at least two options, different time slots or days.') ?>
         </div>
-        <?php $form = ActiveForm::begin() ?>
-
-        <div id="date-rows">
-            <?php foreach ($models as $index => $day) : ?>
-                <?= $this->render('date_row', [
-                    'form' => $form,
-                    'model' => $day,
-                    'index' => $index,
-                    'contentContainer' => $contentContainer,
-                    'last' => $index === count($models) - 1,
-                ]) ?>
-            <?php endforeach; ?>
-
-            <?php if (empty($models)) : ?>
-                <?= $this->render('date_row', [
-                    'form' => $form,
-                    'model' => new DayForm(),
-                    'index' => 0,
-                    'contentContainer' => $contentContainer,
-                    'last' => true,
-                ]) ?>
-            <?php endif; ?>
-
-        </div>
-
-
-        <div class="text-center">
-            <?= ModalButton::light('Previous')->load($prevUrl); ?>
-            <?= ModalButton::submitModal(null, Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
-                ->action('submit')->loader(false)?>
-        </div>
-
-        <?php ActiveForm::end() ?>
     </div>
 
-<?php Modal::end() ?>
+    <div id="date-rows">
+        <?php foreach ($models as $index => $day) : ?>
+            <?= $this->render('date_row', [
+                'form' => $form,
+                'model' => $day,
+                'index' => $index,
+                'contentContainer' => $contentContainer,
+                'last' => $index === count($models) - 1,
+            ]) ?>
+        <?php endforeach; ?>
+
+        <?php if (empty($models)) : ?>
+            <?= $this->render('date_row', [
+                'form' => $form,
+                'model' => new DayForm(),
+                'index' => 0,
+                'contentContainer' => $contentContainer,
+                'last' => true,
+            ]) ?>
+        <?php endif; ?>
+
+    </div>
+
+<?php Modal::endFormDialog() ?>
