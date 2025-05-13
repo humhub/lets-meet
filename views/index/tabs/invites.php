@@ -78,7 +78,7 @@ $title = TabsStateManager::instance()->id
                 </div>
             </div>
         <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
-            <ul class="media-list">
+            <div class="hh-list">
                 <?php foreach ($invites as $index => $user) : ?>
                     <li>
                         <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
