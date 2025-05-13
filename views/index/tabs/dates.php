@@ -35,6 +35,7 @@ $title = TabsStateManager::instance()->id
 <?php $form = Modal::beginFormDialog([
         'title' => $title,
         'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
+        'footer' => ModalButton::light('Previous')->load($prevUrl) . ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))->submit()->loader(false),
     ]) ?>
     <div class="form-heading">
         <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
@@ -63,12 +64,5 @@ $title = TabsStateManager::instance()->id
                 'last' => true,
             ]) ?>
         <?php endif; ?>
-
     </div>
-
-    <div class="text-center">
-        <?= ModalButton::light('Previous')->load($prevUrl) ?>
-        <?= ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))->action('submit')->loader(false) ?>
-    </div>
-
 <?php Modal::endFormDialog() ?>
