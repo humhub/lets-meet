@@ -79,7 +79,7 @@ $title = TabsStateManager::instance()->id
         <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
             <div class="hh-list">
                 <?php foreach ($invites as $index => $user) : ?>
-                    <div>
+                    <div class="hh-list-item">
                         <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
                         <div class="d-flex mt-3">
                             <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="flex-grow-1">
