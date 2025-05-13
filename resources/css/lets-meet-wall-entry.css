@@ -115,7 +115,7 @@
 }
 
 .expanded-vote.voted .time-slot-vote:not(.voted) {
-    color: #555555;
+    color: var(--hh-text-color-main);
 }
 
 .expanded-vote .time-slot-vote {
@@ -142,7 +142,7 @@
     color: var(--hh-text-color-danger);
 }
 .time-slot-vote.vote-decline:hover, .time-slot-vote.vote-decline.voted {
-    background-color: var(--bs-dagner-subtle);
+    background-color: var(--bs-danger-bg-subtle);
 }
 
 .lets-meet-container.voting-closed .time-slot-vote.voted:not(.vote-accept) {

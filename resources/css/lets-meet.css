@@ -18,7 +18,7 @@
     float: left;
     margin-right: 5px;
 }
-.invites .flex-grow-1:not(:first-child) 
+.invites .flex-grow-1:not(:first-child) {
     padding-left: 5px;
 }
 
