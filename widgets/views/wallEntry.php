@@ -34,8 +34,8 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
     }
 </style>
 
-<div class="d-flex" style="margin-top:20px;">
-    <div class="clearfix" style="margin-bottom:10px">
+<div class="mt-4">
+    <div class="mb-3">
         <?php if (!empty($meeting->description)) : ?>
             <div data-ui-markdown data-ui-show-more>
                 <?= RichText::output($meeting->description) ?>
@@ -50,7 +50,6 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             ) ?>
         </div>
     </div>
-
 
     <?php Pjax::begin(['enablePushState' => 0, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
         <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>" data-ui-widget="letsMeet.WallEntry" data-ui-init>

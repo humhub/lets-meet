@@ -130,24 +130,24 @@
     color: var(--hh-text-color-success);
 }
 .time-slot-vote.vote-accept:hover, .time-slot-vote.vote-accept.voted {
-    background-color: var(--hh-background-color-success);
+    background-color: var(--bs-success-bg-subtle);
 }
 .time-slot-vote.vote-maybe {
     color: var(--hh-text-color-warning);
 }
 .time-slot-vote.vote-maybe:hover, .time-slot-vote.vote-maybe.voted {
-    background-color: var(--hh-background-color-warning);
+    background-color: var(--bs-warning-bg-subtle);
 }
 .time-slot-vote.vote-decline {
     color: var(--hh-text-color-danger);
 }
 .time-slot-vote.vote-decline:hover, .time-slot-vote.vote-decline.voted {
-    background-color: var(--hh-background-color-danger);
+    background-color: var(--bs-dagner-subtle);
 }
 
 .lets-meet-container.voting-closed .time-slot-vote.voted:not(.vote-accept) {
-    background-color: #e7e7e7;
-    color: #555555;
+    background-color: var(--hh-background-color-page);
+    color: var(--hh-text-color-main);
 }
 
 .results-container .votes-container {
