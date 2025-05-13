@@ -23,10 +23,10 @@ use yii\web\View;
 
 <div class="date-row" id="date-row-<?= $index ?>">
     <div class="row">
-        <div class="col-xs-2 col-md-1 row-icons">
+        <div class="col-xs-2 col-lg-1 row-icons">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-xs-5 col-md-6">
+        <div class="col-xs-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
                 ->widget(DatePicker::class, [
                     'options' => [
@@ -35,7 +35,7 @@ use yii\web\View;
                 ])
                 ->label(false) ?>
         </div>
-        <div class="col-xs-5 text-right">
+        <div class="col-xs-5 text-end">
             <?= Button::asLink()->danger()
                 ->icon('fa-times')
                 ->action('removeDateRow')
@@ -60,10 +60,10 @@ use yii\web\View;
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-2 col-md-1 row-icons">
+        <div class="col-xs-2 col-lg-1 row-icons">
             <?= Icon::get('clock-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-xs-10 col-md-11">
+        <div class="col-xs-10 col-lg-11">
             <?= $form->field($model, "[$index]times")
                 ->widget(TimeSlotPicker::class, [
                     'options' => [

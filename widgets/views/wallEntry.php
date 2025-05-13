@@ -67,7 +67,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php foreach ($meeting->daySlots as $daySlot): ?>
                     <div>
                         <div class="day-cell">
-                            <span class="tt" data-toggle="tooltip" data-placement="top" title="<?= Yii::$app->formatter->asDate($daySlot->date, 'long') ?>">
+                            <span class="tt" data-bs-toggle="tooltip" data-placement="top" title="<?= Yii::$app->formatter->asDate($daySlot->date, 'long') ?>">
                                 <?= Yii::$app->formatter->asDate($daySlot->date, 'MMM d') ?>
                             </span>
                         </div>

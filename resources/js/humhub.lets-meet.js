@@ -159,7 +159,7 @@ humhub.module('letsMeet', function (module, require, $) {
     Form.prototype.removeParticipant = function(event) {
         const participant = event.$target.closest('li');
 
-        $('input[value="' + participant.find('input').val() + '"]').closest('.form-group').remove();
+        $('input[value="' + participant.find('input').val() + '"]').closest('.mb-3').remove();
         participant.remove();
     }
 

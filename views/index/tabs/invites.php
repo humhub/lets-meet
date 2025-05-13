@@ -61,7 +61,7 @@ $title = TabsStateManager::instance()->id
             ],
         ]) ?>
             <div class="row">
-                <div class="col-xs-10">
+                <div class="col-10">
                     <?= UserPickerField::widget([
                         'model' => $newInvitesModel,
                         'attribute' => 'invites',
@@ -70,7 +70,7 @@ $title = TabsStateManager::instance()->id
                         'url' => $searchUsersUrl,
                     ]) ?>
                 </div>
-                <div class="col-xs-2 text-right">
+                <div class="col-2 text-end">
                     <?= Button::info()
                         ->submit()
                         ->options(['name' => 'add'])
@@ -127,7 +127,7 @@ $title = TabsStateManager::instance()->id
                 <?php endforeach; ?>
             <?= $form->field($model, 'invite_all_space_members')->checkbox(['data' => ['action-change' => 'inviteAllMembers']]) ?>
 
-            <div class="text-center">
+            <div class="modal-body-footer">
                 <?php if (TabsStateManager::instance()->id): ?>
                     <?= ModalButton::cancel(); ?>
                 <?php else: ?>
