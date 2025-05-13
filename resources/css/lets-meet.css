@@ -27,7 +27,7 @@
 }
 
 #date-rows {
-    background-color: #ededed;
+    background-color: var(--hh-background-color-page);
     border-radius: 4px;
     padding: 8px 8px 0 8px;
     overflow: hidden;
@@ -45,7 +45,7 @@
 #date-rows .date-row {
     padding: 8px;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: var(--hh-background-color-main);
     overflow: hidden;
     margin-bottom: 8px;
     width: 100%;
