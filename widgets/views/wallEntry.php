@@ -34,7 +34,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
     }
 </style>
 
-<div class="media" style="margin-top:20px;">
+<div class="d-flex" style="margin-top:20px;">
     <div class="clearfix" style="margin-bottom:10px">
         <?php if (!empty($meeting->description)) : ?>
             <div data-ui-markdown data-ui-show-more>

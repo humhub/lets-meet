@@ -46,7 +46,7 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
             'hideOnlineStatus' => true,
             'showTooltip' => true,
             'width' => 36,
-            'htmlOptions' => ['class' => 'media-object'],
+            'htmlOptions' => ['class' => 'flex-shrink-0'],
         ]) ?>
     </div>
     <div class="dates-cell scrollable-container">

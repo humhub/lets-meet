@@ -80,27 +80,24 @@ $title = TabsStateManager::instance()->id
         <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
             <div class="hh-list">
                 <?php foreach ($invites as $index => $user) : ?>
-                    <li>
-                        <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
-                        <div class="media">
-                            <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="media-body">
-                                <?= Image::widget([
-                                    'user' => $user,
-                                    'link' => false,
-                                    'width' => 32,
-                                    'htmlOptions' => ['class' => 'media-object'],
-                                ]) ?>
-                                <h4 class="media-heading"><?= Html::encode($user->displayName) ?></h4>
-                                <h5><?= Html::encode($user->displayNameSub) ?></h5>
-                            </a>
-                            <div class="media-body">
-                                <?= Button::danger()->sm()
-                                    ->icon('remove')
-                                    ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
-                                    ->action('removeParticipant') ?>
-                            </div>
-                        </div>
-                    </li>
+                    <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
+                    <div class="d-flex">
+                        <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="flex-grow-1">
+                            <?= Image::widget([
+                                'user' => $user,
+                                'link' => false,
+                                'width' => 32,
+                                'htmlOptions' => ['class' => 'flex-shrink-0'],
+                            ]) ?>
+                            <h4 class="mt-0"><?= Html::encode($user->displayName) ?></h4>
+                            <h5><?= Html::encode($user->displayNameSub) ?></h5>
+                        </a>
+                        <div class="flex-grow-1">
+                            <?= Button::danger()->sm()
+                                ->icon('remove')
+                                ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
+                                ->action('removeParticipant') ?>
+                    </div>
                 <?php endforeach; ?>
             </ul>
 
