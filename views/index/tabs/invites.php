@@ -100,7 +100,7 @@ $title = TabsStateManager::instance()->id
                         </div>
                     </div>
                 <?php endforeach; ?>
-            </ul>
+            </div>
 
             <div class="text-center">
                 <?= LinkPager::widget([
