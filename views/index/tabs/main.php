@@ -42,7 +42,6 @@ $title = TabsStateManager::instance()->id
         ],
     ]) ?>
     <?= $form->field($model, 'make_public')->checkbox() ?>
-</div>
 
 <?php Modal::endFormDialog() ?>
 

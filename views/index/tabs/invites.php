@@ -1,6 +1,5 @@
 <?php
 
-
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;

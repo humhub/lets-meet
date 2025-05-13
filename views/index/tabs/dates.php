@@ -2,7 +2,6 @@
 
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
-use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\widgets\form\ActiveForm;
 use humhub\modules\letsMeet\assets\LetsMeetAsset;
