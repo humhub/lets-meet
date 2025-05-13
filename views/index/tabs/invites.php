@@ -57,7 +57,7 @@ $title = TabsStateManager::instance()->id
             'id' => 'new-invites-form',
             'options' => [
                 'data-pjax' => 1,
-                'style' => ['display' => $model->invite_all_space_members ? 'none' : ''],
+                'class' => $model->invite_all_space_members ? 'd-none' : '',
             ],
         ]) ?>
             <div class="row">
@@ -77,7 +77,7 @@ $title = TabsStateManager::instance()->id
                         ->icon('send') ?>
                 </div>
             </div>
-        <div class="invites" style="<?= Html::cssStyleFromArray(['display' => $model->invite_all_space_members ? 'none' : '']) ?>">
+        <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
             <ul class="media-list">
                 <?php foreach ($invites as $index => $user) : ?>
                     <li>
