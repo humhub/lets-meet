@@ -59,8 +59,8 @@ $title = TabsStateManager::instance()->id
                 'class' => $model->invite_all_space_members ? 'd-none' : '',
             ],
         ]) ?>
-            <div class="row">
-                <div class="col-10">
+            <div class="d-flex">
+                <div class="flex-grow-1">
                     <?= UserPickerField::widget([
                         'model' => $newInvitesModel,
                         'attribute' => 'invites',
@@ -69,45 +69,45 @@ $title = TabsStateManager::instance()->id
                         'url' => $searchUsersUrl,
                     ]) ?>
                 </div>
-                <div class="col-2 text-end">
+                <div class="ms-1">
                     <?= Button::info()
                         ->submit()
                         ->options(['name' => 'add'])
                         ->icon('send') ?>
                 </div>
             </div>
-        <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
-            <div class="hh-list">
-                <?php foreach ($invites as $index => $user) : ?>
-                    <div class="hh-list-item">
-                        <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
-                        <div class="d-flex mt-3">
-                            <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="flex-grow-1">
-                                <?= Image::widget([
-                                    'user' => $user,
-                                    'link' => false,
-                                    'width' => 32,
-                                    'htmlOptions' => ['class' => 'flex-shrink-0'],
-                                ]) ?>
-                                <h4 class="mt-0"><?= Html::encode($user->displayName) ?></h4>
-                                <h5><?= Html::encode($user->displayNameSub) ?></h5>
-                            </a>
-                            <div>
-                                <?= Button::danger()->sm()
-                                    ->icon('remove')
-                                    ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
-                                    ->action('removeParticipant') ?>
+            <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
+                <div class="hh-list">
+                    <?php foreach ($invites as $index => $user) : ?>
+                        <div class="hh-list-item">
+                            <?= $form->field($newInvitesModel, "currentInvites[$index]")->hiddenInput()->label(false) ?>
+                            <div class="d-flex mt-3">
+                                <a href="<?= $user->getUrl() ?>" data-modal-close="1" class="flex-grow-1">
+                                    <?= Image::widget([
+                                        'user' => $user,
+                                        'link' => false,
+                                        'width' => 32,
+                                        'htmlOptions' => ['class' => 'flex-shrink-0'],
+                                    ]) ?>
+                                    <h4 class="mt-0"><?= Html::encode($user->displayName) ?></h4>
+                                    <h5><?= Html::encode($user->displayNameSub) ?></h5>
+                                </a>
+                                <div>
+                                    <?= Button::danger()->sm()
+                                        ->icon('remove')
+                                        ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
+                                        ->action('removeParticipant') ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="text-center">
+                    <?= LinkPager::widget([
+                        'pagination' => $invitesDataProvider->pagination,
+                    ]) ?>
+                </div>
             </div>
-
-            <div class="text-center">
-                <?= LinkPager::widget([
-                    'pagination' => $invitesDataProvider->pagination,
-                ]) ?>
-            </div>
-        </div>
         <?php ActiveForm::end() ?>
 
         <?php $form = ActiveForm::begin([
@@ -116,7 +116,6 @@ $title = TabsStateManager::instance()->id
                 'data-pjax' => 0,
             ],
         ]) ?>
-
             <?= $form->field($model, "invites")->hiddenInput(['value' => ''])->label(false) ?>
             <?php foreach ($invites as $user) : ?>
                 <?= $form->field($model, "invites[]")
@@ -135,5 +134,4 @@ $title = TabsStateManager::instance()->id
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>
-
 <?php Modal::endDialog() ?>
