@@ -2,11 +2,11 @@
 
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use humhub\helpers\Html;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\widgets\Image;
 use humhub\modules\user\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * @var Meeting $meeting

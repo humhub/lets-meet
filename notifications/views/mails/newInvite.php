@@ -3,9 +3,8 @@
 use humhub\widgets\mails\MailContentEntry;
 use humhub\modules\user\models\User;
 use humhub\modules\letsMeet\models\Meeting;
-use yii\helpers\Url;
+use humhub\helpers\Url;
 use yii\web\View;
-
 
 /**
  * @var View $this

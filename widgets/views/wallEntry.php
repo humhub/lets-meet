@@ -4,12 +4,11 @@ use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\content\widgets\richtext\RichText;
-use yii\helpers\Url;
-use yii\web\View;
+use humhub\helpers\Url;
 use humhub\widgets\Pjax;
 use humhub\widgets\bootstrap\Button;
-use humhub\modules\user\widgets\Image;
 use humhub\widgets\form\ActiveForm;
+use yii\web\View;
 
 /**
  * @var View $this
