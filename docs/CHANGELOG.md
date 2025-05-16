@@ -5,6 +5,7 @@ Changelog
 ------------------
 - Fix: Layout issues
 - Enh: 12-hour vs. 24-hour Time Format & Language
+- Enh: Removed `composer.json`
 
 1.0.0 (March 6, 2025)
 ---------------------
