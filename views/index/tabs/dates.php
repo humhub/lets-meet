@@ -1,13 +1,13 @@
 <?php
 
+use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
-use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\widgets\form\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\modal\Modal;
 use humhub\widgets\modal\ModalButton;
-use \yii\web\View;
+use yii\web\View;
 
 /**
  * @var ActiveForm $form
@@ -21,21 +21,20 @@ LetsMeetAsset::register($this);
 $tabStateManager = TabsStateManager::instance();
 $prevUrl = $contentContainer->createUrl(
     '/lets-meet/index/edit',
-    $tabStateManager->id ? ['id' => $tabStateManager->id] : ['hash' => $tabStateManager->hash]
+    $tabStateManager->id ? ['id' => $tabStateManager->id] : ['hash' => $tabStateManager->hash],
 );
 
 $title = TabsStateManager::instance()->id
     ? Yii::t('LetsMeetModule.base', 'Edit Let\'s Meet')
     : Yii::t('LetsMeetModule.base', 'Create New Let\'s Meet')
 ;
-
 ?>
 
 <?php $form = Modal::beginFormDialog([
-        'title' => $title,
-        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
-        'footer' => ModalButton::light('Previous')->load($prevUrl) . ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))->submit()->loader(false),
-    ]) ?>
+    'title' => $title,
+    'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
+]) ?>
+
     <div class="form-heading">
         <h5><?= Yii::t('LetsMeetModule.base', 'Select dates for your poll') ?></h5>
         <div>
@@ -64,4 +63,11 @@ $title = TabsStateManager::instance()->id
             ]) ?>
         <?php endif; ?>
     </div>
+
+    <div class="modal-body-footer">
+        <?= ModalButton::light('Previous')->load($prevUrl) ?>
+        <?= ModalButton::primary(Yii::t('LetsMeetModule.base', $tabStateManager->id ? 'Save' : 'Next'))
+            ->submit()->action('submit')->loader(false) ?>
+    </div>
+
 <?php Modal::endFormDialog() ?>

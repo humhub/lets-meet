@@ -1,13 +1,12 @@
 <?php
 
+use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\common\TabsStateManager;
+use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
-use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\bootstrap\Button;
-use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\widgets\form\ActiveForm;
-use humhub\modules\letsMeet\models\forms\DayForm;
 use yii\web\View;
 
 /**
@@ -28,11 +27,7 @@ use yii\web\View;
         </div>
         <div class="col-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
-                ->widget(DatePicker::class, [
-                    'options' => [
-                        'placeholder' => $model->getAttributeLabel('day')
-                    ]
-                ])
+                ->input('date')
                 ->label(false) ?>
         </div>
         <div class="col-5 text-end">
@@ -46,16 +41,14 @@ use yii\web\View;
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Add'),
                     'class' => 'remove-row',
-                ])
-            ?>
+                ]) ?>
             <?= Button::asLink()->primary()
                 ->icon('fa-plus')
                 ->action('addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Delete'),
                     'class' => 'add-row' . $last ? '' : ' d-none',
-                ])
-            ?>
+                ]) ?>
         </div>
     </div>
     <div class="row">
@@ -66,8 +59,8 @@ use yii\web\View;
             <?= $form->field($model, "[$index]times")
                 ->widget(TimeSlotPicker::class, [
                     'options' => [
-                        'placeholder' => $model->getAttributeLabel('times')
-                    ]
+                        'placeholder' => $model->getAttributeLabel('times'),
+                    ],
                 ])
                 ->label(false) ?>
         </div>

@@ -1,14 +1,14 @@
 <?php
 
+use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\content\widgets\richtext\RichTextField;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\widgets\form\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\widgets\modal\Modal;
 use humhub\widgets\modal\ModalButton;
-use humhub\modules\content\components\ContentContainerActiveRecord;
-use yii\widgets\MaskedInput;
 use yii\web\View;
+use yii\widgets\MaskedInput;
 
 /**
  * @var ActiveForm $form
@@ -27,9 +27,9 @@ $title = TabsStateManager::instance()->id
 ?>
 
 <?php $form = Modal::beginFormDialog([
-        'title' => $title,
-        'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
-    ]) ?>
+    'title' => $title,
+    'bodyOptions' => ['class' => 'modal-body meeting-edit-modal', 'data-ui-widget' => 'letsMeet.Form', 'data-ui-init' => true],
+]) ?>
 
     <?= $form->field($model, 'title')->textInput(['autofocus' => true, 'placeholder' => $model->getAttributeLabel('title')]) ?>
     <?= $form->field($model, 'description')->widget(RichTextField::class, ['placeholder' => $model->getAttributeLabel('description')]) ?>
@@ -43,8 +43,8 @@ $title = TabsStateManager::instance()->id
     <?= $form->field($model, 'make_public')->checkbox() ?>
     <div class="modal-body-footer">
         <?= ModalButton::cancel() ?>
-        <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Next'))->action('submit')->loader(false) ?>
+        <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Next'))
+            ->submit()->action('submit')->loader(false) ?>
     </div>
 
 <?php Modal::endFormDialog() ?>
-

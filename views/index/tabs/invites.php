@@ -1,22 +1,22 @@
 <?php
 
+use humhub\helpers\Html;
 use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\letsMeet\assets\LetsMeetAsset;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
-use humhub\widgets\form\ActiveForm;
-use humhub\modules\letsMeet\assets\LetsMeetAsset;
-use humhub\widgets\modal\Modal;
-use humhub\widgets\modal\ModalButton;
-use humhub\widgets\bootstrap\Button;
-use humhub\modules\user\widgets\UserPickerField;
 use humhub\modules\user\models\User;
 use humhub\modules\user\widgets\Image;
-use humhub\helpers\Html;
+use humhub\modules\user\widgets\UserPickerField;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
 use humhub\widgets\LinkPager;
+use humhub\widgets\modal\Modal;
+use humhub\widgets\modal\ModalButton;
 use humhub\widgets\Pjax;
-use yii\web\View;
 use yii\data\ActiveDataProvider;
+use yii\web\View;
 
 /**
  * @var ActiveForm $form
@@ -116,7 +116,7 @@ $title = TabsStateManager::instance()->id
                 'data-pjax' => 0,
             ],
         ]) ?>
-            <?= $form->field($model, "invites")->hiddenInput(['value' => ''])->label(false) ?>
+            <?= $form->field($model, "invites")->hiddenInput(['value' => '', 'class' => $model->hasErrors('invites') ? 'is-invalid' : ''])->label(false) ?>
             <?php foreach ($invites as $user) : ?>
                 <?= $form->field($model, "invites[]")
                         ->hiddenInput(['value' => $user->guid])
@@ -126,11 +126,11 @@ $title = TabsStateManager::instance()->id
 
             <div class="modal-body-footer">
                 <?php if (TabsStateManager::instance()->id): ?>
-                    <?= ModalButton::cancel(); ?>
+                    <?= ModalButton::cancel() ?>
                 <?php else: ?>
-                    <?= ModalButton::light('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])); ?>
+                    <?= ModalButton::light('Previous')->load($contentContainer->createUrl('/lets-meet/index/dates', ['hash' => TabsStateManager::instance()->hash])) ?>
                 <?php endif; ?>
-                <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Save'))->action('submit')->loader(false) ?>
+                <?= ModalButton::primary(Yii::t('LetsMeetModule.base', 'Save'))->submit()->action('submit')->loader(false) ?>
             </div>
         <?php ActiveForm::end() ?>
     <?php Pjax::end() ?>
