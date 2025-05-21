@@ -4,6 +4,7 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
+use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
@@ -27,7 +28,7 @@ use yii\web\View;
         </div>
         <div class="col-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
-                ->input('date')
+                ->widget(DatePicker::class)
                 ->label(false) ?>
         </div>
         <div class="col-5 text-end">
