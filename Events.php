@@ -31,22 +31,4 @@ class Events
 
         return true;
     }
-
-    public static function onIntegrityCheck($event)
-    {
-
-    }
-
-    public static function onSampleDataInstall($event)
-    {
-
-    }
-
-    public static function onRestApiAddRules()
-    {
-        /* @var \humhub\modules\rest\Module $restModule */
-        $restModule = Yii::$app->getModule('rest');
-        //        $restModule->addRules([], 'letsMeet');
-    }
-
 }
