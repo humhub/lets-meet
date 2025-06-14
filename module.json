@@ -10,7 +10,7 @@
     ],
     "version": "1.1.0",
     "humhub": {
-        "minVersion": "1.17.1"
+        "minVersion": "1.18.0"
     },
     "homepage": "https://github.com/humhub/lets-meet",
     "authors": [
