@@ -212,7 +212,7 @@ class LetsMeetCest
 
         $I->waitForElementVisible('.wall_humhubmodulesletsMeetmodelsMeeting_1');
 
-        $I->canSeeElement('.wall_humhubmodulesletsMeetmodelsMeeting_1 [data-original-title="Sara Tester"]');
+        $I->canSeeElement('.wall_humhubmodulesletsMeetmodelsMeeting_1 [data-bs-title="Sara Tester"]');
 
         $I->wait(1);
         $I->click('.preferences .dropdown-toggle', '.wall_humhubmodulesletsMeetmodelsMeeting_1');
