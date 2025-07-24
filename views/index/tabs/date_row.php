@@ -33,7 +33,7 @@ use yii\web\View;
         </div>
         <div class="col-5 text-end">
             <?= Button::asLink()->danger()
-                ->icon('fa-times')
+                ->icon('times')
                 ->action('removeDateRow')
                 ->confirm(
                     Yii::t('LetsMeetModule.base', 'Delete'),
@@ -44,11 +44,11 @@ use yii\web\View;
                     'class' => 'remove-row',
                 ]) ?>
             <?= Button::asLink()->primary()
-                ->icon('fa-plus')
+                ->icon('plus')
                 ->action('addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Delete'),
-                    'class' => 'add-row' . $last ? '' : ' d-none',
+                    'class' => 'add-row' . ($last ? '' : ' d-none'),
                 ]) ?>
         </div>
     </div>
