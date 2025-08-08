@@ -18,7 +18,5 @@ return [
     'events' => [
         ['class' => WallEntryControls::class, 'event' => WallEntryControls::EVENT_INIT, 'callback' => ['humhub\modules\letsMeet\Events', 'onWallEntryControlsInit']],
         ['class' => User::class, 'event' => User::EVENT_BEFORE_DELETE, 'callback' => ['humhub\modules\letsMeet\Events', 'onUserDelete']],
-        //        ['class' => IntegrityController::class, 'event' => IntegrityController::EVENT_ON_RUN, 'callback' => ['humhub\modules\letsMeet\Events', 'onIntegrityCheck']],
-        //        ['class' => 'humhub\modules\rest\Module', 'event' => 'restApiAddRules', 'callback' => ['humhub\modules\letsMeet\Events', 'onRestApiAddRules']],
     ],
 ];
