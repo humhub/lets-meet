@@ -1,6 +1,5 @@
 <?php
-
 return [
-    'Can manage Let\'s Meet' => '',
-    'Manage Let\'s Meet' => '',
+  'Can manage Let\'s Meet' => 'Kan de datumprikker beheersen',
+  'Manage Let\'s Meet' => 'Beheer de datumprikker',
 ];
