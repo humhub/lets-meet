@@ -71,7 +71,7 @@ $header = TabsStateManager::instance()->id
                     ]) ?>
                 </div>
                 <div class="col-xs-2 text-right">
-                    <?= Button::info()
+                    <?= Button::accent()
                         ->submit()
                         ->options(['name' => 'add'])
                         ->icon('send') ?>
