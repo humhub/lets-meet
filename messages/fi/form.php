@@ -1,13 +1,12 @@
 <?php
-
 return [
-    'Day' => '',
-    'Description' => '',
-    'Invite all Space members' => '',
-    'Make Public' => '',
-    'Meeting duration' => '',
-    'New Participant' => '',
-    'Participants' => '',
-    'Times' => '',
-    'Title' => '',
+  'Day' => '',
+  'Description' => 'Kuvaus',
+  'Invite all Space members' => '',
+  'Make Public' => 'Tee tästä julkinen',
+  'Meeting duration' => '',
+  'New Participant' => '',
+  'Participants' => 'Osallistujat',
+  'Times' => '',
+  'Title' => 'Otsikko',
 ];

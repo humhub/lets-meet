@@ -1,13 +1,12 @@
 <?php
-
 return [
-    'Day' => '',
-    'Description' => '',
-    'Invite all Space members' => '',
-    'Make Public' => '',
-    'Meeting duration' => '',
-    'New Participant' => '',
-    'Participants' => '',
-    'Times' => '',
-    'Title' => '',
+  'Day' => 'Eguna',
+  'Description' => 'Deskribapena',
+  'Invite all Space members' => '',
+  'Make Public' => '',
+  'Meeting duration' => '',
+  'New Participant' => '',
+  'Participants' => '',
+  'Times' => '',
+  'Title' => 'Izenburua',
 ];
