@@ -1,13 +1,12 @@
 <?php
-
 return [
-    'Day' => '',
-    'Description' => '',
-    'Invite all Space members' => '',
-    'Make Public' => '',
-    'Meeting duration' => '',
-    'New Participant' => '',
-    'Participants' => '',
-    'Times' => '',
-    'Title' => '',
+  'Day' => 'Dan',
+  'Description' => 'Opis',
+  'Invite all Space members' => '',
+  'Make Public' => 'Učini javnim',
+  'Meeting duration' => '',
+  'New Participant' => '',
+  'Participants' => 'Sudionici',
+  'Times' => '',
+  'Title' => 'Naziv',
 ];

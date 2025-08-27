@@ -70,7 +70,7 @@ $title = TabsStateManager::instance()->id
                     ]) ?>
                 </div>
                 <div class="ms-1">
-                    <?= Button::info()
+                    <?= Button::accent()
                         ->submit()
                         ->options(['name' => 'add'])
                         ->icon('send') ?>

@@ -107,8 +107,8 @@ class WallEntryContent extends Widget
 
         $canVote = (
             (
-                $this->model->invite_all_space_users &&
-                $this->model->content->container->getMembershipUser()->andWhere(['user.id' => Yii::$app->user->id])->exists()
+                $this->model->invite_all_space_users
+                && $this->model->content->container->getMembershipUser()->andWhere(['user.id' => Yii::$app->user->id])->exists()
             )
             || $this->model->getInvites()->andWhere(['user_id' => Yii::$app->user->id])->exists()
             || $this->model->created_by == Yii::$app->user->id
