@@ -3,14 +3,12 @@
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Label;
 use humhub\modules\content\widgets\richtext\RichText;
-use yii\helpers\Url;
-use yii\web\View;
+use humhub\helpers\Url;
 use humhub\widgets\Pjax;
-use humhub\widgets\Button;
-use humhub\modules\user\widgets\Image;
-use yii\widgets\ActiveForm;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
+use yii\web\View;
 
 /**
  * @var View $this
@@ -35,8 +33,8 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
     }
 </style>
 
-<div class="media" style="margin-top:20px;">
-    <div class="clearfix" style="margin-bottom:10px">
+<div class="mt-4">
+    <div class="mb-3">
         <?php if (!empty($meeting->description)) : ?>
             <div data-ui-markdown data-ui-show-more>
                 <?= RichText::output($meeting->description) ?>
@@ -51,7 +49,6 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             ) ?>
         </div>
     </div>
-
 
     <?php Pjax::begin(['enablePushState' => 0, 'id' => "lets_meet_wall_entry_$meeting->id"]) ?>
         <div class="lets-meet-container <?= $isClosed ? 'voting-closed' : '' ?>" data-ui-widget="letsMeet.WallEntry" data-ui-init>
@@ -68,7 +65,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php foreach ($meeting->daySlots as $daySlot): ?>
                     <div>
                         <div class="day-cell">
-                            <span class="tt" data-toggle="tooltip" data-placement="top" title="<?= Yii::$app->formatter->asDate($daySlot->date, 'long') ?>">
+                            <span class="tt" data-bs-toggle="tooltip" data-placement="top" title="<?= Yii::$app->formatter->asDate($daySlot->date, 'long') ?>">
                                 <?= Yii::$app->formatter->asDate($daySlot->date, 'MMM d') ?>
                             </span>
                         </div>
@@ -97,7 +94,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             <?php endif; ?>
             <div class="controls-container">
                 <div class="scroll-left">
-                    <?= Button::defaultType()->icon('arrow-left')->action('scrollLeft')->loader(false) ?>
+                    <?= Button::light()->icon('arrow-left')->action('scrollLeft')->loader(false) ?>
                 </div>
                 <div class="control-buttons">
                     <?php if ($canVote && $meeting->status != $meeting::STATUS_CLOSED): ?>
@@ -105,14 +102,14 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                             <?= Button::primary(Yii::t('LetsMeetModule.base', 'Save Vote'))->submit()
                                 ->options(['name' => 'action', 'value' => 'vote', 'disabled' => !$canEditVote])  ?>
                         <?php else: ?>
-                            <?= Button::defaultType(Yii::t('LetsMeetModule.base', 'Edit Vote'))->submit()
+                            <?= Button::light(Yii::t('LetsMeetModule.base', 'Edit Vote'))->submit()
                                 ->options(['name' => 'action', 'value' => 'edit']) ?>
                         <?php endif; ?>
                     <?php endif; ?>
 
                 </div>
                 <div class="scroll-right">
-                    <?= Button::defaultType()->icon('arrow-right')->action('scrollRight')->loader(false) ?>
+                    <?= Button::light()->icon('arrow-right')->action('scrollRight')->loader(false) ?>
                 </div>
             </div>
 
@@ -129,7 +126,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                 <?php if ($votedUsersCount > 2): ?>
                     <?php if (count($votes) != $votedUsersCount): ?>
                         <div>
-                            <?= Button::defaultType(Yii::t(
+                            <?= Button::light(Yii::t(
                                 'LetsMeetModule.base', 'Show All ({count})',
                                 ['count' => $votedUsersCount]
                             ))
@@ -139,7 +136,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
                         </div>
                     <?php else: ?>
                         <div>
-                            <?= Button::defaultType(Yii::t(
+                            <?= Button::light(Yii::t(
                                 'LetsMeetModule.base', 'Collapse ({count})',
                                 ['count' => $votedUsersCount - 2]
                             ))

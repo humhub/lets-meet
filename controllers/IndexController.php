@@ -8,6 +8,7 @@
 
 namespace humhub\modules\letsMeet\controllers;
 
+use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\models\forms\Form;
@@ -17,17 +18,15 @@ use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\letsMeet\widgets\WallEntryContent;
-use humhub\modules\user\models\UserFilter;
-use humhub\modules\content\components\ContentContainerController;
+use humhub\modules\stream\actions\StreamEntryResponse;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\UserPicker;
-use humhub\modules\stream\actions\StreamEntryResponse;
+use humhub\widgets\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\widgets\ActiveForm;
 
 class IndexController extends ContentContainerController
 {
@@ -76,17 +75,15 @@ class IndexController extends ContentContainerController
 
         $model = $this->stateManager->getState(MainForm::class, new MainForm(), $id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                $this->stateManager->saveState(MainForm::class, $model, $id);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $this->stateManager->saveState(MainForm::class, $model, $id);
 
-                return $this->asJson([
-                    'next' => $this->contentContainer->createUrl(
-                        '/lets-meet/index/dates',
-                        $id ? ['id' => $id] : ['hash' => $this->stateManager->hash],
-                    ),
-                ]);
-            }
+            return $this->asJson([
+                'next' => $this->contentContainer->createUrl(
+                    '/lets-meet/index/dates',
+                    $id ? ['id' => $id] : ['hash' => $this->stateManager->hash],
+                ),
+            ]);
         }
 
         return $this->renderAjax('tabs/main', [

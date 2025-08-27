@@ -18,12 +18,12 @@ use humhub\modules\letsMeet\models\MeetingDaySlot;
 use humhub\modules\letsMeet\models\MeetingInvite;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\content\models\Content;
+use humhub\helpers\Html;
 use Yii;
 use yii\base\BaseObject;
 use yii\base\StaticInstanceInterface;
 use yii\base\StaticInstanceTrait;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 
 /**

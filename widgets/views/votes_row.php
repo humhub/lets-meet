@@ -2,11 +2,11 @@
 
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use humhub\helpers\Html;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\widgets\Image;
 use humhub\modules\user\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * @var Meeting $meeting
@@ -46,7 +46,7 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
             'hideOnlineStatus' => true,
             'showTooltip' => true,
             'width' => 36,
-            'htmlOptions' => ['class' => 'media-object'],
+            'htmlOptions' => ['class' => 'flex-shrink-0'],
         ]) ?>
     </div>
     <div class="dates-cell scrollable-container">

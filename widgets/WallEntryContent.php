@@ -17,7 +17,7 @@ use humhub\modules\letsMeet\models\MeetingVote;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use humhub\helpers\Html;
 
 class WallEntryContent extends Widget
 {

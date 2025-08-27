@@ -8,14 +8,10 @@
 
 namespace humhub\modules\letsMeet\widgets;
 
-use humhub\modules\content\components\ContentContainerActiveRecord;
-use humhub\modules\content\components\ContentTagActiveQuery;
-use humhub\modules\content\models\ContentTag;
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\ui\form\widgets\BasePicker;
-use humhub\modules\ui\view\components\View;
+use humhub\helpers\Html;
 use Yii;
-use yii\helpers\Html;
 
 class TimeSlotPicker extends BasePicker
 {

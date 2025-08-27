@@ -1,13 +1,15 @@
 <?php
 
 use humhub\widgets\mails\MailContentEntry;
-use yii\helpers\Url;
-
+use humhub\modules\user\models\User;
+use humhub\modules\letsMeet\models\Meeting;
+use humhub\helpers\Url;
+use yii\web\View;
 
 /**
- * @var yii\web\View $this
- * @var \humhub\modules\user\models\User $originator
- * @var \humhub\modules\letsMeet\models\Meeting $source
+ * @var View $this
+ * @var User $originator
+ * @var Meeting $source
  * @var array $_params_
  */
 

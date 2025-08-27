@@ -1,16 +1,19 @@
 <?php
 
+use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\common\TabsStateManager;
+use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
 use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Button;
-use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
+use yii\web\View;
 
 /**
- * @var \yii\widgets\ActiveForm $form
- * @var \humhub\modules\letsMeet\models\forms\DayForm $model
- * @var \yii\web\View $this
+ * @var ActiveForm $form
+ * @var DayForm $model
+ * @var View $this
  * @var int|string $index
  * @var bool $last
  * @var ContentContainerActiveRecord $contentContainer
@@ -20,21 +23,17 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 
 <div class="date-row" id="date-row-<?= $index ?>">
     <div class="row">
-        <div class="col-xs-2 col-md-1 row-icons">
+        <div class="col-2 col-lg-1 row-icons">
             <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-xs-5 col-md-6">
+        <div class="col-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
-                ->widget(DatePicker::class, [
-                    'options' => [
-                        'placeholder' => $model->getAttributeLabel('day')
-                    ]
-                ])
+                ->widget(DatePicker::class)
                 ->label(false) ?>
         </div>
-        <div class="col-xs-5 text-right">
+        <div class="col-5 text-end">
             <?= Button::asLink()->danger()
-                ->icon('fa-times')
+                ->icon('times')
                 ->action('removeDateRow')
                 ->confirm(
                     Yii::t('LetsMeetModule.base', 'Delete'),
@@ -43,29 +42,26 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Add'),
                     'class' => 'remove-row',
-                ])
-            ?>
+                ]) ?>
             <?= Button::asLink()->primary()
-                ->icon('fa-plus')
+                ->icon('plus')
                 ->action('addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
                 ->options([
                     'title' => Yii::t('LetsMeetModule.base', 'Delete'),
-                    'class' => 'add-row',
-                    'style' => ['display' => $last ? '' : 'none']
-                ])
-            ?>
+                    'class' => 'add-row' . ($last ? '' : ' d-none'),
+                ]) ?>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-2 col-md-1 row-icons">
+        <div class="col-2 col-lg-1 row-icons">
             <?= Icon::get('clock-o')->size(Icon::SIZE_LG) ?>
         </div>
-        <div class="col-xs-10 col-md-11">
+        <div class="col-10 col-lg-11">
             <?= $form->field($model, "[$index]times")
                 ->widget(TimeSlotPicker::class, [
                     'options' => [
-                        'placeholder' => $model->getAttributeLabel('times')
-                    ]
+                        'placeholder' => $model->getAttributeLabel('times'),
+                    ],
                 ])
                 ->label(false) ?>
         </div>

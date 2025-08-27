@@ -50,15 +50,15 @@ humhub.module('letsMeet', function (module, require, $) {
         const scrollTolerance = 1;
 
         if (scrollableContainer.width() < scrollableContainer[0].scrollWidth) {
-            controlsContainer.show();
-            scrollLeftButton.show();
-            scrollRightButton.show();
+            controlsContainer.removeClass('d-none');
+            scrollLeftButton.removeClass('d-none');
+            scrollRightButton.removeClass('d-none');
         } else {
-            scrollLeftButton.hide();
-            scrollRightButton.hide();
+            scrollLeftButton.addClass('d-none');
+            scrollRightButton.addClass('d-none');
 
             if (controlsContainer.find('.control-buttons').children().length === 0) {
-                controlsContainer.hide();
+                controlsContainer.addClass('d-none');
             }
         }
 
@@ -132,15 +132,15 @@ humhub.module('letsMeet', function (module, require, $) {
     Form.prototype.renderButtons = function() {
         const rowsContainer = this.$.find('#date-rows');
 
-        rowsContainer.find('.add-row').hide();
+        rowsContainer.find('.add-row').addClass('d-none');
 
         if (rowsContainer.find('.date-row').length === 1) {
-            rowsContainer.find('.remove-row').hide();
+            rowsContainer.find('.remove-row').addClass('d-none');
         } else {
-            rowsContainer.find('.remove-row').show();
+            rowsContainer.find('.remove-row').removeClass('d-none');
         }
 
-        rowsContainer.find('.add-row').last().show();
+        rowsContainer.find('.add-row').last().removeClass('d-none');
     }
 
     Form.prototype.inviteAllMembers = function(event) {
@@ -148,18 +148,18 @@ humhub.module('letsMeet', function (module, require, $) {
         const invitesList = this.$.find('.invites');
 
         if (event.$target.prop('checked')) {
-            newInvitesForm.hide();
-            invitesList.hide();
+            newInvitesForm.addClass('d-none');
+            invitesList.addClass('d-none');
         } else {
-            newInvitesForm.show();
-            invitesList.show();
+            newInvitesForm.removeClass('d-none');
+            invitesList.removeClass('d-none');
         }
     }
 
     Form.prototype.removeParticipant = function(event) {
-        const participant = event.$target.closest('li');
+        const participant = event.$target.closest('.hh-list-item');
 
-        $('input[value="' + participant.find('input').val() + '"]').closest('.form-group').remove();
+        $('input[value="' + participant.find('input').val() + '"]').closest('.mb-3').remove();
         participant.remove();
     }
 
