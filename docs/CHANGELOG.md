@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1 (Unreleased)
+-----------------------
+- Enh #27: Improved Module Test GitHub Actions
+
 1.1.0 (August 27, 2025)
 -----------------------
 - Enh #24: Migration to Bootstrap 5 for HumHub 1.18
