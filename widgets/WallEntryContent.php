@@ -37,14 +37,10 @@ class WallEntryContent extends Widget
         $voteModels = ArrayHelper::index(
             ArrayHelper::merge([], [], ...ArrayHelper::getColumn(
                 $this->model->daySlots,
-                function (MeetingDaySlot $daySlot) {
-                    return ArrayHelper::getColumn($daySlot->timeSlots, function (MeetingTimeSlot $timeSlot) {
-                        return new MeetingVote([
-                            'time_slot_id' => $timeSlot->id,
-                            'user_id' => Yii::$app->user->id,
-                        ]);
-                    });
-                },
+                fn(MeetingDaySlot $daySlot) => ArrayHelper::getColumn($daySlot->timeSlots, fn(MeetingTimeSlot $timeSlot) => new MeetingVote([
+                    'time_slot_id' => $timeSlot->id,
+                    'user_id' => Yii::$app->user->id,
+                ])),
             )),
             'time_slot_id',
         );
@@ -149,17 +145,11 @@ class WallEntryContent extends Widget
             }
         }
 
-        usort($bestOptions, function ($a, $b) {
-            return $b['acceptedVotes'] <=> $a['acceptedVotes'];
-        });
+        usort($bestOptions, fn($a, $b) => $b['acceptedVotes'] <=> $a['acceptedVotes']);
 
-        $maxAcceptedVotes = max(array_map(function ($option) {
-            return $option['acceptedVotes'];
-        }, $bestOptions));
+        $maxAcceptedVotes = max(array_map(fn($option) => $option['acceptedVotes'], $bestOptions));
 
-        return array_filter($bestOptions, function ($option) use ($maxAcceptedVotes) {
-            return $option['acceptedVotes'] > 1 && $option['acceptedVotes'] === $maxAcceptedVotes;
-        });
+        return array_filter($bestOptions, fn($option) => $option['acceptedVotes'] > 1 && $option['acceptedVotes'] === $maxAcceptedVotes);
     }
 
     private function formatDuration()

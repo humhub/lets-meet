@@ -34,7 +34,7 @@ use yii\web\View;
                 <br>
                 <strong><?= Yii::t('LetsMeetModule.notification', 'Description') ?>:</strong>
                 <br>
-                <?= nl2br($source->description) ?>
+                <?= nl2br((string) $source->description) ?>
             </td>
         </tr>
         <tr>
