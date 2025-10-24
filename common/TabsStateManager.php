@@ -34,8 +34,8 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
 {
     use StaticInstanceTrait;
 
-    private ?string $hash;
-    private ?int $id;
+    private ?string $hash = null;
+    private ?int $id = null;
 
     public function init()
     {
@@ -136,9 +136,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
             foreach ($meeting->daySlots as $day) {
                 $days[] = new DayForm([
                     'day' => $day->date,
-                    'times' => ArrayHelper::getColumn($day->timeSlots, function (MeetingTimeSlot $timeSlot) {
-                        return Yii::$app->formatter->asTime($timeSlot->time, 'short');
-                    }),
+                    'times' => ArrayHelper::getColumn($day->timeSlots, fn(MeetingTimeSlot $timeSlot) => Yii::$app->formatter->asTime($timeSlot->time, 'short')),
                 ]);
             }
 

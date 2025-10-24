@@ -115,7 +115,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
 
             <?php if (!empty($votes)): ?>
                 <div class="results-container">
-                <?php foreach ($votes as $userId => $vote): ?>
+                <?php foreach ($votes as $vote): ?>
                     <?= $this->render('votes_row', [
                         'meeting' => $meeting,
                         'canVote' => false,

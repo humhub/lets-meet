@@ -30,7 +30,7 @@ use yii\web\NotFoundHttpException;
 
 class IndexController extends ContentContainerController
 {
-    private ?TabsStateManager $stateManager;
+    private ?TabsStateManager $stateManager = null;
 
     public function beforeAction($action)
     {
@@ -101,9 +101,7 @@ class IndexController extends ContentContainerController
         $models = $this->stateManager->getState(DayForm::class, [new DayForm()], $id);
 
         if (Yii::$app->request->isPost) {
-            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm())->formName()), function () {
-                return new DayForm();
-            });
+            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm())->formName()), fn() => new DayForm());
         }
 
         if (DayForm::loadMultiple($models, Yii::$app->request->post()) && DayForm::validateMultiple($models)) {

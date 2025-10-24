@@ -37,7 +37,7 @@ class EveryoneVotedNotificationJob extends ActiveJob
 
         $meetingVotes = MeetingVote::find()
             ->where(['user_id' => $userIds])
-            ->innerJoinWith(['timeSlot.day day' => function ($query) use ($meeting) {
+            ->innerJoinWith(['timeSlot.day day' => function ($query) use ($meeting): void {
                 $query->andOnCondition(['day.meeting_id' => $meeting->id]);
             }], false)
             ->createCommand()
