@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.2 (Unreleased)
+------------------------
+- Fix #31: Fix deprecated `humhub\helpers\Url`
+
 1.1.1 (October 29, 2025)
 ------------------------
 - Enh #27: Improved Module Test GitHub Actions
