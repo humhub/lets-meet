@@ -49,7 +49,7 @@ humhub.module('letsMeet', function (module, require, $) {
         const scrollRightButton = this.$.find('.scroll-right');
         const scrollTolerance = 1;
 
-        if (scrollableContainer.width() < scrollableContainer[0].scrollWidth) {
+        if (scrollableContainer.width() < scrollableContainer[0].scrollWidth - scrollTolerance) {
             controlsContainer.removeClass('d-none');
             scrollLeftButton.removeClass('d-none');
             scrollRightButton.removeClass('d-none');
