@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.2 (Unreleased)
+1.1.2 (October 29, 2025)
 ------------------------
 - Fix #31: Fix deprecated `humhub\helpers\Url`
 
@@ -21,5 +21,6 @@ Changelog
 1.0.0 (March 6, 2025)
 ---------------------
 Initial release
+
 
 
