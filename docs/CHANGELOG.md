@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.3 (Unreleased)
+------------------------
+- Fix #33: Show scroll buttons only when necessary
+
 1.1.2 (October 29, 2025)
 ------------------------
 - Fix #31: Fix deprecated `humhub\helpers\Url`
