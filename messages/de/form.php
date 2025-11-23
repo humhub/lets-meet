@@ -4,9 +4,9 @@ return [
   'Description' => 'Beschreibung',
   'Invite all Space members' => 'Alle Space Mitglieder einladen',
   'Make Public' => 'Veröffentlichen',
-  'Meeting duration' => '',
-  'New Participant' => '',
+  'Meeting duration' => 'Meetingdauer',
+  'New Participant' => 'Neuer Teilnehmer',
   'Participants' => 'Teilnehmer',
-  'Times' => '',
+  'Times' => 'Zeiten',
   'Title' => 'Titel',
 ];
