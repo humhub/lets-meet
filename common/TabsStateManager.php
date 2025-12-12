@@ -181,7 +181,7 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         return $meeting;
     }
 
-    private function saveMeeting(MainForm $main, Meeting $meeting, ContentContainerActiveRecord $contentContainer = null)
+    private function saveMeeting(MainForm $main, Meeting $meeting, ?ContentContainerActiveRecord $contentContainer = null)
     {
         if ($contentContainer) {
             $meeting->content->container = $contentContainer;
