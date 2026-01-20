@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.0 (Unreleased)
+------------------------
+- Enh #36: Update for HumHub 1.19
+
 1.1.3 (Unreleased)
 ------------------------
 - Fix #33: Show scroll buttons only when necessary
