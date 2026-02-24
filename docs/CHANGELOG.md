@@ -1,9 +1,10 @@
 Changelog
 =========
 
-1.1.3 (Unreleased)
-------------------------
+1.1.3 (February 24, 2026)
+-------------------------
 - Fix #33: Show scroll buttons only when necessary
+- Fix #40 Add/delete buttons title
 
 1.1.2 (October 29, 2025)
 ------------------------
@@ -25,6 +26,7 @@ Changelog
 1.0.0 (March 6, 2025)
 ---------------------
 Initial release
+
 
 
 
