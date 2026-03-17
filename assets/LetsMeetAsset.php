@@ -8,8 +8,8 @@
 
 namespace humhub\modules\letsMeet\assets;
 
+use humhub\components\assets\AssetBundle;
 use Yii;
-use yii\web\AssetBundle;
 
 class LetsMeetAsset extends AssetBundle
 {
@@ -35,7 +35,5 @@ class LetsMeetAsset extends AssetBundle
         return parent::register($view);
     }
 
-    public $publishOptions = [
-        'forceCopy' => YII_ENV_DEV,
-    ];
+    public $forceCopy = YII_ENV_DEV;
 }

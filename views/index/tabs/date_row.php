@@ -32,24 +32,20 @@ use yii\web\View;
                 ->label(false) ?>
         </div>
         <div class="col-5 text-end">
-            <?= Button::asLink()->danger()
+            <?= Button::danger()
                 ->icon('times')
                 ->action('removeDateRow')
                 ->confirm(
                     Yii::t('LetsMeetModule.base', 'Delete'),
                     Yii::t('LetsMeetModule.base', 'Are you sure you want to delete this date?'),
                 )
-                ->options([
-                    'title' => Yii::t('LetsMeetModule.base', 'Add'),
-                    'class' => 'remove-row',
-                ]) ?>
-            <?= Button::asLink()->primary()
+                ->tooltip(Yii::t('LetsMeetModule.base', 'Delete'))
+                ->cssClass('remove-row') ?>
+            <?= Button::primary()
                 ->icon('plus')
                 ->action('addDateRow', $contentContainer->createUrl('/lets-meet/index/add-date-row', ['hash' => TabsStateManager::instance()->hash]))
-                ->options([
-                    'title' => Yii::t('LetsMeetModule.base', 'Delete'),
-                    'class' => 'add-row' . ($last ? '' : ' d-none'),
-                ]) ?>
+                ->tooltip(Yii::t('LetsMeetModule.base', 'Add'))
+                ->cssClass('add-row' . ($last ? '' : ' d-none')) ?>
         </div>
     </div>
     <div class="row">
