@@ -9,13 +9,12 @@
 namespace humhub\modules\letsMeet\models;
 
 use DateTime;
-use Yii;
-use yii\db\ActiveQuery;
+use humhub\modules\content\components\ContentActiveRecord;
+use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\letsMeet\widgets\WallEntry;
 use humhub\modules\user\models\User;
-use humhub\modules\content\components\ContentActiveRecord;
-use humhub\modules\search\interfaces\Searchable;
-use humhub\modules\letsMeet\permissions\ManagePermission;
+use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * @property int $id
@@ -36,7 +35,7 @@ use humhub\modules\letsMeet\permissions\ManagePermission;
  * @property-read User $createdBy
  * @property-read User $updatedBy
  */
-class Meeting extends ContentActiveRecord implements Searchable
+class Meeting extends ContentActiveRecord
 {
     public const STATUS_OPEN = 1;
     public const STATUS_CLOSED = 2;
