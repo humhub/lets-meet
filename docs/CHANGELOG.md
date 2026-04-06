@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.4 (Unreleased)
+-------------------------
+- Enh #43: UI/UX improvements
+
 1.1.3 (February 24, 2026)
 -------------------------
 - Fix #33: Show scroll buttons only when necessary
