@@ -9,11 +9,10 @@ use yii\web\View;
  * @var View $this
  * @var User $originator
  * @var Meeting $source
- * @var array $_params_
  */
 
 ?>
-<?php $this->beginContent('@notification/views/layouts/mail.php', $_params_); ?>
+<?php $this->beginContent('@notification/views/layouts/mail.php') ?>
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="left">
         <tr>

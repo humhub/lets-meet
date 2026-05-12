@@ -4,6 +4,7 @@ Changelog
 1.1.4 (Unreleased)
 -------------------------
 - Enh #43: UI/UX improvements
+- Fix #44: Yii2 2.0.55 compatibility
 
 1.1.3 (February 24, 2026)
 -------------------------
