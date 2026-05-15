@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.1.4 (Unreleased)
--------------------------
+1.1.4 (May 15, 2026)
+--------------------
 - Enh #43: UI/UX improvements
 - Fix #44: Yii2 2.0.55 compatibility
 
