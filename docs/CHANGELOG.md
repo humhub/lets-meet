@@ -5,6 +5,11 @@ Changelog
 ------------------------
 - Enh #36: Update for HumHub 1.19
 
+1.1.4 (May 15, 2026)
+--------------------
+- Enh #43: UI/UX improvements
+- Fix #44: Yii2 2.0.55 compatibility
+
 1.1.3 (February 24, 2026)
 -------------------------
 - Fix #33: Show scroll buttons only when necessary

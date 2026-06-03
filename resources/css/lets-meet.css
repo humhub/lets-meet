@@ -75,3 +75,14 @@
     right: 10px;
     top: 8px;
 }
+
+[data-bs-theme="dark"] #ui-datepicker-div.ui-datepicker .ui-datepicker-prev span,
+[data-bs-theme="dark"] #ui-datepicker-div.ui-datepicker .ui-datepicker-next span {
+    opacity: 0.85;
+    filter: brightness(0) invert(1);
+}
+
+[data-bs-theme="dark"] #ui-datepicker-div.ui-datepicker .ui-datepicker-prev:hover span,
+[data-bs-theme="dark"] #ui-datepicker-div.ui-datepicker .ui-datepicker-next:hover span {
+    opacity: 1;
+}
