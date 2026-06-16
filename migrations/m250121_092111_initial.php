@@ -6,7 +6,6 @@
  * @license https://www.humhub.com/licences
  */
 
-use humhub\modules\letsMeet\models\Meeting;
 use yii\db\Migration;
 
 class m250121_092111_initial extends Migration
@@ -20,7 +19,7 @@ class m250121_092111_initial extends Migration
             'duration' => $this->time()->notNull(),
             'invite_all_space_users' => $this->boolean()->notNull()->defaultValue(0),
             'space_users_notified' => $this->boolean()->notNull()->defaultValue(0),
-            'status' => $this->integer()->defaultValue(Meeting::STATUS_OPEN),
+            'status' => $this->integer()->defaultValue(1), // Meeting::STATUS_OPEN
             'created_at' => $this->dateTime()->notNull(),
             'created_by' => $this->integer()->notNull(),
             'updated_at' => $this->dateTime()->notNull(),
