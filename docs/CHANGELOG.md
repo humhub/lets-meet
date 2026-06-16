@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.1 (Unreleased)
+------------------
+- Fix: Make m250121_092111_initial migration resilient when module is not bootstrapped
+
 1.2.0 (June 5, 2026)
 --------------------
 - Enh #36: Update for HumHub 1.19
