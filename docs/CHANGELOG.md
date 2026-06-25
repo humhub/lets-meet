@@ -4,6 +4,7 @@ Changelog
 1.2.1 (Unreleased)
 ------------------
 - Fix: Make m250121_092111_initial migration resilient when module is not bootstrapped
+- Enh #45: Add aria-label attribute for icon-only buttons
 
 1.2.0 (June 5, 2026)
 --------------------
