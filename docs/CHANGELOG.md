@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2.1 (Unreleased)
-------------------
+1.2.1 (July 8, 2026)
+--------------------
 - Fix: Make m250121_092111_initial migration resilient when module is not bootstrapped
 - Enh #45: Add aria-label attribute for icon-only buttons
 
