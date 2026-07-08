@@ -10,6 +10,10 @@ Changelog
 --------------------
 - Enh #36: Update for HumHub 1.19
 
+1.1.5 (July 8, 2026)
+--------------------
+- Fix: Make m250121_092111_initial migration resilient when module is not bootstrapped
+
 1.1.4 (May 15, 2026)
 --------------------
 - Enh #43: UI/UX improvements
