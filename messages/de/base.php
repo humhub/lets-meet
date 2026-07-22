@@ -27,6 +27,8 @@ return [
   'Reopen Let\'s Meet' => 'Let\'s Meet wieder eröffnen',
   'Save' => 'Speichern',
   'Save Vote' => 'Abstimmung speichern',
+  'Scroll left' => 'Nach links scrollen',
+  'Scroll right' => 'Nach rechts scrollen',
   'Select dates for your poll' => 'Wähle Termine für deine Umfrage',
   'Select either individual users to receive an invite, or select all Space members.' => 'Wählen Sie entweder einzelne Benutzer aus, die eine Einladung erhalten sollen, oder wählen Sie alle Mitglieder des Spaces.',
   'Show All ({count})' => 'Zeige Alle ({count})',

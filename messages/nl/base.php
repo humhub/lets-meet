@@ -27,6 +27,8 @@ return [
   'Reopen Let\'s Meet' => 'Heropen de datumprikker',
   'Save' => 'Opslaan',
   'Save Vote' => 'Stem opslaan',
+  'Scroll left' => 'Scrol naar links',
+  'Scroll right' => 'Scrol naar rechts',
   'Select dates for your poll' => 'Selecteer de datums',
   'Select either individual users to receive an invite, or select all Space members.' => 'Selecteer individuele gebruikers of alle leden van de ruimte die een uitnodiging moeten ontvangen.',
   'Show All ({count})' => 'Alles weergeven ({count})',
