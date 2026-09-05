@@ -8,7 +8,7 @@ return [
   'Are you sure you want to close this Let\'s Meet?' => 'Weet u zeker dat u deze datumprikker wilt sluiten?',
   'Are you sure you want to delete this date?' => 'Weet u zeker dat u deze datum wilt verwijderen?',
   'Are you sure you want to reopen this Let\'s Meet?' => 'Weet u zeker dat u deze datumprikker opnieuw wilt openen?',
-  'Best {options, plural, =1{option} other{options}}' => '',
+  'Best {options, plural, =1{option} other{options}}' => 'Best {options, plural, =1{option} other{options}}',
   'Close' => 'Sluiten',
   'Close Let\'s Meet' => 'Sluiten de datumprikker',
   'Collapse ({count})' => 'Dichtklappen ({count})',
