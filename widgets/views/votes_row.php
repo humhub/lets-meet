@@ -68,8 +68,8 @@ $votes = ArrayHelper::index($votes, 'time_slot_id');
                             <?php endforeach; ?>
                         </div>
                     <?php else:?>
-                        <div class="time-slot-vote voted <?= $voteOptions[$vote?->vote]['class'] ?? '' ?>">
-                            <?= $vote ? Icon::get($voteOptions[$vote?->vote]['icon'] ?? '')->size(Icon::SIZE_LG) : '' ?>
+                        <div class="time-slot-vote voted <?= $voteOptions[$vote?->vote ?? '']['class'] ?? '' ?>">
+                            <?= $vote ? Icon::get($voteOptions[$vote?->vote ?? '']['icon'] ?? '')->size(Icon::SIZE_LG) : '' ?>
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
