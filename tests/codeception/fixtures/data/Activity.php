@@ -9,16 +9,12 @@
 return [
     [
         'id' => 101,
-        'class' => 'humhub\modules\content\activities\ContentCreated',
-        'module' => 'content',
-        'object_model' => 'humhub\modules\letsMeet\models\Meeting',
-        'object_id' => 1,
+        'class' => 'humhub\modules\content\activities\ContentCreatedActivity',
+        'content_id' => 1,
     ],
     [
         'id' => 102,
-        'class' => 'humhub\modules\comment\activities\NewComment',
-        'module' => 'comment',
-        'object_model' => 'humhub\modules\comment\models\Comment',
-        'object_id' => 201,
+        'class' => 'humhub\modules\comment\activities\NewCommentActivity',
+        'content_id' => 201,
     ],
 ];

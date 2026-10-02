@@ -28,6 +28,8 @@ return [
     'Reopen Let\'s Meet' => '',
     'Save' => '',
     'Save Vote' => '',
+    'Scroll left' => '',
+    'Scroll right' => '',
     'Select dates for your poll' => '',
     'Select either individual users to receive an invite, or select all Space members.' => '',
     'Show All ({count})' => '',

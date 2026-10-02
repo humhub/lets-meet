@@ -94,7 +94,11 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
             <?php endif; ?>
             <div class="controls-container">
                 <div class="scroll-left">
-                    <?= Button::light()->icon('arrow-left')->action('scrollLeft')->loader(false) ?>
+                    <?= Button::light()
+                        ->icon('arrow-left')
+                        ->options(['aria-label' => Yii::t('LetsMeetModule.base', 'Scroll left')])
+                        ->action('scrollLeft')
+                        ->loader(false) ?>
                 </div>
                 <div class="control-buttons">
                     <?php if ($canVote && $meeting->status != $meeting::STATUS_CLOSED): ?>
@@ -109,7 +113,11 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
 
                 </div>
                 <div class="scroll-right">
-                    <?= Button::light()->icon('arrow-right')->action('scrollRight')->loader(false) ?>
+                    <?= Button::light()
+                        ->icon('arrow-right')
+                        ->options(['aria-label' => Yii::t('LetsMeetModule.base', 'Scroll right')])
+                        ->action('scrollRight')
+                        ->loader(false) ?>
                 </div>
             </div>
 

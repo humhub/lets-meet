@@ -72,7 +72,7 @@ $title = TabsStateManager::instance()->id
                 <div class="ms-1">
                     <?= Button::accent()
                         ->submit()
-                        ->options(['name' => 'add'])
+                        ->options(['name' => 'add', 'aria-label' => Yii::t('LetsMeetModule.base', 'Add participants...')])
                         ->icon('send') ?>
                 </div>
             </div>
@@ -95,6 +95,7 @@ $title = TabsStateManager::instance()->id
                                 <div>
                                     <?= Button::danger()->sm()
                                         ->icon('remove')
+                                        ->options(['aria-label' => Yii::t('base', 'Remove')])
                                         ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
                                         ->action('removeParticipant') ?>
                                 </div>
