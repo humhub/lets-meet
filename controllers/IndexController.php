@@ -104,7 +104,7 @@ class IndexController extends ContentContainerController
             $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm())->formName()), fn() => new DayForm());
         }
 
-        if (DayForm::loadMultiple($models, Yii::$app->request->post()) && DayForm::validateMultiple($models)) {
+        if (DayForm::loadMultiple($models, Yii::$app->request->post()) && $this->validateDays($models)) {
             $this->stateManager->saveState(DayForm::class, $models, $id);
 
             if ($id) {
@@ -230,6 +230,17 @@ class IndexController extends ContentContainerController
             'index' => $index,
             'contentContainer' => $this->contentContainer,
         ]);
+    }
+
+    /**
+     * @param DayForm[] $models
+     */
+    private function validateDays(array $models): bool
+    {
+        // Both validations must run to show all errors at once
+        $valid = DayForm::validateMultiple($models);
+
+        return DayForm::validateUniqueDays($models) && $valid;
     }
 
     private function getMeeting(int $id): Meeting

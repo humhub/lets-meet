@@ -4,6 +4,7 @@ Changelog
 1.2.2 (Unreleased)
 --------------------
 - Fix #46: Fix "Using null as an array offset" deprecation in votes_row.php (PHP 8.5)
+- Fix #47: Disable already selected days in the day picker and reject duplicated days
 
 1.2.1 (July 8, 2026)
 --------------------

@@ -191,6 +191,37 @@ humhub.module('letsMeet', function (module, require, $) {
         })
     }
 
+    /**
+     * Used as `beforeShowDay` callback of the day picker: disables days already selected in other rows.
+     *
+     * @param {HTMLElement} input the day input the picker is opened for
+     * @param {Date} date the day rendered in the picker
+     * @returns {Array} [selectable, cssClass, tooltip]
+     */
+    const isDayAvailable = function(input, date) {
+        const $input = $(input);
+        const format = $input.datepicker('option', 'dateFormat');
+        const settings = $input.datepicker('option', 'all');
+        const rowsContainer = $input.closest('#date-rows');
+
+        const taken = rowsContainer.find('.date-row input[name$="[day]"]').not($input).filter(function() {
+            const value = $(this).val();
+
+            if (!value) {
+                return false;
+            }
+
+            try {
+                return $.datepicker.parseDate(format, value, settings).getTime() === date.getTime();
+            } catch (e) {
+                // Not a valid date (e.g. the user is still typing)
+                return false;
+            }
+        }).length > 0;
+
+        return [!taken, taken ? 'ui-state-disabled' : ''];
+    };
+
     const changeState = function(event) {
         client.post(event).then(function () {
             Widget.closest(event.$trigger).reload()
@@ -202,6 +233,7 @@ humhub.module('letsMeet', function (module, require, $) {
     module.export({
         WallEntry: WallEntry,
         Form: Form,
+        isDayAvailable: isDayAvailable,
         changeState: changeState,
     });
 });
