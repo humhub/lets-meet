@@ -31,6 +31,36 @@ class DayForm extends Model
         ]);
     }
 
+    /**
+     * Checks that the same day is not used in more than one row.
+     *
+     * Must be called after {@see Model::validateMultiple()}, because only then the days are
+     * normalized to the `Y-m-d` format. Rows whose day already has an error are skipped.
+     *
+     * @param DayForm[] $models
+     * @return bool true if there are no duplicated days
+     */
+    public static function validateUniqueDays(array $models): bool
+    {
+        $valid = true;
+        $usedDays = [];
+
+        foreach ($models as $model) {
+            if ($model->hasErrors('day') || empty($model->day)) {
+                continue;
+            }
+
+            if (isset($usedDays[$model->day])) {
+                $model->addError('day', Yii::t('LetsMeetModule.form', 'This date is already used in another row.'));
+                $valid = false;
+            }
+
+            $usedDays[$model->day] = true;
+        }
+
+        return $valid;
+    }
+
     public function attributeLabels()
     {
         return [

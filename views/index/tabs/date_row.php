@@ -8,6 +8,7 @@ use humhub\modules\ui\form\widgets\DatePicker;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
+use yii\web\JsExpression;
 use yii\web\View;
 
 /**
@@ -28,7 +29,13 @@ use yii\web\View;
         </div>
         <div class="col-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
-                ->widget(DatePicker::class)
+                ->widget(DatePicker::class, [
+                    'clientOptions' => [
+                        'beforeShowDay' => new JsExpression(
+                            'function (date) { return humhub.require("letsMeet").isDayAvailable(this, date); }',
+                        ),
+                    ],
+                ])
                 ->label(false) ?>
         </div>
         <div class="col-5 text-end">

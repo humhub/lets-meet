@@ -173,6 +173,27 @@ class LetsMeetCest
         $I->see('3:00 PM');
     }
 
+    public function testDuplicatedDaysAreRejected(AcceptanceTester $I)
+    {
+        $I->amAdmin();
+        $I->enableModule(3, 'lets-meet');
+        $I->wantToTest('that the same day can not be used in several rows');
+        $I->amOnSpace3();
+
+        $I->waitForElementVisible('.wall_humhubmodulesletsMeetmodelsMeeting_1');
+
+        $I->clickEditFromContextMenu();
+
+        $I->clickNext();
+        $I->waitForText('Select dates for your poll');
+        $I->amGoingTo('use the day of the first row in the second row');
+        $I->fillField('DayForm[1][day]', $I->grabValueFrom('DayForm[0][day]'));
+        $I->clickSave();
+
+        $I->expectTo('see an error and that the form is not saved');
+        $I->waitForText('This date is already used in another row.');
+    }
+
     public function testDeleteMeetingDay(AcceptanceTester $I)
     {
         $I->amAdmin();
