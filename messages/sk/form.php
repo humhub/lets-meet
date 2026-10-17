@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => 'Deň',
-  'Description' => 'Popis',
-  'Invite all Space members' => '',
-  'Make Public' => 'Zverejniť',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => 'Účastníci',
-  'Times' => '',
-  'Title' => 'Názov',
+    'Day' => 'Deň',
+    'Description' => 'Popis',
+    'Make Public' => 'Zverejniť',
+    'Participants' => 'Účastníci',
+    'Title' => 'Názov',
+    'Invite all Space members' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];

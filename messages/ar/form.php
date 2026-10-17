@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => 'يوم',
-  'Description' => 'الوصف',
-  'Invite all Space members' => '',
-  'Make Public' => 'اجعله عاماً',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => 'المشاركون',
-  'Times' => '',
-  'Title' => 'العنوان',
+    'Day' => 'يوم',
+    'Description' => 'الوصف',
+    'Make Public' => 'اجعله عاماً',
+    'Participants' => 'المشاركون',
+    'Title' => 'العنوان',
+    'Invite all Space members' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];

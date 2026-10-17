@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => '',
-  'Description' => 'Aprašymas',
-  'Invite all Space members' => '',
-  'Make Public' => 'Padaryti viešą',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => 'Dalyviai',
-  'Times' => '',
-  'Title' => 'Pavadinimas',
+    'Description' => 'Aprašymas',
+    'Make Public' => 'Padaryti viešą',
+    'Participants' => 'Dalyviai',
+    'Title' => 'Pavadinimas',
+    'Day' => '',
+    'Invite all Space members' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];

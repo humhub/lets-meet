@@ -8,6 +8,7 @@ return [
     'Meeting duration' => '',
     'New Participant' => '',
     'Participants' => '',
+    'This date is already used in another row.' => '',
     'Times' => '',
     'Title' => '',
 ];

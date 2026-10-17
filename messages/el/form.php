@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => 'Ημέρα',
-  'Description' => 'Περιγραφή',
-  'Invite all Space members' => '',
-  'Make Public' => 'Κάντο Δημόσιο',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => 'Συμμετέχοντες',
-  'Times' => '',
-  'Title' => 'Τίτλος',
+    'Day' => 'Ημέρα',
+    'Description' => 'Περιγραφή',
+    'Make Public' => 'Κάντο Δημόσιο',
+    'Participants' => 'Συμμετέχοντες',
+    'Title' => 'Τίτλος',
+    'Invite all Space members' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];

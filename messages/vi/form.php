@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => 'Ngày',
-  'Description' => 'Miêu tả',
-  'Invite all Space members' => '',
-  'Make Public' => 'Đưa ra công cộng',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => 'Người tham gia',
-  'Times' => '',
-  'Title' => 'Tiêu đề',
+    'Day' => 'Ngày',
+    'Description' => 'Miêu tả',
+    'Make Public' => 'Đưa ra công cộng',
+    'Participants' => 'Người tham gia',
+    'Title' => 'Tiêu đề',
+    'Invite all Space members' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];

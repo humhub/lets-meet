@@ -1,12 +1,14 @@
 <?php
+
 return [
-  'Day' => '',
-  'Description' => '描述',
-  'Invite all Space members' => '',
-  'Make Public' => '',
-  'Meeting duration' => '',
-  'New Participant' => '',
-  'Participants' => '參與者',
-  'Times' => '',
-  'Title' => '稱謂',
+    'Description' => '描述',
+    'Participants' => '參與者',
+    'Title' => '稱謂',
+    'Day' => '',
+    'Invite all Space members' => '',
+    'Make Public' => '',
+    'Meeting duration' => '',
+    'New Participant' => '',
+    'This date is already used in another row.' => '',
+    'Times' => '',
 ];
