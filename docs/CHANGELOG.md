@@ -5,6 +5,7 @@ Changelog
 --------------------
 - Fix #46: Fix "Using null as an array offset" deprecation in votes_row.php (PHP 8.5)
 - Fix #47: Disable already selected days in the day picker and reject duplicated days
+- Fix #48: Create permission check; Voting limited to participants of open meetings; Escaped notifications; Close/Reopen via POST; Invite notifications; 500 errors
 
 1.2.1 (July 8, 2026)
 --------------------

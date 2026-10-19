@@ -37,7 +37,7 @@ class NewInviteNotificationJob extends ActiveJob
                 $meeting->save();
             } elseif (!$meeting->invite_all_space_users) {
                 $invitedUserIds = $meeting->getInvites()->select('user_id')->andWhere(['notified' => 0])->column();
-                MeetingInvite::updateAll(['notified' => true], ['user_id' => $invitedUserIds]);
+                MeetingInvite::updateAll(['notified' => true], ['meeting_id' => $meeting->id, 'user_id' => $invitedUserIds]);
                 $userQuery->andWhere(['user.id' => $invitedUserIds]);
             } else {
                 $transaction->rollBack();

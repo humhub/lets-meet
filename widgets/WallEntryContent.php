@@ -16,6 +16,7 @@ use humhub\modules\letsMeet\models\MeetingTimeSlot;
 use humhub\modules\letsMeet\models\MeetingVote;
 use Yii;
 use yii\base\Widget;
+use yii\web\ForbiddenHttpException;
 use yii\helpers\ArrayHelper;
 use humhub\helpers\Html;
 
@@ -32,6 +33,19 @@ class WallEntryContent extends Widget
     public function run()
     {
         $action = Yii::$app->request->post('action');
+
+        if (Yii::$app->user->isGuest) {
+            $canVote = false;
+        } else {
+            $canVote = (
+                $this->model->created_by == Yii::$app->user->id
+                || $this->model->getInvites()->andWhere(['user_id' => Yii::$app->user->id])->exists()
+                || (
+                    $this->model->invite_all_space_users
+                    && $this->model->content->container->getMembershipUser()->andWhere(['user.id' => Yii::$app->user->id])->exists()
+                )
+            );
+        }
 
         /** @var MeetingVote[] $voteModels */
         $voteModels = ArrayHelper::index(
@@ -55,7 +69,11 @@ class WallEntryContent extends Widget
         $userVotes = $this->getUserVotes();
         $canEditVote = false;
 
-        if (Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost && in_array($action, ['vote', 'edit'], true)) {
+            if (!$canVote || $this->model->status == Meeting::STATUS_CLOSED) {
+                throw new ForbiddenHttpException();
+            }
+
             if ($action == 'vote') {
                 if (MeetingVote::loadMultiple($voteModels, Yii::$app->request->post()) && MeetingVote::validateMultiple($voteModels)) {
                     $transaction = Yii::$app->db->beginTransaction();
@@ -99,15 +117,6 @@ class WallEntryContent extends Widget
                 ->all(),
             null,
             'user_id',
-        );
-
-        $canVote = (
-            (
-                $this->model->invite_all_space_users
-                && $this->model->content->container->getMembershipUser()->andWhere(['user.id' => Yii::$app->user->id])->exists()
-            )
-            || $this->model->getInvites()->andWhere(['user_id' => Yii::$app->user->id])->exists()
-            || $this->model->created_by == Yii::$app->user->id
         );
 
         return $this->render('wallEntry', [
@@ -156,7 +165,7 @@ class WallEntryContent extends Widget
     {
         $parts = explode(':', $this->model->duration);
         $hours = (int)$parts[0];
-        $minutes = $parts[1];
+        $minutes = (int)$parts[1];
 
         if ($hours === 0) {
             return Yii::t('LetsMeetModule.base', '{minutes, plural, =1{# minute} other{# minutes}}', ['minutes' => $minutes]);
@@ -165,7 +174,7 @@ class WallEntryContent extends Widget
         } else {
             return Yii::t('LetsMeetModule.base', '{hours}:{minutes} {hourLabel}', [
                 'hours' => $hours,
-                'minutes' => $minutes,
+                'minutes' => $parts[1],
                 'hourLabel' => Yii::t('LetsMeetModule.base', '{hours, plural, =1{hour} other{hours}}', ['hours' => $hours]),
             ]);
         }

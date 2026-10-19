@@ -250,15 +250,21 @@ class TabsStateManager extends BaseObject implements StaticInstanceInterface
         }
 
         if (!empty($invites->invites) || $invites->invite_all_space_members) {
+            // Only members of the Space can be invited
+            $userIds = $meeting->content->container->getMembershipUser()
+                ->select('user.id')
+                ->andWhere(['user.id' => $invites->userIds])
+                ->column();
+
             MeetingInvite::deleteAll([
                 'AND',
                 ['=', 'meeting_id', $meeting->id],
-                ['not in', 'user_id', $invites->userIds],
+                ['not in', 'user_id', $userIds],
             ]);
 
             $currentInvites = $meeting->getInvites()->select('user_id')->column();
 
-            foreach ($invites->userIds as $userId) {
+            foreach ($userIds as $userId) {
                 if (in_array($userId, $currentInvites)) {
                     continue;
                 }

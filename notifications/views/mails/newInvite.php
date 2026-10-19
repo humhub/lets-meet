@@ -1,5 +1,6 @@
 <?php
 
+use humhub\helpers\Html;
 use humhub\modules\user\models\User;
 use humhub\modules\letsMeet\models\Meeting;
 use yii\helpers\Url;
@@ -20,7 +21,7 @@ use yii\web\View;
                 <?=
                 humhub\widgets\mails\MailHeadline::widget([
                     'level' => 3,
-                    'text' => $source->getContentName(). ' ' . $source->title,
+                    'text' => Html::encode($source->getContentName() . ' ' . $source->title),
                     'style' => 'text-transform:capitalize;'
                 ])
                 ?>
@@ -28,11 +29,11 @@ use yii\web\View;
         </tr>
         <tr>
             <td>
-                <strong><?= Yii::t('LetsMeetModule.notification', 'Organizer') ?>:</strong> <?= $originator->displayName ?>
+                <strong><?= Yii::t('LetsMeetModule.notification', 'Organizer') ?>:</strong> <?= Html::encode($originator->displayName) ?>
                 <br>
                 <strong><?= Yii::t('LetsMeetModule.notification', 'Description') ?>:</strong>
                 <br>
-                <?= nl2br((string) $source->description) ?>
+                <?= nl2br(Html::encode((string) $source->description)) ?>
             </td>
         </tr>
         <tr>
