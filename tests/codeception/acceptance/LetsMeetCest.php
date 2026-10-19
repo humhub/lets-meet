@@ -128,7 +128,7 @@ class LetsMeetCest
         foreach ([
             '00:15' => '15 minutes',
             '01:30' => '1:30 hour',
-            '03:00' => '3:00 hours',
+            '03:00' => '3 hours',
         ] as $duration => $formattedDuration) {
 
             $I->amGoingTo("edit duration to $formattedDuration");

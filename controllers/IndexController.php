@@ -11,7 +11,6 @@ namespace humhub\modules\letsMeet\controllers;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
-use humhub\modules\letsMeet\models\forms\Form;
 use humhub\modules\letsMeet\models\forms\InvitesForm;
 use humhub\modules\letsMeet\models\forms\MainForm;
 use humhub\modules\letsMeet\models\forms\NewInvitesForm;
@@ -25,6 +24,7 @@ use humhub\widgets\form\ActiveForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -36,6 +36,9 @@ class IndexController extends ContentContainerController
     {
         $this->stateManager = TabsStateManager::instance();
         if ($hash = Yii::$app->request->get('hash')) {
+            if (!is_string($hash) || !preg_match('/^[\w-]{32}$/', $hash)) {
+                throw new BadRequestHttpException();
+            }
             $this->stateManager->restore($hash);
         }
 
@@ -49,29 +52,31 @@ class IndexController extends ContentContainerController
 
     public function actionClose($id)
     {
+        $this->forcePostRequest();
+
         $meeting = $this->getMeeting($id);
 
         $meeting->status = Meeting::STATUS_CLOSED;
         $meeting->save();
 
-        return $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully closed.'));
+        $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully closed.'));
     }
 
     public function actionReopen($id)
     {
+        $this->forcePostRequest();
+
         $meeting = $this->getMeeting($id);
 
         $meeting->status = Meeting::STATUS_OPEN;
         $meeting->save();
 
-        return $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully reopened.'));
+        $this->view->success(Yii::t('LetsMeetModule.base', 'Meeting successfully reopened.'));
     }
 
     public function actionEdit($id = null)
     {
-        if ($id) {
-            $this->getMeeting($id);
-        }
+        $this->checkAccess($id);
 
         $model = $this->stateManager->getState(MainForm::class, new MainForm(), $id);
 
@@ -94,14 +99,13 @@ class IndexController extends ContentContainerController
 
     public function actionDates($id = null)
     {
-        if ($id) {
-            $this->getMeeting($id);
-        }
+        $this->checkAccess($id);
 
         $models = $this->stateManager->getState(DayForm::class, [new DayForm()], $id);
 
-        if (Yii::$app->request->isPost) {
-            $models = ArrayHelper::getColumn(Yii::$app->request->post((new DayForm())->formName()), fn() => new DayForm());
+        $postedDays = Yii::$app->request->post((new DayForm())->formName());
+        if (Yii::$app->request->isPost && is_array($postedDays)) {
+            $models = ArrayHelper::getColumn($postedDays, fn() => new DayForm());
         }
 
         if (DayForm::loadMultiple($models, Yii::$app->request->post()) && $this->validateDays($models)) {
@@ -127,9 +131,7 @@ class IndexController extends ContentContainerController
 
     public function actionInvites($id = null)
     {
-        if ($id) {
-            $this->getMeeting($id);
-        }
+        $this->checkAccess($id);
 
         $newInvites = new NewInvitesForm();
         $model = $this->stateManager->getState(InvitesForm::class, new InvitesForm(), $id);
@@ -200,11 +202,7 @@ class IndexController extends ContentContainerController
 
     public function actionContent($id)
     {
-        $meeting = Meeting::findOne(['id' => $id]);
-
-        if (!$meeting) {
-            throw new NotFoundHttpException();
-        }
+        $meeting = $this->findMeeting($id);
 
         if (!$meeting->content->canView()) {
             throw new ForbiddenHttpException();
@@ -215,9 +213,7 @@ class IndexController extends ContentContainerController
 
     public function actionAddDateRow()
     {
-        if (!$this->contentContainer->getPermissionManager()->can(new ManagePermission())) {
-            throw new ForbiddenHttpException();
-        }
+        $this->checkAccess();
 
         $model = new DayForm();
         $form = new ActiveForm();
@@ -243,13 +239,36 @@ class IndexController extends ContentContainerController
         return DayForm::validateUniqueDays($models) && $valid;
     }
 
-    private function getMeeting(int $id): Meeting
+    /**
+     * Checks the access to edit an existing meeting or to create a new one in the current container
+     *
+     * @param mixed $id
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
+    private function checkAccess($id = null): void
     {
-        $meeting = Meeting::findOne(['id' => $id]);
+        if ($id) {
+            $this->getMeeting($id);
+        } elseif (!(new Meeting($this->contentContainer))->content->canEdit()) {
+            throw new ForbiddenHttpException();
+        }
+    }
 
-        if (!$meeting) {
+    private function findMeeting($id): Meeting
+    {
+        $meeting = is_scalar($id) && ctype_digit((string)$id) ? Meeting::findOne(['id' => (int)$id]) : null;
+
+        if (!$meeting || $meeting->content->contentcontainer_id != $this->contentContainer->contentcontainer_id) {
             throw new NotFoundHttpException();
         }
+
+        return $meeting;
+    }
+
+    private function getMeeting($id): Meeting
+    {
+        $meeting = $this->findMeeting($id);
 
         if (!$meeting->content->canEdit()) {
             throw new ForbiddenHttpException();

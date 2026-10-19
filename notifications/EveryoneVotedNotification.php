@@ -8,14 +8,9 @@
 
 namespace humhub\modules\letsMeet\notifications;
 
-use humhub\modules\comment\models\Comment;
-use humhub\modules\comment\notifications\CommentNotificationCategory;
-use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\notification\components\BaseNotification;
-use humhub\modules\notification\models\Notification;
-use humhub\modules\user\models\User;
-use humhub\modules\user\notifications\Mentioned;
+use humhub\helpers\Html;
 use Yii;
 
 class EveryoneVotedNotification extends BaseNotification
@@ -42,8 +37,8 @@ class EveryoneVotedNotification extends BaseNotification
     public function html()
     {
         return Yii::t('LetsMeetModule.notification', "All invited participants for the <strong>{meeting}</strong> Let’s Meet in the Space <strong>{space}</strong> have voted.", [
-            'meeting' => $this->source->title,
-            'space' => $this->source->content->container->name,
+            'meeting' => Html::encode($this->source->title),
+            'space' => Html::encode($this->source->content->container->name),
         ]);
     }
 }
