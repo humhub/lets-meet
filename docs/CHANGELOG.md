@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.0 (Unreleased)
+--------------------
+- Enh: Compatibility with the core picker that replaces Select2 (humhub/humhub#8677)
+
 1.2.2 (Unreleased)
 --------------------
 - Fix #46: Fix "Using null as an array offset" deprecation in votes_row.php (PHP 8.5)
