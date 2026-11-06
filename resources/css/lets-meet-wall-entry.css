@@ -5,7 +5,7 @@
  */
 
 .lets-meet-container {
-    background-color: var(--hh-background-color-page);
+    background-color: var(--bs-secondary-bg);
     border-radius: 4px;
     padding: 8px 8px 0 8px;
     overflow: hidden;
@@ -16,7 +16,7 @@
     flex-direction: row;
     padding: 8px;
     border-radius: 4px;
-    background-color: var(--hh-background-color-main);
+    background-color: var(--bs-body-bg);
     overflow: hidden;
     margin-bottom: 8px;
     width: 100%;
@@ -25,7 +25,7 @@
 .results-container {
     padding: 8px;
     border-radius: 4px;
-    background-color: var(--hh-background-color-main);
+    background-color: var(--bs-body-bg);
     overflow: hidden;
     margin-bottom: 8px;
     width: 100%;
@@ -71,7 +71,7 @@
 
 .time-slot, .time-slot-vote {
     display: flex;
-    background-color: var(--hh-background-color-secondary);
+    background-color: var(--bs-tertiary-bg);
     border-radius: 4px;
     padding: 8px;
     min-height: 40px;
@@ -101,7 +101,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: var(--hh-background-color-secondary);
+    background-color: var(--bs-tertiary-bg);
 }
 
 .votes-container .icons-cell {
@@ -115,7 +115,7 @@
 }
 
 .expanded-vote.voted .time-slot-vote:not(.voted) {
-    color: var(--hh-text-color-main);
+    color: var(--bs-body-color);
 }
 
 .expanded-vote .time-slot-vote {
@@ -123,31 +123,31 @@
 }
 
 .expanded-vote .time-slot-vote:hover, .expanded-vote .time-slot-vote.voted {
-    border: 4px solid var(--hh-background-color-secondary);
+    border: 4px solid var(--bs-tertiary-bg);
 }
 
 .time-slot-vote.vote-accept {
-    color: var(--hh-text-color-success);
+    color: var(--bs-success-text-emphasis);
 }
 .time-slot-vote.vote-accept:hover, .time-slot-vote.vote-accept.voted {
     background-color: var(--bs-success-bg-subtle);
 }
 .time-slot-vote.vote-maybe {
-    color: var(--hh-text-color-warning);
+    color: var(--bs-warning-text-emphasis);
 }
 .time-slot-vote.vote-maybe:hover, .time-slot-vote.vote-maybe.voted {
     background-color: var(--bs-warning-bg-subtle);
 }
 .time-slot-vote.vote-decline {
-    color: var(--hh-text-color-danger);
+    color: var(--bs-danger-text-emphasis);
 }
 .time-slot-vote.vote-decline:hover, .time-slot-vote.vote-decline.voted {
     background-color: var(--bs-danger-bg-subtle);
 }
 
 .lets-meet-container.voting-closed .time-slot-vote.voted:not(.vote-accept) {
-    background-color: var(--hh-background-color-page);
-    color: var(--hh-text-color-main);
+    background-color: var(--bs-secondary-bg);
+    color: var(--bs-body-color);
 }
 
 .results-container .votes-container {
