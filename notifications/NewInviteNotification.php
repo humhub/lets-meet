@@ -8,50 +8,40 @@
 
 namespace humhub\modules\letsMeet\notifications;
 
-use humhub\helpers\Html;
-use Yii;
 use humhub\modules\letsMeet\models\Meeting;
-use humhub\modules\notification\components\BaseNotification;
+use humhub\modules\notification\components\NotificationBlock;
+use humhub\modules\notification\components\NotificationContext;
+use Yii;
 
-class NewInviteNotification extends BaseNotification
+/**
+ * The user was invited to vote on a meeting.
+ */
+final class NewInviteNotification extends AbstractLetsMeetNotification
 {
-    /**
-     * @var Meeting
-     */
-    public $source;
-
-    /**
-     * @inheritdoc
-     */
-    public $moduleId = 'lets-meet';
-
-    /**
-     * @inheritdoc
-     */
-    public $viewName = 'newInvite';
-
-    /**
-     * @inheritdoc
-     */
-    public function category()
+    protected function getMessage(array $params): string
     {
-        return new LetsMeetNotificationCategory();
+        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Let’s Meet in the Space {space}.", self::sentenceParams($params));
     }
 
-    public function getMailSubject()
+    protected function getMailSubject(array $params): string
     {
-        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Meeting Let's Meet", [
-            'organizer' => $this->originator->displayName,
-            'meeting' => $this->source->title,
-        ]);
+        return Yii::t('LetsMeetModule.notification', "{organizer} invites you to vote on {meeting} Meeting Let's Meet", $params);
     }
 
-    public function html()
+    /**
+     * The meeting with its organizer and description; the core appends the "View online" button.
+     */
+    public function getBlocks(NotificationContext $context): array
     {
-        return Yii::t('LetsMeetModule.notification', "<strong>{organizer}</strong> invites you to vote on <strong>{meeting}</strong> Let’s Meet in the Space <strong>{space}</strong>.", [
-            'organizer' => Html::encode($this->originator->displayName),
-            'meeting' => Html::encode($this->source->title),
-            'space' => Html::encode($this->source->content->container->name),
-        ]);
+        $meeting = $this->getSubjectRecord();
+        if (!$meeting instanceof Meeting) {
+            return parent::getBlocks($context);
+        }
+
+        return [
+            NotificationBlock::heading($meeting->getContentName() . ' ' . $meeting->title),
+            NotificationBlock::text(Yii::t('LetsMeetModule.notification', 'Organizer') . ': ' . $this->originator?->displayName),
+            NotificationBlock::text(Yii::t('LetsMeetModule.notification', 'Description') . ":\n" . $meeting->description),
+        ];
     }
 }

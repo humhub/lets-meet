@@ -55,9 +55,11 @@ class EveryoneVotedNotificationJob extends ActiveJob
             }
         }
 
-        EveryoneVotedNotification::instance()
-            ->from($meeting->createdBy)
-            ->about($meeting)
-            ->send($meeting->createdBy);
+        EveryoneVotedNotification::send(
+            $meeting->createdBy,
+            source: $meeting,
+            originator: $meeting->createdBy,
+            notifyOriginator: true,
+        );
     }
 }

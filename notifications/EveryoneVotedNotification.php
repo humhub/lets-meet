@@ -8,37 +8,20 @@
 
 namespace humhub\modules\letsMeet\notifications;
 
-use humhub\modules\letsMeet\models\Meeting;
-use humhub\modules\notification\components\BaseNotification;
-use humhub\helpers\Html;
 use Yii;
 
-class EveryoneVotedNotification extends BaseNotification
+/**
+ * All invited participants have voted: sent to the organizer of the meeting.
+ */
+final class EveryoneVotedNotification extends AbstractLetsMeetNotification
 {
-    /**
-     * @var Meeting
-     */
-    public $source;
-
-    public $suppressSendToOriginator = false;
-
-    public $moduleId = 'lets-meet';
-
-    public function category()
+    protected function getMessage(array $params): string
     {
-        return new LetsMeetNotificationCategory();
+        return Yii::t('LetsMeetModule.notification', "All invited participants for the {meeting} Let’s Meet in the Space {space} have voted.", self::sentenceParams($params));
     }
 
-    public function getMailSubject()
+    protected function getMailSubject(array $params): string
     {
         return Yii::t('LetsMeetModule.notification', "All invited participants have voted.");
-    }
-
-    public function html()
-    {
-        return Yii::t('LetsMeetModule.notification', "All invited participants for the <strong>{meeting}</strong> Let’s Meet in the Space <strong>{space}</strong> have voted.", [
-            'meeting' => Html::encode($this->source->title),
-            'space' => Html::encode($this->source->content->container->name),
-        ]);
     }
 }

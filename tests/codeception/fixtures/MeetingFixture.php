@@ -21,6 +21,5 @@ class MeetingFixture extends ActiveFixture
         ActivityFixture::class,
         ContentFixture::class,
         CommentFixture::class,
-        NotificationFixture::class,
     ];
 }

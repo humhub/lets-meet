@@ -45,10 +45,11 @@ class NewInviteNotificationJob extends ActiveJob
                 return;
             }
 
-            NewInviteNotification::instance()
-                ->from($meeting->createdBy)
-                ->about($meeting)
-                ->sendBulk($userQuery);
+            NewInviteNotification::send(
+                $userQuery,
+                source: $meeting,
+                originator: $meeting->createdBy,
+            );
 
             $transaction->commit();
         } catch (\Throwable $e) {
