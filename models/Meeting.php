@@ -109,7 +109,7 @@ class Meeting extends ContentActiveRecord
 
     public function getIcon()
     {
-        return 'fa-calendar-check-o';
+        return 'calendar-check';
     }
 
     public function getSearchAttributes()

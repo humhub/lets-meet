@@ -9,8 +9,8 @@
 namespace humhub\modules\letsMeet\widgets;
 
 use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
-use humhub\modules\content\widgets\WallEntryControlLink;
 use humhub\modules\letsMeet\models\Meeting;
+use humhub\widgets\menu\MenuLink;
 use Yii;
 
 /**
@@ -50,54 +50,42 @@ class WallEntry extends WallStreamModuleEntryWidget
         }
 
         if ($this->model->status === $this->model::STATUS_CLOSED) {
-            $result[] = [
-                WallEntryControlLink::class,
-                [
-                    'label' => Yii::t('LetsMeetModule.base', 'Reopen'),
-                    'icon' => 'fa-check',
-                    'action' => 'letsMeet.changeState',
-                    'options' => [
-                        'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/reopen', ['id' => $this->model->id]),
-                        'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Reopen Let\'s Meet'),
-                        'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to reopen this Let\'s Meet?'),
-                    ],
+            $result[] = new MenuLink([
+                'label' => Yii::t('LetsMeetModule.base', 'Reopen'),
+                'icon' => 'check',
+                'url' => '#',
+                'sortOrder' => 200,
+                'htmlOptions' => [
+                    'data-action-click' => 'letsMeet.changeState',
+                    'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/reopen', ['id' => $this->model->id]),
+                    'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Reopen Let\'s Meet'),
+                    'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to reopen this Let\'s Meet?'),
                 ],
-                [
-                    'sortOrder' => 200,
-                ],
-            ];
+            ]);
         } else {
-            $result[] = [
-                WallEntryControlLink::class,
-                [
-                    'label' => Yii::t('LetsMeetModule.base', 'Participants'),
-                    'icon' => 'fa-users',
-                    'action' => 'editModal',
-                    'options' => [
-                        'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/invites', ['id' => $this->model->id]),
-                    ],
+            $result[] = new MenuLink([
+                'label' => Yii::t('LetsMeetModule.base', 'Participants'),
+                'icon' => 'users',
+                'url' => '#',
+                'sortOrder' => 100,
+                'htmlOptions' => [
+                    'data-action-click' => 'editModal',
+                    'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/invites', ['id' => $this->model->id]),
                 ],
-                [
-                    'sortOrder' => 100,
-                ],
-            ];
+            ]);
 
-            $result[] = [
-                WallEntryControlLink::class,
-                [
-                    'label' => Yii::t('LetsMeetModule.base', 'Close'),
-                    'icon' => 'fa-times',
-                    'action' => 'letsMeet.changeState',
-                    'options' => [
-                        'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
-                        'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Let\'s Meet'),
-                        'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to close this Let\'s Meet?'),
-                    ],
+            $result[] = new MenuLink([
+                'label' => Yii::t('LetsMeetModule.base', 'Close'),
+                'icon' => 'x',
+                'url' => '#',
+                'sortOrder' => 200,
+                'htmlOptions' => [
+                    'data-action-click' => 'letsMeet.changeState',
+                    'data-action-url' => $this->model->content->container->createUrl('/lets-meet/index/close', ['id' => $this->model->id]),
+                    'data-action-confirm-header' => Yii::t('LetsMeetModule.base', 'Close Let\'s Meet'),
+                    'data-action-confirm' => Yii::t('LetsMeetModule.base', 'Are you sure you want to close this Let\'s Meet?'),
                 ],
-                [
-                    'sortOrder' => 200,
-                ],
-            ];
+            ]);
         }
 
         return $result;

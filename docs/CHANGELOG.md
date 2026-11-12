@@ -6,6 +6,7 @@ Changelog
 - Enh: Colour tokens of the core 1.20 instead of the deprecated ones (humhub/humhub#8707)
 - Enh: Compatibility with the core picker that replaces Select2 (humhub/humhub#8677)
 - Enh: Compatibility with the notification API of the core 1.20 (humhub/humhub#8576)
+- Enh: Tabler icons, new namespaces of `Icon`, `DatePicker`, `BasePicker` and stream classes, content menu entries as `MenuLink`
 
 1.2.2 (November 4, 2026)
 ------------------------

@@ -73,7 +73,7 @@ $title = TabsStateManager::instance()->id
                     <?= Button::accent()
                         ->submit()
                         ->options(['name' => 'add', 'aria-label' => Yii::t('LetsMeetModule.base', 'Add participants...')])
-                        ->icon('send') ?>
+                        ->icon('send-filled') ?>
                 </div>
             </div>
             <div class="invites" style="<?= Html::cssStyleFromArray(['class' => $model->invite_all_space_members ? 'd-none' : '']) ?>">
@@ -94,7 +94,7 @@ $title = TabsStateManager::instance()->id
                                 </a>
                                 <div>
                                     <?= Button::danger()->sm()
-                                        ->icon('remove')
+                                        ->icon('x')
                                         ->options(['aria-label' => Yii::t('base', 'Remove')])
                                         ->confirm(null, Yii::t('LetsMeetModule.base', 'Are you sure want to remove the participant?'))
                                         ->action('removeParticipant') ?>

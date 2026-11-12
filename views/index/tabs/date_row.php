@@ -4,8 +4,8 @@ use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\letsMeet\common\TabsStateManager;
 use humhub\modules\letsMeet\models\forms\DayForm;
 use humhub\modules\letsMeet\widgets\TimeSlotPicker;
-use humhub\modules\ui\form\widgets\DatePicker;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\form\DatePicker;
+use humhub\widgets\Icon;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\form\ActiveForm;
 use yii\web\JsExpression;
@@ -25,7 +25,7 @@ use yii\web\View;
 <div class="date-row" id="date-row-<?= $index ?>">
     <div class="row">
         <div class="col-2 col-lg-1 row-icons">
-            <?= Icon::get('calendar-check-o')->size(Icon::SIZE_LG) ?>
+            <?= Icon::get('calendar-check')->size(Icon::SIZE_LG) ?>
         </div>
         <div class="col-5 col-lg-6">
             <?= $form->field($model, "[$index]day")
@@ -40,7 +40,7 @@ use yii\web\View;
         </div>
         <div class="col-5 text-end">
             <?= Button::danger()
-                ->icon('times')
+                ->icon('x')
                 ->action('removeDateRow')
                 ->confirm(
                     Yii::t('LetsMeetModule.base', 'Delete'),
@@ -57,7 +57,7 @@ use yii\web\View;
     </div>
     <div class="row">
         <div class="col-2 col-lg-1 row-icons">
-            <?= Icon::get('clock-o')->size(Icon::SIZE_LG) ?>
+            <?= Icon::get('clock')->size(Icon::SIZE_LG) ?>
         </div>
         <div class="col-10 col-lg-11">
             <?= $form->field($model, "[$index]times")

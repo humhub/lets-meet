@@ -2,7 +2,7 @@
 
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use humhub\modules\content\widgets\richtext\RichText;
 use humhub\widgets\Pjax;
 use humhub\widgets\bootstrap\Button;
@@ -55,10 +55,10 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
         <div class="slots-container">
             <div class="icons-cell">
                 <div>
-                    <?= Icon::get('calendar')->size(Icon::SIZE_LG) ?>
+                    <?= Icon::get('calendar-filled')->size(Icon::SIZE_LG) ?>
                 </div>
                 <div>
-                    <?= Icon::get('clock-o')->size(Icon::SIZE_LG) ?>
+                    <?= Icon::get('clock')->size(Icon::SIZE_LG) ?>
                 </div>
             </div>
             <div class="dates-cell scrollable-container">
@@ -159,7 +159,7 @@ $isClosed = $meeting->status == Meeting::STATUS_CLOSED;
 
             <div class="totals-container">
                 <div class="icons-cell">
-                    <?= Icon::get('line-chart')->size(Icon::SIZE_LG) ?>
+                    <?= Icon::get('chart-line')->size(Icon::SIZE_LG) ?>
                 </div>
                 <div class="dates-cell scrollable-container">
                     <?php foreach ($meeting->daySlots as $daySlot): ?>

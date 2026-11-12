@@ -3,7 +3,7 @@
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\models\MeetingVote;
 use humhub\helpers\Html;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use humhub\modules\user\widgets\Image;
 use humhub\modules\user\models\User;
 use yii\helpers\ArrayHelper;
@@ -19,15 +19,15 @@ $voteModel = new MeetingVote();
 
 $voteOptions = [
     MeetingVote::VOTE_ACCEPT => [
-        'icon' => 'check-circle',
+        'icon' => 'circle-check-filled',
         'class' => 'vote-accept'
     ],
     MeetingVote::VOTE_MAYBE => [
-        'icon' => 'circle',
+        'icon' => 'circle-filled',
         'class' => 'vote-maybe'
     ],
     MeetingVote::VOTE_DECLINE => [
-        'icon' => 'times-circle',
+        'icon' => 'circle-x-filled',
         'class' => 'vote-decline'
     ]
 ];

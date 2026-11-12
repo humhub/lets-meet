@@ -9,7 +9,7 @@
 namespace humhub\modules\letsMeet\widgets;
 
 use humhub\modules\letsMeet\models\MeetingTimeSlot;
-use humhub\modules\ui\form\widgets\BasePicker;
+use humhub\widgets\form\BasePicker;
 use humhub\helpers\Html;
 use Yii;
 

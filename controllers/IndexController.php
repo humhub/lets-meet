@@ -17,7 +17,7 @@ use humhub\modules\letsMeet\models\forms\NewInvitesForm;
 use humhub\modules\letsMeet\models\Meeting;
 use humhub\modules\letsMeet\permissions\ManagePermission;
 use humhub\modules\letsMeet\widgets\WallEntryContent;
-use humhub\modules\stream\actions\StreamEntryResponse;
+use humhub\modules\content\actions\StreamEntryResponse;
 use humhub\modules\user\models\User;
 use humhub\modules\user\models\UserPicker;
 use humhub\widgets\form\ActiveForm;
